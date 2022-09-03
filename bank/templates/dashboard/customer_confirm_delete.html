@@ -1,0 +1,52 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+{% load only_hours %}
+
+{% block title %}
+    Confirm Delete
+{% endblock title %}
+
+{% block stylesheets %}
+     {{ block.super }}
+        <link href="{% static 'dashboard/author/css/dashboard-article.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+
+{% block content %}
+
+      <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-x-circle bg-red"></i>
+                    <div class="d-inline">
+                        <h5>Confirm Delete</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            
+                          <div class="card-body">
+                            <div class="content">
+                                     
+                                    <p>Are you sure you want to delete this record?</p>
+
+                                    <form action="" method="POST">
+                                      {% csrf_token %}
+                                      <input type="submit" value="Yes, delete.">
+                                    </form>
+
+                            </div>
+                          </div>
+                        </div>
+                </div>
+            </div>
+
+    </div>
+
+{% endblock content %}

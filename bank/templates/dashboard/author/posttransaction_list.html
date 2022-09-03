@@ -1,0 +1,178 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+
+{% block title %}
+All Transactions
+{% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'dashboard/author/css/dashboard-article.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+
+{% block content %}
+<div class="page-header">
+  <div class="row align-items-end">
+    <div class="col-lg-8">
+      <div class="page-header-title">
+        <i class="ik ik-edit-1 bg-primary"></i>
+        <div class="d-inline">
+          <h5>Transactions</h5>
+          <span>List of all transactions.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h4 class="title">List Of Transactions</h4>
+        </div>
+        <div class="card-body">
+          <div class="content">
+            <section class="blog-list px-3 py-5 p-md-5">
+              {% if posttransactions %}
+              <div class="container">
+                {% for payment in posttransactions %}
+                <div class="item mb-5">
+                  <div class="media">
+
+                    <div class="media-body">
+                      {% if payment.account %}
+                      <h3 class="title mb-1"><a href="{% url 'bank:posttransaction-update' payment.id %}">{{payment.account.account_name}}</a></h3>
+                      <div class="meta mb-1">
+                        <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
+                        <span class="date">Receiver's Account Number:<b>{{ payment.account.account_number }}
+                          </b></span>
+                        <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
+                        <span class="time">{{ payment.date }}</span>
+
+                        <span class="time">
+                          <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                          </i>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'bank:posttransaction-update' payment.id %}">Update</a>
+                            <div class="dropdown-divider w-100"></div>
+                            <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item"
+                              href="javascript:void(0)">Delete</a>
+                          </div>
+                        </span>
+                      </div>
+                      {% else %}
+                      <h3 class="title mb-1"><a href="{% url 'bank:posttransaction-update' payment.id %}">{{payment.account_name}}</a></h3>
+                      <div class="meta mb-1">
+                        <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
+                        <span class="date">Receiver's Account Number:<b>{{ payment.account_number }}
+                          </b></span>
+                        <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
+                        <span class="time">{{ payment.date }}</span>
+
+                        <span class="time">
+                          <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                          </i>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'bank:posttransaction-update' payment.id %}">Update</a>
+                            <div class="dropdown-divider w-100"></div>
+                            <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item"
+                              href="javascript:void(0)">Delete</a>
+                          </div>
+                        </span>
+                      </div>
+
+                      {% endif %}
+
+                      <hr class="solid"><!-- Solid divider -->
+                    </div>
+                    <!--//media-body-->
+                  </div>
+                  <!--//media-->
+                </div>
+                <!--//item-->
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Transaction?</b></h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Select "Delete Transaction" below if you want to delete the payment.
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                          Cancel
+                        </button>
+                        <a class="btn btn-danger" href="{% url 'bank:posttransaction-delete' payment.id %}">Delete
+                          Transaction</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% else %}
+              <center>
+                <div class="alert alert-info"><b>No Transaction</b></div>
+              </center>
+              {% endif %}
+            </section>
+
+            {# Pagination for Transaction #}
+            <nav aria-label="Page navigation example">
+              {% if posttransactions.has_other_pages %}
+              <ul class="pagination justify-content-center">
+                {% if posttransactions.has_previous %}
+                <li class="badge badge-pill badge-secondary">
+                  <a class="badge text-white" href="?page={{ posttransactions.previous_page_number }}"
+                    tabindex="-1">Previous</a>
+                </li>
+                {% else %}
+                <li class="badge badge-pill badge-secondary disabled">
+                  <span class="badge badge-pill badge-secondary">Previous</span>
+                </li>
+                {% endif %}
+                {% for i in posttransactions.paginator.page_range %}
+                {% if posttransactions.number == i %}
+                <li class="page-item active">
+                  <span class="page-link">
+                    {{ i }}
+                    <span class="sr-only">(current)</span>
+                  </span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if posttransactions.has_next %}
+                <li class="badge badge-pill badge-secondary">
+                  <a class="badge text-white" href="?page={{ posttransactions.next_page_number }}">Next</a>
+                </li>
+                {% else %}
+                <li class="badge badge-pill badge-secondary disabled">
+                  <span class="badge badge-pill badge-secondary">Next</span>
+                </li>
+                {% endif %}
+              </ul>
+              {% endif %}
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

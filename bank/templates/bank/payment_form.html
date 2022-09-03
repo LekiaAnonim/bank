@@ -1,0 +1,60 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}
+    Update Profile
+{% endblock title %}
+
+{% block stylesheets %}
+     {{ block.super }}
+        <link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+
+{% block content %}
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-file-text bg-blue"></i>
+                    <div class="d-inline">
+                        <h5>Make Payment</h5>
+                        <span>Send Money.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h4 class="title">Make A Payment</h4>
+                            </div>
+                          <div class="card-body">
+                            <div class="content">
+                                <form id="payment-form" method="post" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    <table class="payment-table">
+                                        {{ form.as_table }}
+                                    </table>
+                                    
+                                    <input class="send-payment" type="submit" value="Submit">
+                                    {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <div class="clearfix"></div>
+                                </form>
+                                <button class="otp-button">Get OTP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+{% endblock content %}
