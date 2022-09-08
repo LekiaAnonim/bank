@@ -54,9 +54,9 @@
                                         </div>
                                         <small class="text-small mt-10 d-block">Account information</small>
                                     </div>
-                                    <div class="progress progress-sm">
+                                    <!-- <div class="progress progress-sm">
                                         <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -81,9 +81,9 @@
                                         </div>
                                         <small class="text-small mt-10 d-block">Transaction Summary</small>
                                     </div>
-                                    <div class="progress progress-sm">
+                                    <!-- <div class="progress progress-sm">
                                         <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             
@@ -129,7 +129,7 @@
         
                                                             <tr class="withdrawal">
                                                                 <td>{{transaction.date}}</td>
-                                                                <td class="bold">{{transaction.account.customer.account_name}}</td>
+                                                                <td class="bold">{{transaction.account_name}}</td>
                                                                 <td>- - -</td>
                                                                 <td class="bold" style="color: red;">-${{transaction.amount}}.00</td>
                                                                 

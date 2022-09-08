@@ -13,7 +13,12 @@ app_name = 'bank'
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+#     path('', views.index, name='index'),
+     path(
+          route="",
+          view=views.DashboardHomeView.as_view(),
+          name="dashboard_home"
+    ),
     path('customer/create/', views.CustomerCreate.as_view(), name='customer-create'),
     path('customer/<int:pk>/update/',
          views.CustomerUpdate.as_view(), name='customer-update'),
@@ -67,21 +72,17 @@ urlpatterns = [
     path('<int:pk>/payments',
          views.PaymentListView.as_view(), name='payment-list'),
 
-    path(
-        route="author/dashboard/home/",
-        view=views.DashboardHomeView.as_view(),
-        name="dashboard_home"
-    ),
-    path(
-        route="user/paid/",
-        view=views.ReceivedTransactionsView.as_view(),
-        name="received_transaction"
-    ),
-    path(
-        route="user/sent/",
-        view=views.SentTransactionsView.as_view(),
-        name="sent_transaction"
-    ),
+    
+#     path(
+#         route="user/paid/",
+#         view=views.ReceivedTransactionsView.as_view(),
+#         name="received_transaction"
+#     ),
+#     path(
+#         route="user/sent/",
+#         view=views.SentTransactionsView.as_view(),
+#         name="sent_transaction"
+#     ),
     path(
         route='user/details/',
         view=views.CustomerProfileView.as_view(),
@@ -97,23 +98,23 @@ urlpatterns = [
 
     # account/login/
     path(
-        route='account/login/',
+        route='accounts/login/',
         view=views.UserLoginView.as_view(),
         name='login'
     ),
 
     # account/login/
     path(
-        route='account/register/',
+        route='account/register',
         view=views.UserRegisterView.as_view(),
         name='register'
     ),
 
     # account/logout/
     path(
-        route='account/logout/',
+        route='accounts/logged_out',
         view=views.UserLogoutView.as_view(),
-        name='logout'
+        name='log-out'
     ),
 
     path(route='account_activation_sent/',

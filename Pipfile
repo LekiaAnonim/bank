@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.5.2"
+django = "==4.1.1"
+django-localflavor = "==3.1"
+django-mathfilters = "==1.0.0"
+django-phonenumber-field = "==6.4.0"
+phonenumbers = "==8.12.54"
+python-stdnum = "==1.17"
+sqlparse = "==0.4.2"
+tzdata = "==2022.2"
+dj-database-url = "*"
+psycopg2 = "*"
+whitenoise = "*"
+gunicorn = "*"
+django-environ = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

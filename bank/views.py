@@ -38,8 +38,8 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 # Create your views here.
 
 
-def index(request):
-    return render(request, 'index.html', {})
+# def index(request):
+#     return render(request, 'index.html', {})
 
 
 class UserCreate(CreateView):
@@ -340,45 +340,6 @@ class DashboardHomeView(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
 
 
-class SentTransactionsView(LoginRequiredMixin, View):
-    context = {}
-    template_name = 'dashboard/author/sent_transactions.html'
-
-    def get(self, request, *args, **kwargs):
-        """
-        Returns the author details
-        """
-
-        transaction_list = PostTransaction.objects.filter(user=request.user)
-
-        total_balance = sum(
-            transaction.post_amount for transaction in transaction_list)
-
-        self.context['transaction_list'] = transaction_list
-        self.context['balance'] = total_balance
-
-        return render(request, self.template_name, self.context)
-
-
-class ReceivedTransactionsView(LoginRequiredMixin, View):
-    context = {}
-    template_name = 'dashboard/author/received_transactions.html'
-
-    def get(self, request, *args, **kwargs):
-        """
-        Returns the author details
-        """
-
-        transaction_list = PostTransaction.objects.filter(user=request.user)
-
-        balance = sum(transaction.amount for transaction in transaction_list)
-
-        self.context['transaction_list'] = transaction_list
-        self.context['balance'] = balance
-
-        return render(request, self.template_name, self.context)
-
-
 class CustomerProfileView(LoginRequiredMixin, View):
     """
     Displays author profile details
@@ -393,36 +354,13 @@ class CustomerProfileView(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context_object)
 
 
-# class AccountListView(LoginRequiredMixin, View):
-#     """
-#        View to publish a drafted article
-#     """
-
-#     def get(self, request, *args, **kwargs):
-#         """
-#             Gets article slug from user and gets the article from the
-#             database.
-#             It then sets the status to publish and date published to now and
-#             then save the article and redirects the author to his/her published
-#             articles.
-#         """
-#         account = get_object_or_404(Account)
-#         accounts = Account.objects.all()
-#         return redirect('bank:list_accounts')
-
-
-# Django imports.
-
-# Blog app imports
-
-
 # @method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class UserLoginView(View):
     """
      Logs author into dashboard.
     """
-    template_name = 'account/login.html'
+    template_name = 'registration/login.html'
     context_object = {"login_form": UserLoginForm}
     authentication_classes = ()
 
@@ -466,7 +404,7 @@ class UserLogoutView(View):
     """
      Logs user out of the dashboard.
     """
-    template_name = 'account/logout.html'
+    template_name = 'registration/logout.html'
 
     def get(self, request):
         logout(request)
@@ -485,7 +423,7 @@ class UserRegisterView(View):
     """
       View to let users register
     """
-    template_name = 'account/register.html'
+    template_name = 'registration/register.html'
     context_object = {
         "register_form": UserRegisterForm()
     }
@@ -504,7 +442,7 @@ class UserRegisterView(View):
 
             current_site = get_current_site(request)
             subject = 'Activate Your Bona Blog Account'
-            message = render_to_string('account/account_activation_email.html',
+            message = render_to_string('registration/account_activation_email.html',
                                        {
                                            'user': user,
                                            'domain': current_site.domain,
@@ -534,7 +472,7 @@ class UserRegisterView(View):
 class AccountActivationSentView(View):
 
     def get(self, request):
-        return render(request, 'account/account_activation_sent.html')
+        return render(request, 'registration/account_activation_sent.html')
 
 
 # @method_decorator(csrf_exempt, name='dispatch')
@@ -565,4 +503,4 @@ class ActivateView(View):
 
             return redirect('bank:login')
         else:
-            return render(request, 'account/account_activation_invalid.html')
+            return render(request, 'registration/account_activation_invalid.html')

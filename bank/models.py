@@ -9,22 +9,6 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 from django.template import Context, Template
-# from django.template.loader import get_template
-
-# from django_otp.models import SideChannelDevice, ThrottlingMixin
-
-# Create your models here.
-
-
-# def default_key():  # pragma: no cover
-#     """ Obsolete code here for migrations. """
-#     return random_hex(20)
-
-
-# def key_validator(value):  # pragma: no cover
-#     """ Obsolete code here for migrations. """
-#     return hex_validator()(value)
-
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

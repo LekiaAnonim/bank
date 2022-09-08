@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <link href="{% static 'dashboard/author/css/bootstrap-tagsinput.css' %}" rel="stylesheet" />
         <link rel="stylesheet" href="{% static 'dashboard/author/css/prism.css' %}">
+        <link rel="stylesheet" href="{% static 'dashboard/author/dist/css/theme.css' %}">
         <script src="https://smtpjs.com/v3/smtp.js"></script>
 
    {% endblock stylesheets %}
@@ -79,7 +80,7 @@
                                     <a class="dropdown-item" href="{% url 'bank:user_profile_details' %}">
                                         <i class="ik ik-user dropdown-icon"></i> Profile</a>
                                     <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
-                                    <a class="dropdown-item" href="{% url 'bank:logout' %}" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="{% url 'bank:log-out' %}" data-toggle="modal" data-target="#logoutModal">
                                         <i class="ik ik-power dropdown-icon"></i> Logout</a>
                                 </div>
                             </div>
@@ -108,7 +109,7 @@
                         <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
                         <div class="logo" style="background: none;">
                             <a href="/" class="img-link"><img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic"
-                                    width="60" height="60"></a>
+                                    width="45" height="45"></a>
                         </div>
                     </div>
                     
@@ -250,7 +251,7 @@
                                     <a href="#"><i class="ik ik-settings"></i><span>Settings</span></a>
                                 </div>
                                 <div class="app-item">
-                                    <a href="{% url 'bank:index' %}" target="_blank"><i class="ik ik-send"></i><span>Visit Website</span></a>
+                                    <a href="{% url 'bank:dashboard_home' %}" target="_blank"><i class="ik ik-send"></i><span>Visit Website</span></a>
                                 </div>
                             </div>
                         </div>

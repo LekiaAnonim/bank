@@ -20,6 +20,7 @@
                     <div class="d-inline">
                         <h5>Make Payment</h5>
                         <span>Send Money.</span>
+                        <span class="user-email">{{user.email}}</span>
                     </div>
                 </div>
             </div>
@@ -30,7 +31,7 @@
                 <div class="col-md-12">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                <h4 class="title">Make A Payment</h4>
+                                <h4 class="title">Make Payment</h4>
                             </div>
                           <div class="card-body">
                             <div class="content">
@@ -39,7 +40,7 @@
                                     <table class="payment-table">
                                         {{ form.as_table }}
                                     </table>
-                                    
+                                    <button class="otp-button">Get OTP</button>
                                     <input class="send-payment" type="submit" value="Submit">
                                     {% if messages %}
                                     <ul class="messages">
@@ -50,7 +51,7 @@
                                     {% endif %}
                                     <div class="clearfix"></div>
                                 </form>
-                                <button class="otp-button">Get OTP</button>
+                                
                             </div>
                         </div>
                     </div>

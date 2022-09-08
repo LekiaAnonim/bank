@@ -1,275 +1,51 @@
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html lang="en" class=" signon external">
+{% extends 'registration/account_base.html' %}
 {% load static %}
-<head id="ctl00_ctl00_Head1">
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
 
 
-        Online Banking Sign On
 
+				<span class="login100-form-title p-b-41">
+					Login to CADENCE BANK
+				</span>
+				<form action="{% url 'bank:login' %}" class="login100-form validate-form p-b-33 p-t-5"
+                      method="post" novalidate>
+                    {% csrf_token %}
 
-    </title>
-    <link id="ctl00_ctl00_lnkIcon" rel="icon" type="image/ico" href="favicon.ico" />
-    <link id="ctl00_ctl00_lnkShortcut" rel="shortcut icon" type="image/ico" href="favicon.ico" />
+					<div class="wrap-input100 validate-input" data-validate="Enter username">
+						{{ login_form.username }}
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
 
-    {% block static %}
-    <link class="style-manager-theme"
-        href="{% static 'css/cadence-fluent.css' %}"
-        rel="stylesheet" />
-    <link href="{% static 'css/root-template.css' %}"
-        rel="stylesheet" />
-    <link href="/consumer/Content/fonts?v=K62FTVoBAw1rMW8ZieQ35_PsAU3zPA-O1zLMFeTNweg1" rel="stylesheet" />
-    <script src="/consumer/bundles/jquery?v=s2oTaCk1imIwFcSkGv0_otF8zmk4plxChBfhUftLv9M1"></script>
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						{{ login_form.password }}
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
 
-    <link href="/consumer/Content/legacy/page-template?v=Ygi9cNING3STVWIydgMMfBaWFyKj0ljp_i47Lbcy2UE1"
-        rel="stylesheet" />
-
-    <link href="/consumer/Content/legacy/common?v=TchSm0KYrzyDod4uucZBQkevV8xA2BZ006maIaboEIc1" rel="stylesheet" />
-
-    <link href="/consumer/Content/legacy/external?v=syRNjU1vx0uRy6SHkP6VpJ3dd4EhpFuf2DK57Hzc4B01" rel="stylesheet" />
-
-
-    <link href="/consumer/Content/legacy/sign-on?v=M1d9P7b6wu5boG5gZ0VvGWH5LqcRPOrv4a1kOxP8a1I1" rel="stylesheet" />
-    {% endblock static %}
-    <script language="javascript" type="text/javascript">
-        //Master page calls this.  Child pages can create body_onload functions if they need page load functionality.
-        function mp_onload() {
-            if (window.body_onload != null)
-                window.body_onload();
-        }
-        function mp_onsubmit() {
-            if (window.form_onsubmit != null) {
-                return window.form_onsubmit();
-            }
-            else {
-                return true;
-            }
-        }
-    </script>
-
-    <script src="/consumer/bundles/script-manager?v=EqpAT-YrDa_jF8kOr9mkZO02H90PiJRFdba_9xNFino1"></script>
-
-
-    <script type="text/javascript">
-        nextGenScripts.manifest = { "consumers": [{ "shortName": "lpTag", "metadata": ["26055208", "https://portal.cadencebank.com", ""], "endPoints": ["https://lptag.liveperson.net/tag/tag.js?site=26055208"] }, { "shortName": "CSSTable", "metadata": ["scallback", "moosilauke", "7ef9a7815211477694d7e7fba297fcb9"], "endPoints": ["https://adsmu.cadencebank.com/527522/table.js"] }, { "shortName": "CSSEmail", "endPoints": ["https://adsmu.cadencebank.com/527522/comra.js"] }], "routes": [{ "route": "/", "consumers": [{ "shortName": "lpTag", "isExcluded": false }] }, { "route": "/signon.aspx", "consumers": [{ "shortName": "CSSTable", "metadata": ["login_bb"], "isExcluded": false }, { "shortName": "CSSEmail", "isExcluded": false }] }] };
-        nextGenScripts.init();
-    </script>
-</head>
-
-<body class="">
-
-
-        <!-- <script
-            src="/consumer/WebResource.axd?d=Z4CCXKOVP67aYVyjvVM0OJGpwGgj-gQLjxqdweK0ehNJiHA2VnFFKcdq0w-XB3RyAd_m9KMrtJQhCle99kykhfdPuY_echSOKH4Fe14oxxabTIfMu-1Jd5gePs8dIM4j0&amp;t=637814437746327080"
-            type="text/javascript"></script>
-
-
-        <script src="/consumer/Core/Scripts/IDTranslation.js" type="text/javascript"></script>
-        <script src="/consumer/RootTemplate.js" type="text/javascript"></script>
-        <script src="/consumer/Core/Scripts/BBFormValidation.js" type="text/javascript"></script> -->
-
-        <div id="RootContent" class="root-content external">
-
-            <div id="TopSection">
-                <div id="TopLogo"></div>
-                <div id="TopMenuEdgeTop"></div>
-                <div id="TopMenu">
-
-                    <div id="divTitleBar">
-                        Sign On to Online Banking
+					<div class="container-login100-form-btn m-t-32">
+						<button type="submit" class="login100-form-btn">
+							Login
+						</button>
                     </div>
-
-                </div>
-                <div id="TopMenuEdgeBot"></div>
-            </div>
-
-            <div id="BottomSection">
-                <div id="Content">
-                    <div id="ng-app" ng-app="baseModule">
-                        <div id="Message" nextgen-messages class="nextgen-message" role="alert" aria-atomic="true">
-                            <span role="alert" aria-atomic="true">
-                                <div class="ErrorCrit">Sign On failed</div>
-                            </span>
-                        </div>
-                    <div>
-
-
-
-
-
-                            <div class="signon-panel floatL">
-                                <div style="max-width: 500px; margin-bottom: 15px;">
-
-
-                                    <!-- <script type="text/javascript" src="/consumer/Core/Scripts/Tools.js"></script>
-                                    <script
-                                        src="/consumer/bundles/signon-validation?v=Eug_wAgWIJaKScXaiPQYQshrhqzd_FOdEOTjhCsNr6g1"></script> -->
-
-
-                                    <div id="Message"></div>
-                                    <div id="ctl00_ctl00_mbody_body_ucSignon_divIntroSingleStep"
-                                        class="IntroSingleStep">
-                                        <span>Enter your User ID and Password below.</span>
-                                    </div>
-
-                                    {% if form.errors %}
-                                    <p>Your username and password didn't match. Please try again.</p>
-                                    {% endif %}
-                                    
-                                    {% if next %}
-                                    {% if user.is_authenticated %}
-                                    <p>Your account doesn't have access to this page. To proceed,
-                                        please login with an account that has access.</p>
-                                    {% else %}
-                                    <p>Please login to see this page.</p>
-                                    {% endif %}
-                                    {% endif %}
-                                    
-                                    <form method="post" action="{% url 'login' %}">
-                                        {% csrf_token %}
-                                        <table>
-                                            <tr>
-                                                <td>{{ form.username.label_tag }}</td>
-                                                <td>{{ form.username }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ form.password.label_tag }}</td>
-                                                <td>{{ form.password }}</td>
-                                            </tr>
-                                        </table>
-                                        <input type="submit" value="login" />
-                                        <input type="hidden" name="next" value="{{ next }}" />
-                                    </form>
-                                    
-                                    {# Assumes you setup the password_reset view in your URLconf #}
-                                    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-
-                                <div class="ForgotHeader">Cadence Online Banking Users</div>
-                                <div class="NotEnrolledPanel">
-                                    Not enrolled yet? <a href="/consumer/enroll/default.aspx" class="ForgotPwdLink"
-                                        aria-label="Enroll in Cadence Online Banking">Enroll in Cadence Online
-                                        Banking.</a>
-                                </div>
-                                <div class="ForgotPwdPanel">
-                                    Forgot your password? <a href="/consumer/password-reset/default.aspx"
-                                        class="ForgotPwdLink" aria-label="Reset your password">Reset your
-                                        password.</a>
-                                </div>
-                                <div class="ForgotUIDPanel">
-                                    If you have forgotten your User ID, please contact Cadence Bank
-                                    Customer Service at <a href="tel:+18006367622"
-                                        aria-label="call customer service at 800-636-7622">800-636-7622</a> or <a
-                                        href="/cdn-cgi/l/email-protection#6a091f191e05070f1844190f181c03090f2a090b0e0f04090f080b040144090507"
-                                        class="ForgotPwdLink" aria-label="Send an email to customer service"><span
-                                            class="__cf_email__"
-                                            data-cfemail="b1d2c4c2c5dedcd4c39fc2d4c3c7d8d2d4f1d2d0d5d4dfd2d4d3d0dfda9fd2dedc9f">[email&#160;protected]</span></a>
-                                    We are available to assist you Monday through Friday, 6 am through 8 pm CT and
-                                    Saturday, 8 am through 5 pm CT.
-                                </div>
-                                <div class="ForgotHeader">Allegro Users</div>
-                                <div class="ForgotPwdPanel">
-                                    Forgot your password? <a href="/password-reset/default.aspx"
-                                        class="ForgotPwdLink">Reset your password.</a>
-                                </div>
-                                <div class="ForgotUIDPanel">
-                                    If you have forgotten your User ID, please contact your company's administrator
-                                    for assistance.
-                                    If you are the Administrator for your company and you need assistance, call
-                                    Treasury Management Client Support at <a
-                                        href="tel:+18003290289">800-329-0289</a>.
-                                </div>
-
-                            </div>
-                            <div class="floatL mrgL20">
-
-
-                            </div>
-                            <div class="signon-ads floatR">
-                                <link
-                                    href="/consumer/Content/common-module?v=_Gv9F5j4b6VDXF59K6RcnWeQmjd1s4x_boT41g68y201"
-                                    rel="stylesheet" />
-
-                                <link
-                                    href="/consumer/Content/signon-marketing-ads-widget?v=sbS7SbJHXaSBMpqppJXjN_VJCtOFQbJCNejwasOy6zU1"
-                                    rel="stylesheet" />
-
-
-                                <signon-marketing-ads>
-                                    <div class="signon-marketing-ads-widget"
-                                        data-smoke="signon-marketing-ads-widget" style="position: relative">
-
-                                        <aside id='AdImagel8ECWuPZalhaOMqbMt7Gdw'>
-                                            <div class="marketing-ads">
-                                                <div class="marketing-ads-content">
-                                                    <a href='' target="_self">
-                                                        <img alt="Mobile App Download Now Retail"
-                                                            src="/consumer/api/marketing/ads/l8ECWuPZalhaOMqbMt7Gdw/image">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </aside>
-
-                                        <div class="clr"></div>
-                                    </div>
-                                </signon-marketing-ads>
-                                <div class="supported-browser-panel">
-                                    <div>
-                                        <p>
-                                            <i class="fa fa-chrome icon-1-5x icon-fw" aria-hidden="true"></i>
-                                            <i class="fa fa-edge icon-1-5x icon-fw" aria-hidden="true"></i>
-                                        </p>
-                                        <p>
-                                            <i class="fa fa-firefox icon-1-5x icon-fw" aria-hidden="true"></i>
-                                            <i class="fa fa-safari icon-1-5x icon-fw" aria-hidden="true"></i>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        View information about <a
-                                            href="/resourcecenterpublic?target=SupportedBrowsers"
-                                            class="SupportedBrowserLink" target="_supportedBrowsers">supported
-                                            browsers</a> and recommended versions of iOS and Android for the Cadence
-                                        Bank Mobile App to optimize your online banking experience.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clr"></div>
-
-                        </div>
+                    <hr />
+                    <div class="text-center">
+                      <a class="small text-info" href="#">
+                          Forgot Password?</a>
                     </div>
-                </div>
-                <div id="BottomCopyright">
-                    <div id="BottomCopyrightIndent">
-                        <div>
-                            <span class="copyright">Copyright &copy; 2022 Cadence Bank</span>
-                            <span class="copyright mrgL20">Cadence Bank Member FDIC</span>
-                        </div>
-
+                    <div class="text-center">
+                      <a class="small text-primary" href="{% url 'bank:register' %}"
+                        >Create an Account!</a>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <hr />
+                    <div class="text-center">
+                      <a class="small text-info" href="{% url 'bank:dashboard_home' %}">
+                          Home
+                      </a>
+                    </div>
+				</form>
 
-
-
-        </div>
-
-        <!-- <link href="/consumer/Content/session-timeout?v=uwKiXz7qQBhtBByHPhIg3ZsSlOqntMf0j8pCMCPBJxA1" rel="stylesheet" /> -->
-
-        <!-- <div id="ctl00_ctl00_ucTimeoutNotice_pnlTimeoutNotice">
-
-            <timeout-notice app-name="Cadence Online Banking" app-path="/consumer"
-                sign-out-page="/consumer/Core/Common/SessionSignOut.aspx"></timeout-notice>
-
-        </div> -->
-
-        <!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-        <script src="/consumer/bundles/session-timeout?v=MVQ6ku_c59xqxF7je6RZtrBPElubTIBkif7xn7fDYqo1"></script> -->
-
-</body>
-
-</html>
+{% endblock content %}
