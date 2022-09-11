@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django_otp.util import hex_validator, random_hex
+
 from django.conf import settings
 from django.core.mail import send_mail
 
