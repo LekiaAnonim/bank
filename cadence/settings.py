@@ -39,7 +39,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # DEBUG = 'RENDER' not in os.environ
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['bank-production.up.railway.app']
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME:    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -146,6 +146,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
+CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_DOMAIN = 'bank-production.up.railway.app/'
+SECURE_BROWSER_XSS_FILTER = True
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+# CSP_BLOCK_ALL_MIXED_CONTENT=True
+#
+
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_FRAME_DENY = True
+SECURE_HSTS_SECONDS = 2592000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_REFERRER_POLICY = 'same-origin'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
