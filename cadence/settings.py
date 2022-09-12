@@ -113,7 +113,7 @@ OTP_EMAIL_BODY_TEMPLATE = 'Use the OTP provided below verify your transaction'
 
 # DATABASES = {
 #     'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/cadence', conn_max_age=600)}
-
+DEVELOPMENT_MODE = True
 if DEVELOPMENT_MODE is True:
     DATABASES = {
         "default": {
