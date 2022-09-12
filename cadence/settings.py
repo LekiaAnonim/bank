@@ -153,17 +153,13 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 CSRF_USE_SESSIONS = False
-SESSION_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_DOMAIN = 'bank-production.up.railway.app/'
+# SESSION_COOKIE_DOMAIN = 'bank-production.up.railway.app'
 SECURE_BROWSER_XSS_FILTER = True
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
-
-
-# CSP_BLOCK_ALL_MIXED_CONTENT=True
-#
 
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -195,13 +191,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
 
-
-# if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
-#     # in your application directory on Render.
-#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#     # Turn on WhiteNoise storage backend that takes care of compressing static files
-#     # and creating unique names for each version so they can safely be cached forever.
-#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: "/customer/%s/update/" % u.id,
