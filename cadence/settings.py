@@ -35,11 +35,11 @@ from django.core.management.utils import get_random_secret_key
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 # DEBUG = 'RENDER' not in os.environ
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# DEBUG = os.getenv("DEBUG", False) == True
 
-ALLOWED_HOSTS = ['bank-production.up.railway.app']
+ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000']
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME:    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -113,7 +113,9 @@ OTP_EMAIL_BODY_TEMPLATE = 'Use the OTP provided below verify your transaction'
 
 # DATABASES = {
 #     'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/cadence', conn_max_age=600)}
-DEVELOPMENT_MODE = True
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+DEVELOPMENT_MODE = False
 if DEVELOPMENT_MODE is True:
     DATABASES = {
         "default": {
@@ -121,12 +123,12 @@ if DEVELOPMENT_MODE is True:
             "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
         }
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if os.getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
-    DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
-    }
+# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+#     if os.getenv("DATABASE_URL", None) is None:
+#         raise Exception("DATABASE_URL environment variable not defined")
+DATABASES = {
+    "default": dj_database_url.config(default='postgresql://postgres:ZZcOfjZpOKSQMF5W02ej@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -191,7 +193,7 @@ DATE_INPUT_FORMATS = ['%m/%d/%Y']
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
 
 
 # if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
