@@ -1,16 +1,17 @@
+<!doctype html>
 {% extends 'dashboard/dashboard_base.html' %}
 {% load static %}
 
 {% block title %}
-    Update Profile
+    Create and Update Customer Profile
 {% endblock title %}
 
 {% block stylesheets %}
     {{ block.super }}
     <link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static " ckeditor/ckeditor-init.js" %}"></script>
-    <script type="text/javascript" src="{% static " ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
 {% endblock stylesheets %}
 
 
@@ -21,8 +22,8 @@
                 <div class="page-header-title">
                     <i class="ik ik-file-text bg-blue"></i>
                     <div class="d-inline">
-                        <h5>Profile Update</h5>
-                        <span>Update your profile.</span>
+                        <h5>Create and Update Customer Profile</h5>
+                        <span>Create or Update your profile.</span>
                     </div>
                 </div>
             </div>

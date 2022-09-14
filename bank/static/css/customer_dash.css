@@ -230,6 +230,20 @@ p, h5, h4{
     color: green;
 }
 
+.customer-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    padding: 20px;
+    top: 0;
+}
+.dropdown img{
+    width: 40px;
+    height: 40px;
+}
+
 @media (max-width:865px) {
     .customer-sidenav{
         float: none;

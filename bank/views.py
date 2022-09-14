@@ -451,7 +451,7 @@ class UserLoginView(View):
                 login(request, user)
                 messages.success(request, f"Login Successful ! "
                                           f"Welcome {user.username}.")
-                return redirect('bank:dashboard_home')
+                return redirect('bank:customerdash_home')
 
             else:
                 messages.error(request,
@@ -597,7 +597,7 @@ class CustomerLoginView(View):
             USER_ID = login_form.cleaned_data['USER_ID']
             password = login_form.cleaned_data['password']
 
-            user = authenticate(request, USER_ID=USER_ID, password=password)
+            user = authenticate(request, username=USER_ID, password=password)
 
             if user:
                 login(request, user)

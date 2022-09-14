@@ -153,6 +153,8 @@
 .dashboard-table{
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	border-radius: 10px;
+	width: 100%;
+	table-layout: fixed;
 }
 .dashboard-table table, .dashboard-table th, .dashboard-table td{
 	

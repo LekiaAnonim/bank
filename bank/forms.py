@@ -22,7 +22,7 @@ class UserLoginForm(forms.Form):
     
     username = forms.CharField(widget=forms.TextInput(attrs={
             "name": "username", "class": "input100",
-            "placeholder": "Username"
+            "placeholder": "USER ID"
         }))
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={

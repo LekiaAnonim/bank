@@ -13,7 +13,7 @@ app_name = 'bank'
 
 
 urlpatterns = [
-     path('', views.CustomerLoginView.as_view(), name='index'),
+     # path('', views.CustomerLoginView.as_view(), name='index'),
      path(
           route="my_dashboard",
           view=views.DashboardHomeView.as_view(),
@@ -110,7 +110,7 @@ urlpatterns = [
 
     # account/login/
     path(
-        route='accounts/login/',
+        route='',
         view=views.UserLoginView.as_view(),
         name='login'
     ),

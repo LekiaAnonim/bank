@@ -149,5 +149,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'lekiaprosper@gmail.com'
 EMAIL_HOST_PASSWORD = 'Family=#1'
 
+LOGIN_URL = ''
 LOGIN_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

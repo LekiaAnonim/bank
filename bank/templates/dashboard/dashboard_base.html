@@ -54,9 +54,7 @@
                             </div>
                             <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
                         </div>
-                        <div class="logo">
-                            <a href="/" class="img-link"><img src="{% static 'cadence.png' %}" alt="Cadence Bank" width="197" height="46"></a>
-                        </div>
+                        
                         <div class="top-menu d-flex align-items-center">
 
 
@@ -77,7 +75,7 @@
                                     <img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="{% url 'bank:user_profile_details' %}">
+                                    <a class="dropdown-item" href="{% url 'bank:customer-update' user.id %}">
                                         <i class="ik ik-user dropdown-icon"></i> Profile</a>
                                     <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
                                     <a class="dropdown-item" href="{% url 'bank:log-out' %}" data-toggle="modal" data-target="#logoutModal">
@@ -95,21 +93,19 @@
 
             <div class="page-wrap">
                 <div class="app-sidebar colored">
-                    <div class="sidebar-header">
+                    <div class="sidebar-header" style="display: flex; flex-direction:column; height:30%;">
                         <a class="header-brand" href="{% url 'bank:dashboard_home' %}">
-                            <!-- <div class="logo-img">
-                               <img src="{% static 'blog/images/favicon.png' %}" class="header-brand-img"
-                                    width="30" height="30"
-                                    alt="lavalite">
-                            </div> -->
-                            <span class="text">Dashboard</span>
+                            <div class="logo">
+                                <a href="/" class="img-link"><img src="{% static 'cadence.png' %}" alt="Cadence Bank" width="197" height="46"></a>
+                            </div>
+                            <span class="text" style="color: white; font-size:large;">Dashboard</span>
                         </a>
                         <button type="button" class="nav-toggle">
                             <i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
                         <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
-                        <div class="logo" style="background: none;">
-                            <a href="/" class="img-link"><img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic"
-                                    width="45" height="45"></a>
+                        <div class="logo" style="background: none; border-radius: 50%; width: 80px; height: 80px;">
+                            <a href="/" class="img-link"><img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic" style="max-width:100%; max-height:100%;"
+                                    ></a>
                         </div>
                     </div>
                     
@@ -131,6 +127,8 @@
                                             <i class="ik ik-edit-2"></i><span>New User Profile</span></a>
                                         <a href="{% url 'bank:user-update' user.id %}" class="menu-item">
                                             <i class="ik ik-edit-2"></i><span>Update User Profile</span></a>
+                                        <a href="{% url 'bank:customer-create' %}" class="menu-item">
+                                            <i class="ik ik-edit-2"></i><span>New Customer</span></a>
                                         <a href="{% url 'bank:customer-update' user.id %}" class="menu-item">
                                             <i class="ik ik-edit-2"></i><span>Update Customer Profile</span></a>
                                         <a href="{% url 'bank:customers-list' user.id%}" class="menu-item">
