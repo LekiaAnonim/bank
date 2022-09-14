@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from bank.forms import UserLoginForm
+from bank.forms import UserLoginForm, CustomerLoginForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -34,12 +34,46 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.http import HttpResponse, HttpResponseNotAllowed
+import pandas as pd
 
 # Create your views here.
 
 
 # def index(request):
-#     return render(request, 'index.html', {})
+    # template_name = 'index.html'
+    # context_object = {"customer_login_form": CustomerLoginForm}
+    # authentication_classes = ()
+
+    # def get(self, request, *args, **kwargs):
+    #     return render(request, self.template_name, self.context_object)
+
+    # def post(self, request, *args, **kwargs):
+
+    #     login_form = CustomerLoginForm(data=request.POST)
+
+    #     if login_form.is_valid():
+    #         USER_ID = login_form.cleaned_data['USER_ID']
+    #         password = login_form.cleaned_data['password']
+
+    #         user = authenticate(request, USER_ID=USER_ID, password=password)
+
+    #         if user:
+    #             login(request, user)
+    #             messages.success(request, f"Login Successful ! "
+    #                                       f"Welcome {user.USER_ID}.")
+    #             return redirect('bank:customerdash_home')
+
+    #         else:
+    #             messages.error(request,
+    #                            f"Invalid Login details: {USER_ID}, {password} "
+    #                            f"are not valid username and password !!! Please "
+    #                            f"enter a valid username and password.")
+    #             return render(request, self.template_name, self.context_object)
+
+    #     else:
+    #         messages.error(request, f"Invalid username and password")
+    #         return render(request, self.template_name, self.context_object)
+    # # return render(request, 'index.html', {})
 
 
 class UserCreate(CreateView):
@@ -240,9 +274,45 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         
             return self.context
             
-    # exclude = ['error_message']
+class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
+    model = Payment
+    fields = ['account_name', 'account_number', 'bank', 'amount','receiver_email', 'routing_number', 'bank_address', 'otp']
+    context = {}
+    context_object_name = 'payment'
+    template_name = 'bank/customer_payment_form.html'
 
-    # success_url = '/success/'
+    
+    def get(self, request, *args, **kwargs):
+        self.context = super(CustomerPaymentCreate, self).get(request, **kwargs)
+
+        transaction_list = PostTransaction.objects.filter(
+                account_id=request.user.id).order_by("-date")
+
+        # print(transaction_list)
+
+        payments_sent_list = Payment.objects.all().order_by("-date")
+
+        # print(payments_sent_list)
+
+        # all_transactions = list(chain(transaction_list, payments_sent_list))
+
+        all_withdrawals = sum(
+            transaction.amount for transaction in payments_sent_list)
+        all_deposits = sum(
+            transaction.amount for transaction in transaction_list)
+
+        # pay = get_object_or_404(Payment, kwargs={'pk': self.pk})
+
+        balance = all_deposits - all_withdrawals
+
+        success_message = "Transaction successful"
+        if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
+            return HttpResponse("Transaction Denied - Insufficience balance", status=406)
+            # HttpResponse({"Transaction Denied": "Insufficience balance"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            self.context['success_message'] = success_message
+        
+            return self.context
     
 
 
@@ -504,3 +574,174 @@ class ActivateView(View):
             return redirect('bank:login')
         else:
             return render(request, 'registration/account_activation_invalid.html')
+
+
+
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class CustomerLoginView(View):
+    """
+     Logs author into dashboard.
+    """
+    template_name = 'index.html'
+    context_object = {"customer_login_form": CustomerLoginForm}
+    authentication_classes = ()
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.context_object)
+
+    def post(self, request, *args, **kwargs):
+
+        login_form = CustomerLoginForm(data=request.POST)
+
+        if login_form.is_valid():
+            USER_ID = login_form.cleaned_data['USER_ID']
+            password = login_form.cleaned_data['password']
+
+            user = authenticate(request, USER_ID=USER_ID, password=password)
+
+            if user:
+                login(request, user)
+                messages.success(request, f"Login Successful ! "
+                                          f"Welcome {user.USER_ID}.")
+                return redirect('bank:customerdash_home')
+
+            else:
+                messages.error(request,
+                               f"Invalid Login details: {USER_ID}, {password} "
+                               f"are not valid username and password !!! Please "
+                               f"enter a valid username and password.")
+                return render(request, self.template_name, self.context_object)
+
+        else:
+            messages.error(request, f"Invalid username and password")
+            return render(request, self.template_name, self.context_object)
+
+
+class CustomerDashView(LoginRequiredMixin, View):
+    """
+    Display homepage of the dashboard.
+    """
+    context = {}
+    template_name = 'customer_dashboard/customer_dashboard.html'
+    paginate_by = 1
+
+    def get(self, request, *args, **kwargs):
+        """
+        Returns the author details
+        """
+
+        transaction_list = PostTransaction.objects.filter(
+            account_id=request.user.id).order_by("-date")
+
+        last_payment_received = transaction_list.last()
+
+        payments_sent_list = Payment.objects.all().order_by("-date")
+        last_payment_sent = payments_sent_list.last()
+
+        # print(payments_sent_list)
+
+        # all_transactions = list(chain(transaction_list, payments_sent_list))
+
+        customers = Customer.objects.all()
+        accounts = Account.objects.all()
+
+        login_user_accounts = Account.objects.filter(
+            id=request.user.id)
+        login_customer = Customer.objects.filter(id=request.user.id)
+
+        all_deposits = sum(
+            transaction.amount for transaction in transaction_list)
+        all_withdrawals = sum(transaction.amount for transaction in payments_sent_list)
+
+        balance = (sum(transaction.amount for transaction in transaction_list) -
+                   sum(transaction.amount for transaction in payments_sent_list))
+
+        self.context['all_deposits'] = all_deposits
+        self.context['all_withdrawals'] = all_withdrawals
+        self.context['transaction_list'] = transaction_list
+        self.context['payments_sent_list'] = payments_sent_list
+        self.context['last_payment_received'] = last_payment_received
+        self.context['last_payment_sent'] = last_payment_sent
+        # self.context['all_transactions'] = all_transactions
+        self.context['balance'] = balance
+        # self.context['previous_bal'] = previous_bal
+        self.context['customers'] = customers
+        self.context['accounts'] = accounts
+        self.context['login_user_accounts'] = login_user_accounts
+        self.context['login_customer'] = login_customer
+
+        return render(request, self.template_name, self.context)
+
+class TransactionHistoryView(LoginRequiredMixin, View):
+    """
+    Display homepage of the dashboard.
+    """
+    context = {}
+    template_name = 'customer_dashboard/customer_transaction_history.html'
+    paginate_by = 1
+
+    def get(self, request, *args, **kwargs):
+        """
+        Returns the author details
+        """
+
+        transaction_list = PostTransaction.objects.filter(
+            account_id=request.user.id).order_by("-date")
+
+        payments_sent_list = Payment.objects.all().order_by("-date")
+        
+        transaction_data = {'Date': [], 'Account Name': [], 'Credit': [], 'Debit': []}
+        # transaction_data = {}
+        for transaction in transaction_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Account Name'].append(transaction.account_name)
+            transaction_data['Credit'].append('$'+str(transaction.amount))
+            transaction_data['Debit'].append('---')
+            
+
+        for transaction in payments_sent_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Account Name'].append(transaction.account_name)
+            transaction_data['Credit'].append('---')
+            transaction_data['Debit'].append('-$'+str(transaction.amount))
+
+        transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
+        transaction_dataframe.sort_values(by='Date',ascending=False) 
+        # print(transaction_dataframe)
+
+        # all_transactions = list(chain(transaction_list, payments_sent_list))
+        # t_data = {}
+        # for transaction in all_transactions:
+        #     t_data['Date'] = transaction.date
+        #     t_data['Amount'] = transaction.amount
+            
+        # print(all_transactions)
+
+        customers = Customer.objects.all()
+        accounts = Account.objects.all()
+
+        login_user_accounts = Account.objects.filter(
+            id=request.user.id)
+        login_customer = Customer.objects.filter(id=request.user.id)
+
+        all_deposits = sum(
+            transaction.amount for transaction in transaction_list)
+        all_withdrawals = sum(transaction.amount for transaction in payments_sent_list)
+
+        balance = (sum(transaction.amount for transaction in transaction_list) -
+                   sum(transaction.amount for transaction in payments_sent_list))
+
+        self.context['all_deposits'] = all_deposits
+        self.context['all_withdrawals'] = all_withdrawals
+        self.context['transaction_list'] = transaction_list
+        self.context['payments_sent_list'] = payments_sent_list
+        
+        self.context['transaction_dataframe'] = transaction_dataframe
+        self.context['balance'] = balance
+        # self.context['previous_bal'] = previous_bal
+        self.context['customers'] = customers
+        self.context['accounts'] = accounts
+        self.context['login_user_accounts'] = login_user_accounts
+        self.context['login_customer'] = login_customer
+
+        return render(request, self.template_name, self.context)

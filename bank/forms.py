@@ -75,3 +75,15 @@ class UserRegisterForm(UserCreationForm):
 
         }
 
+
+class CustomerLoginForm(forms.Form):
+    
+    USER_ID = forms.CharField(widget=forms.TextInput(attrs={
+            "name": "USER ID", "class": "input100",
+            "placeholder": "USER ID"
+        }))
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+            "name": "password",  "class": "input100",
+            "placeholder": "Password"
+        }))

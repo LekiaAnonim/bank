@@ -13,12 +13,22 @@ app_name = 'bank'
 
 
 urlpatterns = [
-#     path('', views.index, name='index'),
+     path('', views.CustomerLoginView.as_view(), name='index'),
      path(
-          route="",
+          route="my_dashboard",
           view=views.DashboardHomeView.as_view(),
           name="dashboard_home"
-    ),
+     ),
+     path(
+          route="customer-portal",
+          view=views.CustomerDashView.as_view(),
+          name="customerdash_home"
+     ),
+     path(
+          route="customer/transaction_history",
+          view=views.TransactionHistoryView.as_view(),
+          name="transaction_history"
+     ),
     path('customer/create/', views.CustomerCreate.as_view(), name='customer-create'),
     path('customer/<int:pk>/update/',
          views.CustomerUpdate.as_view(), name='customer-update'),
@@ -64,6 +74,8 @@ urlpatterns = [
 
     path('payment/create/', views.PaymentCreate.as_view(),
          name='payment-create'),
+     path('customer/payment/send/', views.CustomerPaymentCreate.as_view(),
+         name='customer-payment-create'),
     path('payment/<int:pk>/update/',
          views.PaymentUpdate.as_view(), name='payment-update'),
     path('payment/<int:pk>/delete/',

@@ -18,6 +18,9 @@ psycopg2 = "*"
 whitenoise = "*"
 gunicorn = "*"
 django-environ = "*"
+six = "*"
+djangorestframework = "*"
+pillow = "*"
 
 [dev-packages]
 

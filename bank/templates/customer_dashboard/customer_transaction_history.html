@@ -1,0 +1,33 @@
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+
+{% block title %}
+    Transaction History
+{% endblock title %}
+
+{% block content %}
+    <div class="customer-container customer-payment-container">
+        <img src="{% static 'image/time_machine_100px.png' %}" alt="" class="icon">
+        <h2>Transaction History</h2>
+        <div class="transaction-history">
+            <table>
+                <tr>
+                  {% for col in transaction_dataframe.columns %}
+                    <th>
+                      {{col}}
+                    </th>
+                  {% endfor %}
+                </tr>
+                  {% for index, row in transaction_dataframe.iterrows %}
+                    <tr>
+                      {% for cell in row %}
+                        <td>
+                          {{cell}}
+                        </td>
+                      {% endfor %}
+                    </tr>
+                  {% endfor %}
+              </table>
+        </div>
+    </div>
+{% endblock content %}
