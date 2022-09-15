@@ -263,8 +263,9 @@ p, h5, h4{
     .customer-dashboard-nav{
         background-color: #ff886d;
         margin: 5px;
-        height: 100px;
-        width: 150px;
+        height: fit-content;
+        width: fit-content;
+        margin-bottom: 5px;
     }
     .customer-card-head{
         flex-wrap: wrap;
@@ -276,8 +277,9 @@ p, h5, h4{
         flex-wrap: wrap;
     }
     .transaction-history{
-        padding: 5px;
+        padding: 1px;
         margin-top: 30px;
+        width: 100%
     }
     .transaction-history table{
         width: 100%;
@@ -285,7 +287,7 @@ p, h5, h4{
     .transaction-history td, th{
         padding: 10px;
         font-weight: 900;
-        font-size: smaller;
+        font-size: 11px;
     }
 
 }
