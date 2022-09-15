@@ -152,11 +152,13 @@
 }
 .dashboard-table{
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-	border-radius: 10px;
+	width: 100%;
+	table-layout: fixed;
 }
 .dashboard-table table, .dashboard-table th, .dashboard-table td{
 	
 	border-collapse: collapse;
+	width: 100%;
 }
 
 .dashboard-table tr{
@@ -166,7 +168,7 @@
 .dashboard-table th,
 .dashboard-table td{
 	/* background-color: rgb(220, 255, 253); */
-	padding: 20px;
+	padding: 5px;
 }
 .available-balance p{
 	padding: 0px;

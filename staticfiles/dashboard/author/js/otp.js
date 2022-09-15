@@ -1,11 +1,16 @@
 console.log('Working!!!!!!!!!!!!!');
 const otpInput = document.querySelector('#id_otp');
-console.log(otpInput);
+
 const otpButton = document.querySelector('.otp-button');
 const paymentTable = document.querySelector('.payment-table')
 const paymentButton = document.querySelector('.send-payment');
 const paymentForm = document.querySelector('#payment-form');
 const receiverEmail = document.querySelector('.user-email');
+
+const accountName = document.querySelector('#id_account_name');
+const accountNumber = document.querySelector('#id_account_number');
+const amount = document.querySelector('#id_amount');
+const bank = document.querySelector('#id_bank');
 
 const len = 6;
 
@@ -45,14 +50,15 @@ otpButton.addEventListener('click', function (e) {
     const name = 'Lekia';
     const email ='lekiaprosper@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
-    let message = `Hello, ${name}, you are trying to make a payment, copy the OTP to continue your transaction.
+    let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - ${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;
+    console.log(message);
     sendMail(email, subject, message);
     const otpInfo = document.createElement('p');
     otpInfo.style.color = 'green';
     otpInfo.innerText = `An OTP has been sent to your email`;
     paymentTable.appendChild(otpInfo);
-    console.log('sending email...');
+    // console.log('sending email...');
 })
 
 function sendMail(email, subject, message) {
