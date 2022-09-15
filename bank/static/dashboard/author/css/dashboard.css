@@ -245,4 +245,12 @@ textarea {
   .card{
     width: 100%;
   }
+  .dashboard-table th,
+  .dashboard-table td{
+    /* background-color: rgb(220, 255, 253); */
+    padding: 5px 20px 5px 20px;
+  }
+  .card-body{
+    width: 100%;
+  }
 }
