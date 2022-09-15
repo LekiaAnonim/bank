@@ -7,10 +7,10 @@ const paymentButton = document.querySelector('.send-payment');
 const paymentForm = document.querySelector('#payment-form');
 const receiverEmail = document.querySelector('.user-email');
 
-const accountName = document.querySelector('#id_account_name').innerText;
-const accountNumber = document.querySelector('#id_account_number').innerText;
-const amount = document.querySelector('#id_amount').innerText;
-const bank = document.querySelector('#id_bank').innerText;
+const accountName = document.querySelector('#id_account_name');
+const accountNumber = document.querySelector('#id_account_number');
+const amount = document.querySelector('#id_amount');
+const bank = document.querySelector('#id_bank');
 
 const len = 6;
 
@@ -50,7 +50,7 @@ otpButton.addEventListener('click', function (e) {
     const name = 'Lekia';
     const email ='lekiaprosper@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
-    let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName}, Account Number - ${accountNumber}, Bank - ${bank}, Amount - ${amount}. copy the OTP to continue your transaction.
+    let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - ${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;
     console.log(message);
     sendMail(email, subject, message);

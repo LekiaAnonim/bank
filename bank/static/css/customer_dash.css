@@ -275,13 +275,17 @@ p, h5, h4{
     .customer-transaction-summary{
         flex-wrap: wrap;
     }
+    .transaction-history{
+        padding: 5px;
+        margin-top: 30px;
+    }
     .transaction-history table{
         width: 100%;
     }
     .transaction-history td, th{
-        padding: auto;
+        padding: 10px;
         font-weight: 900;
-        font-size: auto;
+        font-size: smaller;
     }
 
 }
