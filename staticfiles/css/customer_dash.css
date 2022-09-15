@@ -263,9 +263,12 @@ p, h5, h4{
     .customer-dashboard-nav{
         background-color: #ff886d;
         margin: 5px;
-        height: fit-content;
-        width: fit-content;
-        margin-bottom: 5px;
+        flex-direction:column;
+        height: 100px;
+        width: 100px;
+    }
+    .customer-dashboard-nav h5{
+        font-size: smaller;
     }
     .customer-card-head{
         flex-wrap: wrap;
@@ -277,17 +280,22 @@ p, h5, h4{
         flex-wrap: wrap;
     }
     .transaction-history{
-        padding: 1px;
-        margin-top: 30px;
-        width: 100%
+        padding: 0px;
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        margin-bottom: 10px;
     }
     .transaction-history table{
         width: 100%;
     }
     .transaction-history td, th{
-        padding: 10px;
+        padding: 5px 20px 5px 20px;
         font-weight: 900;
-        font-size: 11px;
+        font-size: 10px;
     }
+    .customer-payment-container{
 
+        padding: 5px;
+    }
 }
