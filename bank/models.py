@@ -20,7 +20,7 @@ class Customer(models.Model):
     mobile_number = PhoneNumberField()
     # email_address = models.EmailField(max_length=254, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(default='avatar.png', upload_to='avatar')
+    image = models.ImageField(default='bank/static/avatar.png', upload_to='avatar')
 
     class Meta:
         ordering = ['created_on']

@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\DELL\Documents\bank\cadence_virtualenv"
+VIRTUAL_ENV="C:\Users\TOSHIBA\Desktop\PilotXLab\Django\koretgist-brew\candencebank\bank\cadence_virtualenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

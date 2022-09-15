@@ -694,7 +694,10 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         # transaction_data = {}
         for transaction in transaction_list:
             transaction_data['Date'].append(transaction.date)
-            transaction_data['Account Name'].append(transaction.account_name)
+            if transaction.account:
+                transaction_data['Account Name'].append(transaction.account.account_name)
+            else:
+                transaction_data['Account Name'].append(transaction.account_name)
             transaction_data['Credit'].append('$'+str(transaction.amount))
             transaction_data['Debit'].append('---')
             

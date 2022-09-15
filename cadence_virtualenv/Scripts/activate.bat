@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\DELL\Documents\bank\cadence_virtualenv
+set VIRTUAL_ENV=C:\Users\TOSHIBA\Desktop\PilotXLab\Django\koretgist-brew\candencebank\bank\cadence_virtualenv
 
 if not defined PROMPT set PROMPT=$P$G
 
