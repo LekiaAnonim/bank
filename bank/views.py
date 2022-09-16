@@ -709,6 +709,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction_data['Debit'].append('-$'+str(transaction.amount))
 
         transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
+        transaction_dataframe['Date'].dt.strftime('%m/%d/%Y')
         transaction_dataframe.sort_values(by='Date',ascending=False) 
         # print(transaction_dataframe)
 
