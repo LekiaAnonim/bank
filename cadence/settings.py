@@ -187,13 +187,18 @@ USE_TZ = True
 USE_L10N = False
 DATE_INPUT_FORMATS = ['%m/%d/%Y']
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = "/var/www/bank-production.up.railway.app/static/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
-
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: "/customer/%s/update/" % u.id,
@@ -207,6 +212,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('OTP_EMAIL_SENDER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = ''
 LOGIN_REDIRECT_URL = '/'

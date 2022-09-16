@@ -119,7 +119,7 @@
                                                         <tbody>
                                                             {% for transaction in transaction_list %}
                                                             <tr class="deposit">
-                                                                <td>{{transaction.date}}</td>
+                                                                <td>{{transaction.date|date:"SHORT_DATE_FORMAT"}}</td>
                                                                 <td class="bold">{{transaction.account.customer.account_name}}</td>
                                                                 <td class="bold" style="color: green;">${{transaction.amount}}.00</td>
                                                                 <td>- - -</td>
@@ -129,7 +129,7 @@
                                                             {% for transaction in payments_sent_list %}
         
                                                             <tr class="withdrawal">
-                                                                <td>{{transaction.date}}</td>
+                                                                <td>{{transaction.date|date:"SHORT_DATE_FORMAT"}}</td>
                                                                 <td class="bold">{{transaction.account_name}}</td>
                                                                 <td>- - -</td>
                                                                 <td class="bold" style="color: red;">-${{transaction.amount}}.00</td>

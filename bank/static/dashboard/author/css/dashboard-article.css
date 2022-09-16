@@ -192,3 +192,41 @@
 	color: #000;
 }
 
+@media(max-width: 865px){
+	.content {
+		padding: 15px 3px 10px 3px;
+	}
+	.row{
+	  width:100%;
+	}
+	.card{
+	  width: 100%;
+	  padding:0;
+	  margin:0;
+	}
+	.dashboard-table th{
+	  padding: 5px;
+	}
+	.dashboard-table td{
+	  /* background-color: rgb(220, 255, 253); */
+	  padding: 5px;
+	  font-size: 10px;
+	}
+	.card-body{
+	  width: 100%;
+	  padding:0;
+	  margin:0;
+	}
+	.col-md-12{
+	  width: 100%
+	}
+	.container{
+	  padding-left: 0;
+	  padding-right: 0;
+	  margin: 0;
+	}
+	.px-3, .py-5{
+	  padding: 0!important;
+  
+	}
+  }
