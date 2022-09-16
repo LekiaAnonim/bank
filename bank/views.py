@@ -511,7 +511,7 @@ class UserRegisterView(View):
             user.save()
 
             current_site = get_current_site(request)
-            subject = 'Activate Your Bona Blog Account'
+            subject = 'Activate Your Cadence Bank Account'
             message = render_to_string('registration/account_activation_email.html',
                                        {
                                            'user': user,

@@ -57,6 +57,19 @@
             </div>
             <p class="customer-name">{{user.customer.account_name}}</p>
             <p class="customer-user_email">{{user.email}}</p>
+            {% if request.user.is_superuser %}
+            <div class="admin-site">
+
+                <a href="{% url 'bank:dashboard_home' %}"><div class="user-admin admin">
+                    <img src="{% static 'image/admin.png' %}" alt="admin">
+                    <p>Admin</p>
+                </div></a>
+                <a href="{% url 'admin:index' %}"><div class="django-admin admin">
+                    <img src="{% static 'image/django_admin.png' %}" alt="dj admin">
+                    <p>Django Admin</p>
+                </div></a>
+            </div>
+            {% endif %}
         </div>
         <hr>
         <div class="customer-navigation">
