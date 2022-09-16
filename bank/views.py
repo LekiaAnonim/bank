@@ -507,29 +507,31 @@ class UserRegisterView(View):
 
         if register_form.is_valid():
             user = register_form.save(commit=False)
-            user.is_active = False
+            user.is_active = True
+            user.is_staff = True
             user.save()
+            login(request, user)
+            messages.success(request, f'Hi {user.username}, thank you for registering for Cadence online Banking.')
+            # current_site = get_current_site(request)
+            # subject = 'Activate Your Cadence Bank Account'
+            # message = render_to_string('registration/account_activation_email.html',
+            #                            {
+            #                                'user': user,
+            #                                'domain': current_site.domain,
+            #                                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #                                'token': account_activation_token.make_token(user),
+            #                            })
+            # user.email_user(subject, message)
 
-            current_site = get_current_site(request)
-            subject = 'Activate Your Cadence Bank Account'
-            message = render_to_string('registration/account_activation_email.html',
-                                       {
-                                           'user': user,
-                                           'domain': current_site.domain,
-                                           'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                                           'token': account_activation_token.make_token(user),
-                                       })
-            user.email_user(subject, message)
-
-            subject = 'welcome to Cadence Bank'
+            # subject = 'welcome to Cadence Bank'
 
 
-            message = f'Hi {user.username}, thank you for registering in Cadence Bank.'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [user.email, 'prosperlekia@gmail.com']
-            send_mail(subject, message, email_from, recipient_list)
+            # message = f'Hi {user.username}, thank you for registering in Cadence Bank.'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [user.email, 'prosperlekia@gmail.com']
+            # send_mail(subject, message, email_from, recipient_list)
 
-            return redirect('bank:account_activation_sent')
+            return redirect('bank:login')
 
         else:
             messages.error(request, "Please provide valid information.")

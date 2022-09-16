@@ -8,9 +8,9 @@ from .models import Customer, Account, PostTransaction, Payment
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('user','created_on', 'CUSTOMER_ID','middle_name', 'SSN',
-                    'mobile_number', 'image')
+                    'mobile_number', 'image', 'email_confirmed')
     fields = [('user','CUSTOMER_ID', 'middle_name'), ('SSN',
-              'mobile_number', 'image')]
+              'mobile_number', 'image', 'email_confirmed')]
 
 
 admin.site.register(Customer, CustomerAdmin)
