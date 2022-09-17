@@ -16,8 +16,7 @@ import dj_database_url
 import environ
 import sys
 import cloudinary
-import cloudinary.upload
-import cloudinary.api
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -50,6 +49,14 @@ ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000'
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 # Application definition
+cloudinary.config(
+    CLOUD_NAME = os.getenv('CLOUD_NAME'),
+    API_KEY = os.getenv('API_KEY'),
+    API_SECRET = os.getenv('API_SECRET'),
+)
+import cloudinary.uploader
+import cloudinary.api
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -62,7 +69,7 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'mathfilters',
-    'cloudinary_storage',
+    # 'cloudinary_storage',
     'cloudinary',    
 ]
 
@@ -138,16 +145,13 @@ DATABASES = {
     "default": dj_database_url.config(default='postgresql://postgres:ZZcOfjZpOKSQMF5W02ej@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
 }
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
-    'API_KEY': os.getenv('API_KEY'),
-    'API_SECRET': os.getenv('API_SECRET'),
-}
+
+
 
 # MEDIA SETTINGS
 DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.RawMediaCloudinaryStorage'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Password validation
