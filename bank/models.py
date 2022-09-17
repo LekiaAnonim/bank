@@ -4,11 +4,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
-
 from django.conf import settings
 from django.core.mail import send_mail
-
 from django.template import Context, Template
+from cloudinary.models import CloudinaryField
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -20,7 +19,7 @@ class Customer(models.Model):
     mobile_number = PhoneNumberField()
     # email_address = models.EmailField(max_length=254, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(default='avatar.png', upload_to='avatar')
+    image = CloudinaryField('image')
     email_confirmed = models.BooleanField(default=False)
 
     class Meta:

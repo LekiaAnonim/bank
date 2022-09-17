@@ -35,6 +35,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from django.http import HttpResponse, HttpResponseNotAllowed
 import pandas as pd
+from cloudinary.forms import cl_init_js_callbacks
 
 # Create your views here.
 

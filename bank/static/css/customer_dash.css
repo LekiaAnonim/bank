@@ -319,12 +319,13 @@ p, h5, h4{
         width: 100%;
     }
     .transaction-history td{
-        padding: 5px 20px 5px 20px;
+        padding: 5px 4px 5px 4px;
         font-weight: 900;
         font-size: 10px;
     }
     .transaction-history th{
         font-size: 11px;
+        padding: 10px 4px 10px 4px;
     }
     .customer-payment-container{
         padding: 5px;
