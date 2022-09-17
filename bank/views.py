@@ -106,7 +106,7 @@ class CustomerDetailView(generic.DetailView):
 class CustomerCreate(CreateView):
     model = Customer
     fields = '__all__'
-
+    
     def get_success_url(self):
         return reverse('bank:account-create')
 

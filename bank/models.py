@@ -19,7 +19,7 @@ class Customer(models.Model):
     mobile_number = PhoneNumberField()
     # email_address = models.EmailField(max_length=254, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    image = CloudinaryField('image')
+    image = models.ImageField(default='avatar.png', upload_to='avatar')
     email_confirmed = models.BooleanField(default=False)
 
     class Meta:

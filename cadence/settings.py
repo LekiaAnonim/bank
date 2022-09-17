@@ -16,7 +16,8 @@ import dj_database_url
 import environ
 import sys
 import cloudinary
-
+# import cloudinary.uploader
+# import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -49,14 +50,6 @@ ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000'
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 # Application definition
-cloudinary.config(
-    CLOUD_NAME = os.getenv('CLOUD_NAME'),
-    API_KEY = os.getenv('API_KEY'),
-    API_SECRET = os.getenv('API_SECRET'),
-)
-import cloudinary.uploader
-import cloudinary.api
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,8 +62,8 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'mathfilters',
-    # 'cloudinary_storage',
-    'cloudinary',    
+    'cloudinary_storage',
+    'cloudinary', 
 ]
 
 
@@ -145,13 +138,30 @@ DATABASES = {
     "default": dj_database_url.config(default='postgresql://postgres:ZZcOfjZpOKSQMF5W02ej@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
 }
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'cloudinary_strorage.storage.StaticHashedCloudCloudinaryStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = "/var/www/bank-production.up.railway.app/static/"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET'),
+}
 
 # MEDIA SETTINGS
-DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.RawMediaCloudinaryStorage'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.MediaCloudinaryStorage'
+# 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Password validation
@@ -208,18 +218,6 @@ USE_TZ = True
 USE_L10N = False
 DATE_INPUT_FORMATS = ['%m/%d/%Y']
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-# STATIC_ROOT = "/var/www/bank-production.up.railway.app/static/"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: "/customer/%s/update/" % u.id,
