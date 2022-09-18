@@ -21,6 +21,8 @@ django-environ = "*"
 six = "*"
 djangorestframework = "*"
 pillow = "*"
+django-cloudinary-storage = "*"
+dj3-cloudinary-storage = "*"
 
 [dev-packages]
 

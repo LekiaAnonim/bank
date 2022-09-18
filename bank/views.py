@@ -106,7 +106,9 @@ class CustomerDetailView(generic.DetailView):
 class CustomerCreate(CreateView):
     model = Customer
     fields = '__all__'
-    
+    # CloudinaryImage('if_set_image.jpg').image(transformation={
+    #     'default_image':"avatar.png"
+    # })
     def get_success_url(self):
         return reverse('bank:account-create')
 

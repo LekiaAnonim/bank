@@ -16,8 +16,9 @@ import dj_database_url
 import environ
 import sys
 import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
+import cloudinary.uploader
+import cloudinary.api
+# import cloudinary_storage
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -58,12 +59,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary', 
     'bank.apps.BankConfig',
     'localflavor',
     'phonenumber_field',
     'mathfilters',
-    'cloudinary_storage',
-    'cloudinary', 
 ]
 
 
@@ -151,15 +152,20 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
-    'API_KEY': os.getenv('API_KEY'),
-    'API_SECRET': os.getenv('API_SECRET'),
-}
-
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'lekiaprosper',
+#     'API_KEY': os.getenv('API_KEY'),
+#     'API_SECRET': os.getenv('API_SECRET'),
+# }
+cloudinary.config( 
+  cloud_name = "lekiaprosper", 
+  api_key = "666558139559246", 
+  api_secret = "msWiQ9tiGPF5oT28VwwaZz_bXSA",
+)
+# CLOUDINARY_URL='cloudinary://666558139559246:msWiQ9tiGPF5oT28VwwaZz_bXSA@lekiaprosper'
 # MEDIA SETTINGS
 MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.MediaCloudinaryStorage'
 # 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
