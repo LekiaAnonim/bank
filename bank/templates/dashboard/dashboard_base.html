@@ -74,11 +74,9 @@
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="d-none d-lg-inline text-gray-700">{{ user.username }}</span>
                                    
-                                    {% if user.customer.image.name %}
+                                    
                                     <img class="avatar" src="{{ user.customer.image.url }}" alt="{{user.username}}">
-                                    {% else %}
-                                    <img class="avatar" src="{% static 'image/avatar.png' %}" alt="{{user.username}}">
-                                    {% endif %}
+                                    
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="{% url 'bank:customer-update' user.id %}">
@@ -111,11 +109,11 @@
                         <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
                         <div class="logo" style="border-radius: 50%; width: 80px; height: 80px;">
                             <a href="/" class="img-link">
-                                {% if user.customer.image.name %}
+                                
                                 <img class="avatar" style="border-radius: 50%; max-width:100%; max-height:100%;" src="{{ user.customer.image.url }}" alt="{{user.username}}">
-                                {% else %}
-                                <img class="avatar" style="border-radius: 50%; max-width:100%; max-height:100%;" src="{% static 'image/avatar.png' %}" alt="{{user.username}}">
-                                {% endif %}
+                            
+    
+                                
                             </a>
                         </div>
                     </div>
