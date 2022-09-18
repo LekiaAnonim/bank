@@ -5,6 +5,23 @@
 {% load mathfilters %}
 
 {% block content %}
+    <div class="customer-container customer-transaction-details">
+        <h4>Your account summary</h4>
+        <div class="customer-transaction-summary">
+            <div class="customer-transaction-card">
+                <h5>Current Balance</h5>
+                <p>${{balance}}.00</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Received</h5>
+                <p>${{last_payment_received.amount}}.00</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Sent</h5>
+                <p>${{last_payment_sent.amount}}.00</p>
+            </div>
+        </div>
+    </div>
     <div class="customer-container customer-card-head">
         <div class="customer-atm-card">
             <div class="customer-logo">
@@ -44,21 +61,5 @@
         {% endfor %}
         {% endif %}
     </div>
-    <div class="customer-container customer-transaction-details">
-        <h4>Your account summary</h4>
-        <div class="customer-transaction-summary">
-            <div class="customer-transaction-card">
-                <h5>Current Balance</h5>
-                <p>${{balance}}.00</p>
-            </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Received</h5>
-                <p>${{last_payment_received.amount}}.00</p>
-            </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Sent</h5>
-                <p>${{last_payment_sent.amount}}.00</p>
-            </div>
-        </div>
-    </div>
+    
 {% endblock content %}
