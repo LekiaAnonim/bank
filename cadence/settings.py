@@ -43,7 +43,7 @@ DEBUG = False
 # DEBUG = 'RENDER' not in os.environ
 # DEBUG = os.getenv("DEBUG", False) == True
 
-ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000', 'cadenceportal.com']
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME:    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -190,7 +190,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app', 'https://cadenceportal.com']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 CSRF_USE_SESSIONS = False
 # SESSION_COOKIE_SECURE = True
