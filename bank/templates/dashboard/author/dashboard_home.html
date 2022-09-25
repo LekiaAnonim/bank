@@ -25,17 +25,7 @@
                                                 <h6>Account Details</h6>
                                                 
                                                 <h2>{{ user.username }}</h2>
-                                                {% if is_superuser %}
-                                                    {% if accounts %}
-                                                    {% for account in accounts %}
-                                                        <small>{{ account.id }}</small>
-                                                        <h6 class="text-small"><span>Acount name: </span>{{ account.account_name }}</h6>
-                                                        <h6 class="text-small"><span>Acount number: </span>{{ account.account_number }}</h6>
-                                                        <h6 class="text-small"><span>Acount type: </span>{{ account.account_type }}</h6>
-                                                        <hr>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                {% else %}
+                                                
                                                     {% if accounts %}
                                                     {% for account in login_user_accounts %}
                                                         <small>{{ account.id }}</small>
@@ -45,10 +35,7 @@
                                                         <hr>
                                                     {% endfor %}
                                                     {% endif %}
-                                                {% endif %}
-                                                
-                                                
-                                                
+
                                             </div>
                                             <div class="icon">
                                                 <i class="ik ik-edit-2"></i>

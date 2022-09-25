@@ -1,19 +1,11 @@
 <!doctype html>
-{% extends 'dashboard/dashboard_base.html' %}
+{% extends 'registration/account_base.html' %}
 {% load static %}
 {% load cloudinary %}
 
 {% block title %}
     Create and Update Customer Profile
 {% endblock title %}
-
-{% block stylesheets %}
-    {{ block.super }}
-    <link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-{% endblock stylesheets %}
 
 
 {% block content %}
@@ -44,7 +36,7 @@
                                     <table>
                                         {{ form.as_table }}
                                     </table>
-                                    <input type="submit" value="Submit">
+                                    <input type="submit" class="login100-form-btn" value="Next">
 
                                     <div class="clearfix"></div>
                                 </form>

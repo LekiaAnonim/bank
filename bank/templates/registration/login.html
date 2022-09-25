@@ -2745,7 +2745,19 @@
         
             </header>
     {% endblock head %}
-
+    {% block messages %} {% if messages %} {% for message in messages %}
+    <div class="text-center font-weight-bold alert alert-dismissible fade show
+                                            {% if message.level_tag == 'error' %}
+                                            alert-danger
+                                            {% else %}
+                                            alert-{{ message.tags }}
+                                            {% endif %}">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %} {% endif %} {% endblock messages %}
     {% block content%}
     <main id="main">
 
@@ -3413,7 +3425,7 @@
 
     </main>
     {% endblock content %}
-
+    
     {% block footer %}
     <footer class="site-footer">
         <div class="container">
@@ -3683,6 +3695,8 @@
         style="width: 0px; height: 0px; position: absolute; top: -1000px; left: -1000px; display: none;"></iframe>
     <script id="lpSS_32721149217"
         src="https://lpcdn.lpsnmedia.net/le_secure_storage/3.18.0.0-release_5078/storage.secure.min.js?loc=https%3A%2F%2Fcadencebank.com&amp;site=26055208&amp;force=1&amp;env=prod&amp;isCrossDomain=true"></script>
+
+
 </body>
 <iframe id="ce_proto_iframe" title="CrazyEgg Tracking iframe" style="display: none;"></iframe>
 <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>

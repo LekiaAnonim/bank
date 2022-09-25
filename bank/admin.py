@@ -7,10 +7,10 @@ from .models import Customer, Account, PostTransaction, Payment
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('user','created_on', 'CUSTOMER_ID','middle_name', 'SSN',
-                    'mobile_number', 'image', 'email_confirmed')
-    fields = [('user','CUSTOMER_ID', 'middle_name'), ('SSN',
-              'mobile_number', 'image', 'email_confirmed')]
+    list_display = ('user','created_on', 'CUSTOMER_ID','middle_name','DOB', 'SSN',
+                    'mobile_number', 'home_address', 'image', 'email_confirmed')
+    fields = [('user','CUSTOMER_ID', 'middle_name', 'DOB'), ('SSN',
+              'mobile_number', 'home_address', 'image', 'email_confirmed')]
 
 
 admin.site.register(Customer, CustomerAdmin)
@@ -19,8 +19,9 @@ class CustomerInline(admin.TabularInline):
 
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('created_on', 'customer', 'account_number', 'account_type')
-    fields = ['customer','account_number','account_type']
+    list_display = ('created_on', 'customer', 'account_number', 'account_type', 'suspend_account', 'block_account')
+    fields = ['customer', 'account_number',
+              'account_type', 'suspend_account', 'block_account']
 
 
 admin.site.register(Account, AccountAdmin)

@@ -43,33 +43,36 @@
 </head>
 
 <body style="background-image: url('/static/account/images/account.jpg');">
-    <div class="logo">
-        <a href="/" class="img-link"><img src="{% static 'cadence.png' %}" alt="Cadence Bank" width="197" height="46"></a>
-    </div>
-    <div class="top-menu d-flex align-items-center">
-        <div class="limiter">
-            <div class="container-login100">
-                <div class="wrap-login100 p-t-30 p-b-50">
-
-                    {% block messages %} {% if messages %} {% for message in messages %}
-                    <div class="text-center font-weight-bold alert alert-dismissible fade show
-                                    {% if message.level_tag == 'error' %}
-                                    alert-danger
-                                    {% else %}
-                                    alert-{{ message.tags }}
-                                    {% endif %}">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                  </button>
+    <div class="body-container">
+        <div class="logo">
+            <a href="/" class="img-link"><img src="{% static 'cadence.png' %}" alt="Cadence Bank" width="197" height="46"></a>
+        </div>
+        <div class="top-menu d-flex align-items-center">
+            <div class="limiter">
+                <div class="container-login100">
+                    <div class="wrap-login100 p-t-30 p-b-50">
+        
+                        {% block messages %} {% if messages %} {% for message in messages %}
+                        <div class="text-center font-weight-bold alert alert-dismissible fade show
+                                            {% if message.level_tag == 'error' %}
+                                            alert-danger
+                                            {% else %}
+                                            alert-{{ message.tags }}
+                                            {% endif %}">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %} {% endif %} {% endblock messages %} {% block content %} {% endblock content %}
+        
                     </div>
-                    {% endfor %} {% endif %} {% endblock messages %} {% block content %} {% endblock content %}
-
                 </div>
             </div>
-        </div>
-        <div id="dropDownSelect1"></div>
+            <div id="dropDownSelect1"></div>
 
+    </div>
+    
         {% block script %}
 
         <!--===============================================================================================-->

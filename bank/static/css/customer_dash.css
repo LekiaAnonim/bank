@@ -1,3 +1,20 @@
+@media (min-width: 1500px) {
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .body-container {
+        max-width: 1600px;
+
+    }
+    .customer-sidenav {
+        margin-right: 50px;
+    }
+}
+
+
 .customer-sidenav{
     float: left;
     
@@ -73,6 +90,7 @@
     align-items: center;
 }
 .customer-atm-card{
+    min-width: 370px;
     max-width: 400px;
     height: fit-content;
     padding: 20px;

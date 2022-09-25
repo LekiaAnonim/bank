@@ -39,6 +39,9 @@ urlpatterns = [
     path('customer/<int:pk>/delete/',
          views.CustomerDelete.as_view(), name='customer-delete'),
 
+    path('customer-user/<int:pk>/update/',
+         views.CustomerUserUpdate.as_view(), name='customer-user-update'),
+
     path('customer/<int:pk>',
          views.CustomerDetailView.as_view(), name='customer-detail'),
 
@@ -50,6 +53,8 @@ urlpatterns = [
     path('user/<int:pk>/delete/',
          views.UserDelete.as_view(), name='user-delete'),
 
+    path('enrol-account/create/', views.EnrolAccountCreate.as_view(),
+         name='enrol-account-create'),
     path('account/create/', views.AccountCreate.as_view(), name='account-create'),
     path('account/<int:pk>/update/',
          views.AccountUpdate.as_view(), name='account-update'),

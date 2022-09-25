@@ -273,3 +273,9 @@ textarea {
 
   }
 }
+
+@media (min-width: 1500px) {
+  .row{
+    min-width: 600px;
+  }
+}

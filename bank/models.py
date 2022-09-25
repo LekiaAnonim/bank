@@ -14,9 +14,11 @@ class Customer(models.Model):
     CUSTOMER_ID = models.CharField(max_length=255, null=True)
     # first_name = models.CharField(max_length=255, null=True)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
+    DOB = models.DateField(null=True)
     # last_name = models.CharField(max_length=255, null=True)
     SSN = USSocialSecurityNumberField(max_length=9)
     mobile_number = PhoneNumberField()
+    home_address = models.CharField(max_length=255, null=True, blank=True)
     # email_address = models.EmailField(max_length=254, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     # image = models.ImageField(default='avatar.png', upload_to='avatar')
@@ -57,6 +59,9 @@ class Account(models.Model):
     account_number = models.CharField(max_length=12, unique=True, null=True, validators=[
                                       RegexValidator(r'^\d{1,12}$')])
     created_on = models.DateTimeField(auto_now_add=True)
+    suspend_account = models.BooleanField(default=False)
+    block_account = models.BooleanField(default=False)
+    
 
     class Meta:
         ordering = ['account_type', 'created_on']

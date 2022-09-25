@@ -230,3 +230,19 @@
   
 	}
   }
+
+.media-body .trans-details{
+	color: rgb(0, 0, 0);
+	/* text-decoration: none; */
+	/* background-color: #ffffff; */
+	margin-right: 10px;
+  }
+
+.media-body .trans-details br {
+	margin-right: 5px;
+}
+.media-body .trans-cont{
+	background-color: #ededee;
+	padding: 10px;
+	border-radius: 10px;
+}

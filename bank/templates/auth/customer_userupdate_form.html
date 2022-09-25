@@ -1,0 +1,54 @@
+<!doctype html>
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}
+Update Profile
+{% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+
+{% block content %}
+<div class="customer-container page-header customer-payment-container">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="ik ik-file-text bg-blue"></i>
+                <div class="d-inline">
+                    <h5>Update Your Profile</h5>
+                    <span>Update user profile.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="customer-payment-container mb-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <!-- <div class="card-header">
+                                <h4 class="title">Update Profile</h4>
+                            </div> -->
+                <div class="card-body">
+                    <div class="content">
+                        <form method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <table>
+                                {{ form.as_table }}
+                            </table>
+                            <input type="submit" value="Update">
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

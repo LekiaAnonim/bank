@@ -1,3 +1,21 @@
+@media (min-width: 1600px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body-container {
+        max-width: 1500px;
+
+    }
+
+    .customer-sidenav {
+        margin-right: 50px;
+    }
+}
+
 body {
     background-size: cover;
     background-repeat: no-repeat;
@@ -46,7 +64,7 @@ form div {
     background-color: none;
 }
 
-button {
+button, .login100-form-btn {
     border: none;
     border-radius: 10px;
     background-color: #A4508B;
