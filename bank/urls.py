@@ -33,6 +33,7 @@ urlpatterns = [
           name="transaction_history"
      ),
     path('customer/create/', views.CustomerCreate.as_view(), name='customer-create'),
+    path('enrol-customer/create/', views.EnrolCustomerCreate.as_view(), name='enrol-customer-create'),
     path('customer/<int:pk>/update/',
          views.CustomerUpdate.as_view(), name='customer-update'),
 

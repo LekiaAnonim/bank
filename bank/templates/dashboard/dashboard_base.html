@@ -124,36 +124,7 @@
                                 <div class="nav-item">
                                     <a href="{% url 'bank:dashboard_home' %}"><i class="ik ik-home"></i><span>Home</span></a>
                                 </div>
-                                <div class="nav-lavel">Create Customer Profile</div>
-                                <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="fa fa-newspaper"></i><span>User | Customer</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{% url 'bank:user-create' %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>New User Profile</span></a>
-                                        <a href="{% url 'bank:user-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>Update User Profile</span></a>
-                                        <a href="{% url 'bank:customer-create' %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>New Customer</span></a>
-                                        <a href="{% url 'bank:customer-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>Update Customer Profile</span></a>
-                                        <a href="{% url 'bank:customers-list' user.id%}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>List of Customers</span></a>
-                                    </div>
-                                </div>
-
-                                <div class="nav-lavel">Create Bank Account</div>
-                                <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-users"></i><span>Account</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{% url 'bank:account-create' %}" class="menu-item">
-                                            <i class="ik ik-user"></i><span>New Account</span></a>
-                                        <a href="{% url 'bank:account-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-user-plus"></i><span>Update Account</span></a>
-
-                                        <a href="{% url 'bank:accounts-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-user-plus"></i><span>List of Accounts</span></a>
-                                    </div>
-                                </div>
+                               
 
                                 <div class="nav-lavel">Utilities</div>
                                 <div class="nav-item has-sub">
@@ -163,10 +134,6 @@
                                             <i class="ik ik-edit-2"></i><span>Account Topup</span></a>
                                         <a href="{% url 'bank:payment-create' %}" class="menu-item">
                                             <i class="ik ik-edit-2"></i><span>Transfer Money</span></a>
-                                        <a href="{% url 'bank:payment-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-layers"></i><span>Customer's Payment History</span></a>
-                                        <a href="{% url 'bank:posttransactions-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-file-text"></i><span>Posted Transactions</span></a>
                                     </div>
                                 </div>
 

@@ -42,7 +42,7 @@ class Customer(models.Model):
 
 class Account(models.Model):
     customer = models.ForeignKey(
-        Customer, on_delete=models.SET_NULL, null=True)
+        Customer, on_delete=models.CASCADE, null=True)
     # balance = models.IntegerField(blank=True, null=True)
     CHOICES = (
         ('Checking', 'Checking'),
@@ -79,18 +79,18 @@ class Account(models.Model):
 class PostTransaction(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True)
-    account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
-        RegexValidator(r'^\d{1,12}$')])
+    # account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
+    #     RegexValidator(r'^\d{1,12}$')])
     bank = models.CharField(
         max_length=255, null=True, default='Cadence')
-    account_name = models.CharField(
-        max_length=255, blank=True, null=True)
+    # account_name = models.CharField(
+    #     max_length=255, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     amount = models.IntegerField(blank=False, null=False)
-    error_message = models.TextField(blank=True)
+    # error_message = models.TextField(blank=True)
 
     def get_absolute_url(self):
-        return reverse('bank:posttransactions-list', kwargs={'pk': self.pk})
+        return reverse('bank:posttransaction-update', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['-date']

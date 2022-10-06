@@ -40,43 +40,6 @@ from cloudinary.forms import cl_init_js_callbacks
 # Create your views here.
 
 
-# def index(request):
-# template_name = 'index.html'
-# context_object = {"customer_login_form": CustomerLoginForm}
-# authentication_classes = ()
-
-# def get(self, request, *args, **kwargs):
-#     return render(request, self.template_name, self.context_object)
-
-# def post(self, request, *args, **kwargs):
-
-#     login_form = CustomerLoginForm(data=request.POST)
-
-#     if login_form.is_valid():
-#         USER_ID = login_form.cleaned_data['USER_ID']
-#         password = login_form.cleaned_data['password']
-
-#         user = authenticate(request, USER_ID=USER_ID, password=password)
-
-#         if user:
-#             login(request, user)
-#             messages.success(request, f"Login Successful ! "
-#                                       f"Welcome {user.USER_ID}.")
-#             return redirect('bank:customerdash_home')
-
-#         else:
-#             messages.error(request,
-#                            f"Invalid Login details: {USER_ID}, {password} "
-#                            f"are not valid username and password !!! Please "
-#                            f"enter a valid username and password.")
-#             return render(request, self.template_name, self.context_object)
-
-#     else:
-#         messages.error(request, f"Invalid username and password")
-#         return render(request, self.template_name, self.context_object)
-# # return render(request, 'index.html', {})
-
-
 class UserCreate(CreateView):
     model = User
     form_class = SignupForm
@@ -114,7 +77,7 @@ class UserUpdate(UpdateView):
     fields = '__all__'
 
     def get_success_url(self):
-        return reverse('bank:customer-create')
+        return reverse('bank:dashboard_home')
 
 
 class UserDelete(DeleteView):
@@ -128,8 +91,28 @@ class CustomerDetailView(generic.DetailView):
 
 class CustomerCreate(LoginRequiredMixin, CreateView):
     model = Customer
-    fields = ['CUSTOMER_ID', 'middle_name',
-              'SSN', 'mobile_number', 'image', 'email_confirmed']
+    fields = ['user', 'middle_name', 'SSN', 'mobile_number', 'image']
+
+    def get_success_url(self):
+        return reverse('bank:account-create')
+
+
+class EnrolCustomerCreate(CreateView):
+    model = Customer
+    fields = ['middle_name', 'SSN', 'mobile_number', 'image']
+    template_name = 'bank/enrol_customer_form.html'
+    context = {}
+    context_object_name = 'customer'
+
+    def get(self, request, *args, **kwargs):
+        self.context = super(EnrolCustomerCreate,
+                             self).get(request, **kwargs)
+
+        success_message = "Profile update successful"
+
+        self.context['success_message'] = success_message
+
+        return self.context
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -143,8 +126,9 @@ class CustomerUpdate(UpdateView):
     model = Customer
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
-    # def get_success_url(self):
-    #     return reverse('bank:account-update')
+
+    def get_success_url(self):
+        return reverse('bank:dashboard_home')
 
 
 class CustomerListView(generic.ListView):
@@ -169,7 +153,7 @@ class CustomerDelete(DeleteView):
     template_name = 'dashboard/author/customer_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse('bank:customers-list', kwargs={'pk': self.pk})
+        return reverse('bank:dashboard_home')
 
 
 class AccountCreate(CreateView):
@@ -186,7 +170,7 @@ class EnrolAccountCreate(CreateView):
     context = {}
     context_object_name = 'account'
     template_name = 'bank/enrol_account_form.html'
-    
+
     def form_valid(self, form):
         # form.instance.user = self.request.user
         if form.instance.account_number != '200220191994':
@@ -194,7 +178,7 @@ class EnrolAccountCreate(CreateView):
             messages.error(self.request,
                            f"Enter the correct account number. "
                            f"Or Kindly contact the administrator for the issuance of an account number  "
-                            )
+                           )
             return render(self.request, self.template_name, self.context)
 
         else:
@@ -209,7 +193,7 @@ class AccountUpdate(UpdateView):
     model = Account
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
-    template_name = 'bank/user_account_update_form.html'
+    template_name = 'bank/account_form.html'
 
     def get_context_data(self, **kwargs):
         context = super(AccountUpdate, self).get_context_data(**kwargs)
@@ -229,7 +213,7 @@ class AccountDelete(DeleteView):
     # success_url = reverse_lazy('accounts')
 
     def get_success_url(self):
-        return reverse('bank:accounts-list', kwargs={'pk': self.pk})
+        return reverse('bank:dashboard_home')
 
 
 class AccountDetailView(generic.DetailView):
@@ -259,6 +243,9 @@ class PostTransactionCreate(SuccessMessageMixin, CreateView):
     # success_url = '/success/'
     success_message = "Transaction successful"
 
+    def get_success_url(self):
+        return reverse('bank:dashboard_home')
+
 
 class PostTransactionUpdate(UpdateView):
     model = PostTransaction
@@ -270,9 +257,6 @@ class PostTransactionDelete(DeleteView):
     model = PostTransaction
     template_name = 'dashboard/author/posttransaction_confirm_delete.html'
     success_url = reverse_lazy('bank:dashboard_home')
-
-    # def get_success_url(self):
-    #     return reverse('bank:posttransactions-list', kwargs={'pk': self.pk})
 
 
 class PostTransactionDetailView(generic.DetailView):
@@ -311,7 +295,6 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         transaction_list = PostTransaction.objects.filter(
             account_id=request.user.id).order_by("-date")
 
-
         payments_sent_list = Payment.objects.all().order_by("-date")
 
         all_withdrawals = sum(
@@ -342,6 +325,9 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
 
                 return self.context
 
+        def get_success_url(self):
+            return reverse('bank:dashboard_home')
+
 
 class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
@@ -362,10 +348,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         payments_sent_list = Payment.objects.all().order_by("-date")
 
-        # print(payments_sent_list)
-
-        # all_transactions = list(chain(transaction_list, payments_sent_list))
-
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list)
         all_deposits = sum(
@@ -373,14 +355,12 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
-         
 
-        
         if account_suspend:
             messages.error(request,
-                            f"This account has been suspended. "
-                            f"Kindly contact the administrator to learn more "
-                            f"Or enter a valid username and password.")
+                           f"This account has been suspended. "
+                           f"Kindly contact the administrator to learn more "
+                           f"Or enter a valid username and password.")
             return render(request, self.template_name, self.context_object)
 
         else:
@@ -400,17 +380,12 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 class PaymentUpdate(UpdateView):
     model = Payment
     fields = '__all__'
-    # Not recommended (potential security issue if more fields added)
-    # exclude = ['error_message']
 
 
 class PaymentDelete(DeleteView):
     model = Payment
     template_name = 'dashboard/author/payment_confirm_delete.html'
     success_url = reverse_lazy('bank:dashboard_home')
-
-    # def get_success_url(self):
-    #     return reverse('bank:payment-list')
 
 
 class PaymentDetailView(generic.DetailView):
@@ -430,7 +405,7 @@ class PaymentListView(generic.ListView):
         # Call the base implementation first to get the context
         context = super(PaymentListView,
                         self).get_context_data(**kwargs)
-        
+
         # Create any data and add it to the context
         return context
 
@@ -439,6 +414,7 @@ class DashboardHomeView(LoginRequiredMixin, View):
     """
     Display homepage of the dashboard.
     """
+    model = Account
     context = {}
     template_name = 'dashboard/author/dashboard_home.html'
     paginate_by = 10
@@ -448,16 +424,9 @@ class DashboardHomeView(LoginRequiredMixin, View):
         Returns the author details
         """
 
-        transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id).order_by("-date")
+        transaction_list = PostTransaction.objects.all().order_by("-date")
 
-
-        payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=request.user.id).order_by("-date")
-
-        # print(payments_sent_list)
-
-        # all_transactions = list(chain(transaction_list, payments_sent_list))
+        payments_sent_list = Payment.objects.all().order_by("-date")
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
@@ -473,10 +442,6 @@ class DashboardHomeView(LoginRequiredMixin, View):
 
         balance = (sum(transaction.amount for transaction in transaction_list) -
                    sum(transaction.amount for transaction in payments_sent_list))
-        # lent_trant = len(transaction_list)
-        # len_pay = len(payments_sent_list)
-
-        # previous_bal = (sum(transaction.amount for transaction in transaction_list[0:lent_trant]) - sum(transaction.amount for transaction in payments_sent_list[0:len_pay]))
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
@@ -535,36 +500,32 @@ class UserLoginView(View):
             if user:
                 if account_block:
                     messages.error(request,
-                    f"This account has been blocked. "
-                    f"Kindly contact the administrator to learn more "
-                    f"Or enter a valid username and password.")
+                                   f"This account has been blocked. "
+                                   f"Kindly contact the administrator to learn more "
+                                   f"Or enter a valid username and password.")
                     return render(request, self.template_name, self.context_object)
 
                 else:
                     login(request, user)
                     messages.success(request, f"Login Successful ! "
-                                    f"Welcome {user.username}. Update your User profile if you have not done so. Ignore this message if your User profile is upto date.")
-                    return redirect('bank:customerdash_home')
-      
+                                     f"Welcome {user.username}. Update your User profile if you have not done so. Ignore this message if your User profile is upto date.")
+                    if user.is_superuser == True:
+                        return redirect('bank:dashboard_home')
+                    else:
+                        return redirect('bank:customerdash_home')
 
             else:
                 messages.error(request,
-                                f"Invalid Login details: {username}, {password} "
-                                f"are not valid username and password !!! Please "
-                                f"enter a valid username and password.")
+                               f"Invalid Login details: {username}, {password} "
+                               f"are not valid username and password !!! Please "
+                               f"enter a valid username and password.")
                 return render(request, self.template_name, self.context_object)
-
-            
 
         else:
             messages.error(request, f"Invalid username and password")
             return render(request, self.template_name, self.context_object)
 
 
-# Django imports
-
-
-# @method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class UserLogoutView(View):
     """
@@ -576,11 +537,6 @@ class UserLogoutView(View):
         logout(request)
         messages.success(request, "You have successfully logged out.")
         return render(request, self.template_name)
-
-
-# Django imports.
-
-# Blog app imports.
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -609,25 +565,8 @@ class UserRegisterView(View):
             login(request, user)
             messages.success(
                 request, f'Hi {user.username}, thank you for registering for Cadence online Banking.')
-            # current_site = get_current_site(request)
-            # subject = 'Activate Your Cadence Bank Account'
-            # message = render_to_string('registration/account_activation_email.html',
-            #                            {
-            #                                'user': user,
-            #                                'domain': current_site.domain,
-            #                                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #                                'token': account_activation_token.make_token(user),
-            #                            })
-            # user.email_user(subject, message)
 
-            # subject = 'welcome to Cadence Bank'
-
-            # message = f'Hi {user.username}, thank you for registering in Cadence Bank.'
-            # email_from = settings.EMAIL_HOST_USER
-            # recipient_list = [user.email, 'prosperlekia@gmail.com']
-            # send_mail(subject, message, email_from, recipient_list)
-
-            return redirect('bank:customer-create')
+            return redirect('bank:enrol-customer-create')
 
         else:
             messages.error(request, "Please provide valid information.")
@@ -738,10 +677,6 @@ class CustomerDashView(LoginRequiredMixin, View):
         # payments_sent_list = Payment.objects.filter(account_id=request.user.id).order_by("-date")
         last_payment_sent = payments_sent_list.last()
 
-        # print(payments_sent_list)
-
-        # all_transactions = list(chain(transaction_list, payments_sent_list))
-
         customers = Customer.objects.all()
         accounts = Account.objects.all()
 
@@ -817,15 +752,6 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         transaction_dataframe.style.format(
             {"Date": lambda t: t.strftime("%m/%d/%Y")})
         transaction_dataframe.sort_values(by='Date', ascending=False)
-        # print(transaction_dataframe)
-
-        # all_transactions = list(chain(transaction_list, payments_sent_list))
-        # t_data = {}
-        # for transaction in all_transactions:
-        #     t_data['Date'] = transaction.date
-        #     t_data['Amount'] = transaction.amount
-
-        # print(all_transactions)
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
