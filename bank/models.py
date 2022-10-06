@@ -11,7 +11,7 @@ from cloudinary.models import CloudinaryField
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    CUSTOMER_ID = models.CharField(max_length=255, null=True)
+    # CUSTOMER_ID = models.CharField(max_length=255, null=True)
     # first_name = models.CharField(max_length=255, null=True)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     DOB = models.DateField(null=True)
@@ -23,7 +23,7 @@ class Customer(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     # image = models.ImageField(default='avatar.png', upload_to='avatar')
     image = CloudinaryField('image')
-    email_confirmed = models.BooleanField(default=False)
+    # email_confirmed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['created_on']
