@@ -209,6 +209,15 @@ class AccountUpdate(UpdateView):
     model = Account
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
+    template_name = 'bank/user_account_update_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdate, self).get_context_data(**kwargs)
+        accounts = Account.objects.all()
+        context['user_model'] = User
+        context['customer_model'] = Customer
+        context['accounts'] = accounts
+        return context
 
     def get_success_url(self):
         return reverse('bank:dashboard_home')
