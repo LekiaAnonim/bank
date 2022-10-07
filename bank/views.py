@@ -342,11 +342,11 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
                              self).get(request, **kwargs)
 
         transaction_list = PostTransaction.objects.filter(
-            account_id=request.user.id).order_by("-date")
+            account__customer__user_id=request.user.id)
 
         # print(transaction_list)
 
-        payments_sent_list = Payment.objects.all().order_by("-date")
+        payments_sent_list = Payment.objects.all()
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list)
@@ -375,6 +375,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
                 self.context['success_message'] = success_message
 
                 return self.context
+        def get_success_url(self):
+            return reverse('bank:transaction_history')
 
 
 class PaymentUpdate(UpdateView):
@@ -667,10 +669,9 @@ class CustomerDashView(LoginRequiredMixin, View):
         """
 
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id).order_by("-date")
+            account__customer__user_id=request.user.id)
 
-        payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=request.user.id).order_by("-date")
+        payments_sent_list = Payment.objects.all()
 
         last_payment_received = transaction_list.last()
 
@@ -689,8 +690,8 @@ class CustomerDashView(LoginRequiredMixin, View):
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list)
 
-        balance = (sum(transaction.amount for transaction in transaction_list) -
-                   sum(transaction.amount for transaction in payments_sent_list))
+        balance = (sum(transaction.amount for transaction in transaction_list) - sum(transaction.amount for transaction in payments_sent_list))
+        # print(balance)
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
@@ -723,7 +724,9 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         """
 
         transaction_list = PostTransaction.objects.filter(
-            account_id=request.user.id).order_by("-date")
+            account__customer__user_id=request.user.id).order_by("-date")
+
+        # print(transaction_list)
 
         payments_sent_list = Payment.objects.all().order_by("-date")
 

@@ -14,7 +14,16 @@
     }
 }
 
+.body-container{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.username-nav{
+    color: #c7c7c7;
+}
 
+.content-head{
+    color: #ffffff;
+}
 .customer-sidenav{
     float: left;
     
@@ -33,12 +42,13 @@
 }
 .customer-user-info .customer-name{
     font-size: 25px;
-    color: #2c2b2b;
+    /* color: #2c2b2b; */
+    color: #ffffff;
     font-weight: 800;
 }
 .customer-user-info .customer-user_email{
     font-size: 14px;
-    color: rgb(90, 90, 90);
+    color: rgb(204, 204, 204);
 }
 .customer-photo{
     border-radius: 50%;
@@ -52,7 +62,7 @@
     border-radius: 50%;
 }
 .customer-navigation{
-    background-color: #FF5733;
+    background-color: rgba(255, 87, 51, 0.7);
     border-radius: 30px;
     padding: 40px;
     height: 100vh;
@@ -186,17 +196,18 @@
     border-radius: 10px;
     /* color: #ffffff; */
     padding: 10px 10px 10px 15px;
-    background-color: #d6d6d6;
+    background-color: #3a393988;
     margin: 20px;
 }
 .customer-transaction-card h5{
     font-size: large;
     font-weight: 800;
-    color: #2c2b2b;
+    color: #ffffff;
     margin: 5px 0 5px 0;
 }
 .customer-transaction-card p{
     padding: 0;
+    color: #ffffff;
 }
 a{
     list-style: none;
@@ -232,7 +243,7 @@ p, h5, h4{
     font-weight: 900;
 }
 .transaction-history td{
-    border: thin solid #272727;
+    border: thin solid #fffefe;
 }
 
 .transaction-history th{
@@ -241,7 +252,11 @@ p, h5, h4{
 }
 
 .transaction-history tr:nth-child(even){
-    background: #ffebe6;
+    background: #ffebe6af;
+}
+.transaction-history tr:nth-child(odd) {
+    color: #ffffff;
+    background: #0000009d;
 }
 .transaction-history td:nth-child(4) {
     color: red;
@@ -303,7 +318,7 @@ p, h5, h4{
         flex-wrap: wrap;
     }
     .customer-dashboard-nav{
-        background-color: #ff886d;
+        background-color: #ff886dd2;
         margin: 5px;
         flex-direction:column;
         justify-content:center;
@@ -348,4 +363,11 @@ p, h5, h4{
     .customer-payment-container{
         padding: 5px;
     }
+}
+.customer-container h5, .customer-container span{
+    color: #ffffff;
+}
+.icon{
+    width: 20px;
+    height: 20px;
 }
