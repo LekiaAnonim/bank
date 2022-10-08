@@ -42,6 +42,8 @@ from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 # Create your views here.
 handler404 = 'mysite.views.my_custom_page_not_found_view'
 handler500 = 'mysite.views.my_custom_error_view'
+handler403 = 'mysite.views.my_custom_permission_denied_view'
+
 
 
 class UserCreate(CreateView):
