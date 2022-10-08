@@ -7,7 +7,10 @@
 {% endblock sidebar %}
 
 {% block content %}
-    <h2>You should not be here.</h2>
-    <h3>Looks like you lost you way again.</h3>
-    <h3><a href="{% url 'bank:customerdash_home' %}">Go back Home 👈</a></h3>
+    
+    <div class="error-container" style="padding: 50px;">
+        <h2 style="color: white;">You should not be here.</h2>
+        <h4 style="color: white;">Looks like you lost you way again.</h4>
+        <p><a style="color: white;" href="{% url 'bank:customerdash_home' %}">Go back Home 👈</a></p>
+    </div>
 {% endblock content %}

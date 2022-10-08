@@ -7,7 +7,9 @@
 {% endblock sidebar %}
 
 {% block content %}
-<h2>You should not be here.</h2>
-<h3>Looks like you lost you way again.</h3>
-<h3><a href="{% url 'bank:login' %}">Log in again 👈</a></h3>
+<div class="error-container" style="padding: 50px;">
+    <h2 style="color: white;">You should not be here.</h2>
+    <p><a style="color: white;" href="{% url 'bank:login' %}">Log in again 👈</a></p>
+</div>
+
 {% endblock content %}

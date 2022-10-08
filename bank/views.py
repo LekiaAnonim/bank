@@ -807,7 +807,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             
         for transaction in debit_transaction_list:
             transaction_data['Date'].append(transaction.date)
-            transaction_data['Account Name'].append(transaction.account_name)
+            transaction_data['Account Name'].append(transaction.account.account_name)
             transaction_data['Credit'].append('---')
             transaction_data['Debit'].append('-$'+str(transaction.amount))
 
