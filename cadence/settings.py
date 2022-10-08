@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'localflavor',
     'phonenumber_field',
     'mathfilters',
+    'bootstrap_datepicker_plus',
 ]
 
 

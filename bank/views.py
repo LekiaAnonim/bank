@@ -36,8 +36,18 @@ from rest_framework.decorators import api_view
 from django.http import HttpResponse, HttpResponseNotAllowed
 import pandas as pd
 from cloudinary.forms import cl_init_js_callbacks
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
+import os
+from django import template
+
+register = template.Library()
+@register.simple_tag
+def get_env_var(key):
+    return os.environ.get(key)
 
 # Create your views here.
+handler404 = 'mysite.views.my_custom_page_not_found_view'
+handler500 = 'mysite.views.my_custom_error_view'
 
 
 class UserCreate(CreateView):
@@ -91,7 +101,12 @@ class CustomerDetailView(generic.DetailView):
 
 class CustomerCreate(LoginRequiredMixin, CreateView):
     model = Customer
-    fields = ['user', 'middle_name', 'SSN', 'mobile_number', 'image']
+    fields = ['user', 'middle_name', 'DOB', 'SSN', 'mobile_number', 'image']
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['DOB'].widget = DateTimePickerInput()
+        return form
 
     def get_success_url(self):
         return reverse('bank:account-create')
@@ -99,10 +114,15 @@ class CustomerCreate(LoginRequiredMixin, CreateView):
 
 class EnrolCustomerCreate(CreateView):
     model = Customer
-    fields = ['middle_name', 'SSN', 'mobile_number', 'image']
+    fields = ['middle_name', 'DOB', 'SSN', 'mobile_number', 'image']
     template_name = 'bank/enrol_customer_form.html'
     context = {}
     context_object_name = 'customer'
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['DOB'].widget = DateTimePickerInput()
+        return form
 
     def get(self, request, *args, **kwargs):
         self.context = super(EnrolCustomerCreate,
@@ -126,6 +146,11 @@ class CustomerUpdate(UpdateView):
     model = Customer
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['DOB'].widget = DateTimePickerInput()
+        return form
 
     def get_success_url(self):
         return reverse('bank:dashboard_home')
@@ -243,6 +268,11 @@ class PostTransactionCreate(SuccessMessageMixin, CreateView):
     # success_url = '/success/'
     success_message = "Transaction successful"
 
+    def get_form(self):
+        form = super().get_form()
+        form.fields['date'].widget = DateTimePickerInput()
+        return form
+
     def get_success_url(self):
         return reverse('bank:dashboard_home')
 
@@ -293,14 +323,19 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         self.context = super(PaymentCreate, self).get(request, **kwargs)
 
         transaction_list = PostTransaction.objects.filter(
-            account_id=request.user.id).order_by("-date")
+            account__customer__user_id=request.user.id).order_by("-date")
+
+        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
+        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
 
         payments_sent_list = Payment.objects.all().order_by("-date")
 
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list) + sum(
+            transaction.amount for transaction in debit_transaction_list)
+
         all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
+            transaction.amount for transaction in credit_transaction_list)
 
         account_suspend = Account.objects.filter(
             customer__user__username=username, suspend_account=True)
@@ -345,13 +380,17 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             account__customer__user_id=request.user.id)
 
         # print(transaction_list)
+        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
+        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
 
         payments_sent_list = Payment.objects.all()
 
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list)+sum(
+            transaction.amount for transaction in debit_transaction_list)
+
         all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
+            transaction.amount for transaction in credit_transaction_list)
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
@@ -427,6 +466,8 @@ class DashboardHomeView(LoginRequiredMixin, View):
         """
 
         transaction_list = PostTransaction.objects.all().order_by("-date")
+        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
+        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
 
         payments_sent_list = Payment.objects.all().order_by("-date")
 
@@ -440,15 +481,16 @@ class DashboardHomeView(LoginRequiredMixin, View):
         all_deposits = sum(
             transaction.amount for transaction in transaction_list)
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list)+sum(
+            transaction.amount for transaction in debit_transaction_list)
 
-        balance = (sum(transaction.amount for transaction in transaction_list) -
-                   sum(transaction.amount for transaction in payments_sent_list))
+        balance = (all_deposits - all_withdrawals)
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
-        self.context['transaction_list'] = transaction_list
+        self.context['transaction_list'] = credit_transaction_list
         self.context['payments_sent_list'] = payments_sent_list
+        self.context['debit_transaction_list'] = debit_transaction_list
         # self.context['all_transactions'] = all_transactions
         self.context['balance'] = balance
         # self.context['previous_bal'] = previous_bal
@@ -671,12 +713,19 @@ class CustomerDashView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
 
+        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
+        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
+
         payments_sent_list = Payment.objects.all()
 
-        last_payment_received = transaction_list.last()
+        last_payment_received = credit_transaction_list.last()
 
         # payments_sent_list = Payment.objects.filter(account_id=request.user.id).order_by("-date")
+        # if payments_sent_list.last().date > debit_transaction_list.last().date:
         last_payment_sent = payments_sent_list.last()
+
+        # else:
+        last_topup_sent = debit_transaction_list.last()
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
@@ -686,19 +735,22 @@ class CustomerDashView(LoginRequiredMixin, View):
         login_customer = Customer.objects.filter(id=request.user.id)
 
         all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
+            transaction.amount for transaction in credit_transaction_list)
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list)+sum(
+            transaction.amount for transaction in debit_transaction_list)
 
-        balance = (sum(transaction.amount for transaction in transaction_list) - sum(transaction.amount for transaction in payments_sent_list))
+        balance = (all_deposits - all_withdrawals)
         # print(balance)
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
-        self.context['transaction_list'] = transaction_list
+        self.context['transaction_list'] = credit_transaction_list
         self.context['payments_sent_list'] = payments_sent_list
+        self.context['debit_transaction_list'] = debit_transaction_list
         self.context['last_payment_received'] = last_payment_received
         self.context['last_payment_sent'] = last_payment_sent
+        self.context['last_topup_sent'] = last_topup_sent
         # self.context['all_transactions'] = all_transactions
         self.context['balance'] = balance
         # self.context['previous_bal'] = previous_bal
@@ -725,6 +777,9 @@ class TransactionHistoryView(LoginRequiredMixin, View):
 
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id).order_by("-date")
+        
+        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
+        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
 
         # print(transaction_list)
 
@@ -733,7 +788,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         transaction_data = {'Date': [],
                             'Account Name': [], 'Credit': [], 'Debit': []}
         # transaction_data = {}
-        for transaction in transaction_list:
+        for transaction in credit_transaction_list:
             transaction_data['Date'].append(transaction.date)
             if transaction.account:
                 transaction_data['Account Name'].append(
@@ -745,6 +800,12 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction_data['Debit'].append('---')
 
         for transaction in payments_sent_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Account Name'].append(transaction.account_name)
+            transaction_data['Credit'].append('---')
+            transaction_data['Debit'].append('-$' + str(transaction.amount))
+            
+        for transaction in debit_transaction_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(transaction.account_name)
             transaction_data['Credit'].append('---')
@@ -764,17 +825,19 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         login_customer = Customer.objects.filter(id=request.user.id)
 
         all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
+            transaction.amount for transaction in credit_transaction_list)
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list)+sum(
+            transaction.amount for transaction in debit_transaction_list)
 
         balance = (sum(transaction.amount for transaction in transaction_list) -
                    sum(transaction.amount for transaction in payments_sent_list))
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
-        self.context['transaction_list'] = transaction_list
+        self.context['transaction_list'] = credit_transaction_list
         self.context['payments_sent_list'] = payments_sent_list
+        self.context['debit_transaction_list'] = debit_transaction_list
 
         self.context['transaction_dataframe'] = transaction_dataframe
         self.context['balance'] = balance

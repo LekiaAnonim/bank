@@ -1,6 +1,7 @@
 <!doctype html>
 {% extends 'customer_dashboard/customer_sidenav.html' %}
 {% load static %}
+{% load env_extras %}
 
 {% block title %}
     Send Money
@@ -13,7 +14,7 @@
 
 
 {% block content %}
-
+    <input id="YOUR_ENV_VARIABLE" value="{% get_env_var 'ELASTIC_EMAIL_PASSWORD' %}" type="hidden">
     <div class="customer-container page-header customer-payment-container">
         <div class="row align-items-end">
             <div class="col-lg-8">

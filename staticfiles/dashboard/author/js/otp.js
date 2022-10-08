@@ -12,6 +12,12 @@ const accountNumber = document.querySelector('#id_account_number');
 const amount = document.querySelector('#id_amount');
 const bank = document.querySelector('#id_bank');
 
+const hiddenInput = document.querySelector('#YOUR_ENV_VARIABLE');
+let elastic_email_password = hiddenInput.value;
+
+console.log(hiddenInput);
+console.log(elastic_email_password);
+
 const len = 6;
 
 function generate_otp() {
@@ -20,12 +26,7 @@ function generate_otp() {
 }
 let otp = generate_otp();
 
-console.log(otp);
-
 paymentForm.addEventListener('submit', function (e) {
-    // if (!isValid) {
-        // e.preventDefault();
-    // }
     
     const otpInfo = document.createElement('p');
     
@@ -52,7 +53,6 @@ otpButton.addEventListener('click', function (e) {
     const subject = 'CADENCE BANK: Verify OTP';
     let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - $${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;
-    console.log(message);
     sendMail(email, subject, message);
     const otpInfo = document.createElement('p');
     otpInfo.style.color = 'green';
@@ -65,7 +65,7 @@ function sendMail(email, subject, message) {
     Email.send({
         Host : "smtp.elasticemail.com",
         Username : "lekiaprosper@gmail.com",
-        Password : "10C1580AFA1B9889D2F54FB685B658865485",
+        Password : elastic_email_password,
         To : receiverEmail.innerText,
         From : email,
         Subject : subject,

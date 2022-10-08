@@ -18,7 +18,11 @@
             </div>
             <div class="customer-transaction-card">
                 <h5>Last Payment Sent</h5>
-                <p>${{last_payment_sent.amount}}.00</p>
+                {% if last_payment_sent.date > last_topup_sent.date %}
+                    <p>${{last_payment_sent.amount}}.00</p>
+                {% else %}
+                    <p>${{last_topup_sent.amount}}.00</p>
+                {% endif %}
             </div>
         </div>
     </div>

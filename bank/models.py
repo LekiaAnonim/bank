@@ -85,9 +85,15 @@ class PostTransaction(models.Model):
         max_length=255, null=True, default='Cadence')
     # account_name = models.CharField(
     #     max_length=255, blank=True, null=True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     amount = models.IntegerField(blank=False, null=False)
     # error_message = models.TextField(blank=True)
+    CHOICES = (
+        ('Credit', 'Credit'),
+        ('Debit', 'Debit'),
+    )
+    
+    top_up_type = models.CharField(max_length=300, choices=CHOICES, null=True)
 
     def get_absolute_url(self):
         return reverse('bank:posttransaction-update', kwargs={'pk': self.pk})

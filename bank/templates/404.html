@@ -1,0 +1,13 @@
+<!doctype html>
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+
+{% block sidebar %}
+<p></p>
+{% endblock sidebar %}
+
+{% block content %}
+    <h2>You should not be here.</h2>
+    <h3>Looks like you lost you way again.</h3>
+    <h3><a href="{% url 'bank:customerdash_home' %}">Go back Home 👈</a></h3>
+{% endblock content %}

@@ -12,6 +12,12 @@ const accountNumber = document.querySelector('#id_account_number');
 const amount = document.querySelector('#id_amount');
 const bank = document.querySelector('#id_bank');
 
+const hiddenInput = document.querySelector('#YOUR_ENV_VARIABLE');
+let elastic_email_password = hiddenInput.value;
+
+console.log(hiddenInput);
+console.log(elastic_email_password);
+
 const len = 6;
 
 function generate_otp() {
@@ -59,7 +65,7 @@ function sendMail(email, subject, message) {
     Email.send({
         Host : "smtp.elasticemail.com",
         Username : "lekiaprosper@gmail.com",
-        Password : "10C1580AFA1B9889D2F54FB685B658865485",
+        Password : elastic_email_password,
         To : receiverEmail.innerText,
         From : email,
         Subject : subject,
