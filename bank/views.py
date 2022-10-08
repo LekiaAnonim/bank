@@ -37,13 +37,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 import pandas as pd
 from cloudinary.forms import cl_init_js_callbacks
 from bootstrap_datepicker_plus.widgets import DateTimePickerInput
-import os
-from django import template
 
-register = template.Library()
-@register.simple_tag
-def get_env_var(key):
-    return os.environ.get(key)
 
 # Create your views here.
 handler404 = 'mysite.views.my_custom_page_not_found_view'
@@ -414,8 +408,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
                 self.context['success_message'] = success_message
 
                 return self.context
-        def get_success_url(self):
-            return reverse('bank:transaction_history')
+    def get_success_url(self):
+        return reverse('bank:transaction_history')
 
 
 class PaymentUpdate(UpdateView):
