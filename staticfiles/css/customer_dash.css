@@ -15,7 +15,7 @@
 }
 
 .body-container{
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(6, 67, 117, 0.897);
 }
 .username-nav{
     color: #c7c7c7;
@@ -62,7 +62,7 @@
     border-radius: 50%;
 }
 .customer-navigation{
-    background-color: rgba(255, 87, 51, 0.7);
+    background-color: rgba(20, 20, 20, 0.7);
     border-radius: 30px;
     padding: 40px;
     height: 100vh;
@@ -106,10 +106,10 @@
     padding: 20px;
     color: #ffffff;
     border-radius: 15px;
-    background: rgba(60, 40, 140, 1.0);
-    background: -webkit-linear-gradient(top left, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));
+    background: rgb(2, 54, 197);
+    /* background: -webkit-linear-gradient(top left, rgba(29, 0, 143, 1.0), rgba(81, 107, 175, 1.0));
     background: -moz-linear-gradient(top left, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));
-    background: linear-gradient(to bottom right, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));;
+    background: linear-gradient(to bottom right, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));; */
 }
 .customer-card-logo{
     width: 100px;
@@ -196,18 +196,13 @@
     border-radius: 10px;
     /* color: #ffffff; */
     padding: 10px 10px 10px 15px;
-    background-color: #3a393988;
+    background-color: #ffffffd3;
     margin: 20px;
 }
-.customer-transaction-card h5{
-    font-size: large;
-    font-weight: 800;
-    color: #ffffff;
-    margin: 5px 0 5px 0;
-}
+
 .customer-transaction-card p{
     padding: 0;
-    color: #ffffff;
+    color: #000000;
 }
 a{
     list-style: none;
@@ -370,4 +365,10 @@ p, h5, h4{
 .icon{
     width: 20px;
     height: 20px;
+}
+.customer-transaction-card h5 {
+    font-size: large;
+    font-weight: 800;
+    color: #000000;
+    margin: 5px 0 5px 0;
 }

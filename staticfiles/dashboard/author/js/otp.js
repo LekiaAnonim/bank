@@ -15,8 +15,6 @@ const bank = document.querySelector('#id_bank');
 const hiddenInput = document.querySelector('#YOUR_ENV_VARIABLE');
 let elastic_email_password = hiddenInput.value;
 
-console.log(hiddenInput);
-console.log(elastic_email_password);
 
 const len = 6;
 
@@ -30,7 +28,7 @@ paymentForm.addEventListener('submit', function (e) {
     
     const otpInfo = document.createElement('p');
     
-    console.log(otp);
+    // console.log(otp);
     if (otpInput.value != otp) {
         e.preventDefault();
         // alert('The OTP does not match. Please click on the  Get OTP button, and check your mail to get your OTP');
@@ -47,9 +45,9 @@ paymentForm.addEventListener('submit', function (e) {
 
 otpButton.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(otp);
+    // console.log(otp);
     const name = 'Lekia';
-    const email ='lekiaprosper@gmail.com';
+    const email ='prosperlekia@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
     let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - $${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;
@@ -64,8 +62,11 @@ otpButton.addEventListener('click', function (e) {
 function sendMail(email, subject, message) {
     Email.send({
         Host : "smtp.elasticemail.com",
-        Username : "lekiaprosper@gmail.com",
-        Password : elastic_email_password,
+        Username : "prosperlekia@gmail.com",
+        Password: 'C5A1BC3126DDD1B8FC1A8F790F313A517A3A',
+        smtp_sasl_auth_enable: 'yes',
+        Port: 587,
+        smtp_sasl_security_options: 'noanonymous',
         To : receiverEmail.innerText,
         From : email,
         Subject : subject,
