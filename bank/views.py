@@ -388,9 +388,9 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     context_object_name = 'payment'
     template_name = 'bank/customer_payment_form.html'
 
-    def form_valid(self, form):
-        form.instance.account.customer = self.request.user.customer
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.account.customer = self.request.user.customer
+    #     return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
         self.context = super(CustomerPaymentCreate,
