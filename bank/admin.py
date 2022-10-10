@@ -30,9 +30,9 @@ class AccountInline(admin.TabularInline):
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('account', 'account_number', 'bank',
+    list_display = ('account_number', 'bank',
                     'account_name', 'amount', 'date')
-    fields = ['account', 'account_number', 'bank',
+    fields = ['account_number', 'bank',
               'account_name', 'amount']
 
 
@@ -42,8 +42,8 @@ class PaymentInline(admin.TabularInline):
 
 
 class PostTransactionAdmin(admin.ModelAdmin):
-    list_display = ('account', 'bank', 'amount', 'date')
-    fields = ['account', 'bank', 'amount']
+    list_display = ('account', 'company_name', 'amount', 'date')
+    fields = ['account', 'company_name', 'amount']
 
 
 admin.site.register(PostTransaction, PostTransactionAdmin)

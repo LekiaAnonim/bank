@@ -81,6 +81,9 @@ urlpatterns = [
     path('<int:pk>/posttransactions',
          views.PostTransactionListView.as_view(), name='posttransactions-list'),
 
+    path('transactionhistory/create/', views.TransactionHistoryCreate.as_view(),
+         name='transactionhistory-create'),
+
     path('payment/create/', views.PaymentCreate.as_view(),
          name='payment-create'),
      path('customer/payment/send/', views.CustomerPaymentCreate.as_view(),

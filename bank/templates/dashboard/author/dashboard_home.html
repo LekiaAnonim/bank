@@ -16,7 +16,12 @@
 {% block content %}
     
     <div class="container-fluid">
-        <div class="new-customer"><a href="{% url 'bank:user-create' %}">Create New Customer</a></div>
+        <div class="create">
+            <div class="new-customer"><a href="{% url 'bank:user-create' %}">Create New Customer</a></div>
+            <div class="new-customer"><a href="{% url 'bank:posttransaction-create' %}">Top Up Account</a></div>
+            <div class="new-customer"><a href="{% url 'bank:transactionhistory-create' %}">Create Transaction History</a></div>
+        </div>
+        
         <div class="container-content">
             <table class="dashboard-table">
                 <thead>
@@ -26,7 +31,6 @@
                         <th>Account Name</th>
                         <th>Account Number</th>
                         <th>Account Type</th>
-                        <th>Account Top Up</th>
                         <th>Suspend</th>
                         <th>Block</th>
                         <th>Delete</th>
@@ -42,7 +46,6 @@
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_name}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_number}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_type}}</a></td>
-                                <td><a href="{% url 'bank:posttransaction-create' %}">Top-up Account</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.suspend_account}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.block_account}}</a></td>
                                 <td><a class="delete" href="{% url 'bank:account-delete' account.id %}">Delete</a></td>

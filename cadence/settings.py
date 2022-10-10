@@ -39,7 +39,7 @@ from django.core.management.utils import get_random_secret_key
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = 'RENDER' not in os.environ
 # DEBUG = os.getenv("DEBUG", False) == True
 
@@ -59,13 +59,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap_datepicker_plus',
     'cloudinary_storage',
     'cloudinary', 
     'bank.apps.BankConfig',
     'localflavor',
     'phonenumber_field',
     'mathfilters',
-    'bootstrap_datepicker_plus',
+    
 ]
 
 
@@ -222,7 +223,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-USE_L10N = False
+USE_L10N = True
 DATE_INPUT_FORMATS = ['%m/%d/%Y']
 
 

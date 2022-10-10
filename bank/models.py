@@ -58,7 +58,7 @@ class Account(models.Model):
     account_type = models.CharField(max_length=300, choices=CHOICES, null=True)
     account_number = models.CharField(max_length=12, unique=True, null=True, validators=[
                                       RegexValidator(r'^\d{1,12}$')])
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateField(auto_now_add=True)
     suspend_account = models.BooleanField(default=False)
     block_account = models.BooleanField(default=False)
     
@@ -79,21 +79,9 @@ class Account(models.Model):
 class PostTransaction(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True)
-    # account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
-    #     RegexValidator(r'^\d{1,12}$')])
-    bank = models.CharField(
-        max_length=255, null=True, default='Cadence')
-    # account_name = models.CharField(
-    #     max_length=255, blank=True, null=True)
-    date = models.DateField()
+    company_name = models.CharField(max_length=255, null=True)
+    date = models.DateField(auto_now_add=True)
     amount = models.IntegerField(blank=False, null=False)
-    # error_message = models.TextField(blank=True)
-    CHOICES = (
-        ('Credit', 'Credit'),
-        ('Debit', 'Debit'),
-    )
-    
-    top_up_type = models.CharField(max_length=300, choices=CHOICES, null=True)
 
     def get_absolute_url(self):
         return reverse('bank:posttransaction-update', kwargs={'pk': self.pk})
@@ -101,6 +89,31 @@ class PostTransaction(models.Model):
     class Meta:
         ordering = ['-date']
 
+
+class CreateHistory(models.Model):
+    account = models.ForeignKey(
+        Account, on_delete=models.SET_NULL, null=True)
+    # account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
+    #     RegexValidator(r'^\d{1,12}$')])
+    company_name = models.CharField(max_length=255, null=True, blank=True)
+    # account_name = models.CharField(
+    #     max_length=255, blank=True, null=True)
+    date = models.DateField()
+    amount = models.IntegerField(blank=False, null=False)
+
+    # error_message = models.TextField(blank=True)
+    CHOICES = (
+        ('Credit', 'Credit'),
+        ('Debit', 'Debit'),
+    )
+
+    top_up_type = models.CharField(max_length=300, choices=CHOICES, null=True)
+
+    def get_absolute_url(self):
+        return reverse('bank:createhistory-update', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['-date']
 
 class Payment(models.Model):
     account = models.ForeignKey(
