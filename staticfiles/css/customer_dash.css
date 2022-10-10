@@ -381,6 +381,19 @@ p, h5, h4{
     height: auto;
     padding: 10px;
     position: fixed;
-    top: 0;
+    top: 25%;
     left: calc(50% - 150px);
+    z-index: 1000;
+}
+
+.successful{
+    color: white;
+    background-color: #00815a;
+    width: 300px;
+    height: auto;
+    padding: 10px;
+    position: fixed;
+    top: 25%;
+    left: calc(50% - 150px);
+    z-index: 1000;
 }
