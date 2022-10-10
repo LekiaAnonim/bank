@@ -144,7 +144,7 @@ class CustomerUpdate(UpdateView):
 
     def get_form(self):
         form = super().get_form()
-        form.fields['DOB'].widget = DateTimePickerInput()
+        form.fields['DOB'].widget = DatePickerInput()
         return form
 
     def get_success_url(self):

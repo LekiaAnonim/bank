@@ -2263,6 +2263,18 @@ hr { box-sizing: content-box; height: 0; margin-top: 1rem; border: 0; border-top
   height: auto;
   padding: 10px;
   position: fixed;
-  top: 0;
+  top: 25%;
   left: calc(50% - 150px);
+  z-index: 1000;
+}
+.successful{
+    color: white;
+    background-color: #008081;
+    width: 300px;
+    height: auto;
+    padding: 10px;
+    position: fixed;
+    top: 25%;
+    left: calc(50% - 150px);
+    z-index: 1000;
 }
