@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from .models import User, Account, CreateHistory
+from .models import User, Account, CreateHistory, Payment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from bootstrap_datepicker_plus.widgets import DatePickerInput
@@ -11,6 +11,12 @@ class EnrolModelForm(ModelForm):
         model = User
         fields = '__all__'
 
+
+class CustomerPaymentForm(ModelForm):
+    class Meta:
+        model = Payment
+        fields = ['account_name', 'account_number', 'bank', 'amount',
+                  'receiver_email', 'routing_number', 'bank_address', 'otp']
 
 class CreateHistoryForm(ModelForm):
     date = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS)

@@ -106,9 +106,9 @@
                         <h5 class="customer-nav-title">Pay Bills</h5>
                     </a>
                 </div>
-                <div class="customer-dashboard-nav">
+                <div class="customer-dashboard-nav paybills">
                     <img src="{% static 'image/user_100px.png' %}" alt="" class="icon">
-                    <a href="{% url 'bank:customer-user-update' user.id %}">
+                    <a href="#">
                         <h5 class="customer-nav-title">Update Profile</h5>
                     </a>
                 </div>
@@ -117,14 +117,16 @@
         <script>
 
             const navBar = document.querySelector('.customer-navigation');
-            const paybillBtn = document.querySelector('.paybills');
+            const paybillBtn = document.querySelectorAll('.paybills');
 
-            paybillBtn.addEventListener('click', function () {
+            paybillBtn.forEach(function(btn){
+                btn.addEventListener('click', function () {
 
-                const p_tag = document.createElement('p');
-                p_tag.style.color = 'white';
-                p_tag.innerText = ` 🟠 Sorry, You did not sign up for this service.`;
-                navBar.appendChild(p_tag);
+                    const p_tag = document.createElement('p');
+                    p_tag.style.color = 'white';
+                    p_tag.innerText = ` 🟠 Sorry, You do not have access to this function.`;
+                    navBar.appendChild(p_tag);
+                })
             })
         </script>
         {% endblock sidebar %}
@@ -138,7 +140,7 @@
             <div class="col-md-12">
                 {% if messages %}
                 {% for message in messages %}
-                <div class="text-center font-weight-bold alert alert-dismissible fade show
+                <div class="message text-center font-weight-bold alert alert-dismissible fade show
                                                            {% if message.level_tag == 'error' %}
                                                            alert-danger
                                                            {% else %}

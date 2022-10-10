@@ -117,7 +117,7 @@ class CreateHistory(models.Model):
 
 class Payment(models.Model):
     account = models.ForeignKey(
-        Account, on_delete=models.SET_NULL, null=True, blank=True)
+        User, on_delete=models.SET_NULL, null=True, blank=True)
     account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
         RegexValidator(r'^\d{1,12}$')])
     bank = models.CharField(

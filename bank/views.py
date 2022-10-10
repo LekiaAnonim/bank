@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from bank.forms import UserLoginForm, CustomerLoginForm, CreateHistoryForm
+from bank.forms import UserLoginForm, CustomerLoginForm, CreateHistoryForm, CustomerPaymentForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -384,6 +384,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
     fields = ['account_name', 'account_number', 'bank', 'amount',
               'receiver_email', 'routing_number', 'bank_address', 'otp']
+
+    # form_class = CustomerPaymentForm
     context = {}
     context_object_name = 'payment'
     template_name = 'bank/customer_payment_form.html'
@@ -433,6 +435,10 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
                 self.context['success_message'] = success_message
 
                 return self.context
+    
+    def form_valid(self, form):
+        form.instance.account = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('bank:transaction_history')
@@ -736,7 +742,8 @@ class CustomerDashView(LoginRequiredMixin, View):
         # debit_transaction_list = transaction_list.filter(top_up_type='Debit')
         # credit_transaction_list = transaction_list.filter(top_up_type='Credit')
         if request.user:
-            payments_sent_list = Payment.objects.all()
+            payments_sent_list = Payment.objects.filter(
+                account__id=request.user.id)
 
         last_payment_received = transaction_list.last()
 
@@ -800,13 +807,14 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         createhistory_list = CreateHistory.objects.filter(
             account__customer__user_id=request.user.id).order_by("-date")
 
-        debit_createhistory_list = createhistory_list.filter(
+        debit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
             top_up_type='Debit').order_by("-date")
-        credit_createhistory_list = createhistory_list.filter(
+        credit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
             top_up_type='Credit').order_by("-date")
 
         if request.user:
-            payments_sent_list = Payment.objects.all().order_by("-date")
+            payments_sent_list = Payment.objects.filter(
+                account__id = request.user.id).order_by("-date")
 
         transaction_data = {'Date': [],
                             'Account Name': [], 'Credit': [], 'Debit': []}

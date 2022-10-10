@@ -106,7 +106,7 @@
     padding: 20px;
     color: #ffffff;
     border-radius: 15px;
-    background: rgb(43, 44, 46);
+    background: rgb(8, 23, 53);
     /* background: -webkit-linear-gradient(top left, rgba(29, 0, 143, 1.0), rgba(81, 107, 175, 1.0));
     background: -moz-linear-gradient(top left, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));
     background: linear-gradient(to bottom right, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));; */
@@ -373,4 +373,14 @@ p, h5, h4{
     font-weight: 800;
     color: #000000;
     margin: 5px 0 5px 0;
+}
+.message{
+    color: white;
+    background-color: #d65437;
+    width: 300px;
+    height: auto;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: calc(50% - 150px);
 }

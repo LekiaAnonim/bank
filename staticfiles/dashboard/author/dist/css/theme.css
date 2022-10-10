@@ -2256,3 +2256,13 @@ hr { box-sizing: content-box; height: 0; margin-top: 1rem; border: 0; border-top
 .swal-modal .swal-footer { text-align: center; }
 
 /*# sourceMappingURL=theme.css.map */
+.message {
+  color: white;
+  background-color: #d65437;
+  width: 300px;
+  height: auto;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: calc(50% - 150px);
+}
