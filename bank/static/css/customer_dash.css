@@ -311,9 +311,10 @@ p, h5, h4{
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        background-color: none;
     }
     .customer-dashboard-nav{
-        background-color: #ff886dd2;
+        background-color: rgba(20, 20, 20, 0.7);
         margin: 5px;
         flex-direction:column;
         justify-content:center;
