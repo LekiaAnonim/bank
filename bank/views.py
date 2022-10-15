@@ -393,7 +393,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
-        print(account_suspend[0])
         if account_suspend:
             # message = messages.error(request, account_suspend[0].suspend_account_message)
             return HttpResponse(account_suspend[0].suspend_account_message, status=406)
