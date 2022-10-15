@@ -15,14 +15,15 @@
 }
 
 .body-container{
-    background-color: rgba(6, 67, 117, 0.897);
+    background-color: rgba(255, 255, 255, 0);
 }
 .username-nav{
-    color: #c7c7c7;
+    color: #000000;
 }
 
 .content-head{
-    color: #ffffff;
+    color: #000000;
+    font-weight: 900;
 }
 .customer-sidenav{
     float: left;
@@ -35,6 +36,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
+    
 }
 .customer-user-info p{
     margin: 5px;
@@ -43,12 +45,13 @@
 .customer-user-info .customer-name{
     font-size: 25px;
     /* color: #2c2b2b; */
-    color: #ffffff;
+    color: #000000;
     font-weight: 800;
 }
 .customer-user-info .customer-user_email{
     font-size: 14px;
-    color: rgb(204, 204, 204);
+    color: rgb(31, 31, 31);
+    display: none;
 }
 .customer-photo{
     border-radius: 50%;
@@ -106,7 +109,7 @@
     padding: 20px;
     color: #ffffff;
     border-radius: 15px;
-    background: rgb(8, 23, 53);
+    background: rgba(8, 23, 53, 0.877);
     /* background: -webkit-linear-gradient(top left, rgba(29, 0, 143, 1.0), rgba(81, 107, 175, 1.0));
     background: -moz-linear-gradient(top left, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));
     background: linear-gradient(to bottom right, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));; */
@@ -377,18 +380,13 @@ p, h5, h4{
 .message{
     color: white;
     background-color: #d65437;
-    width: 300px;
-    height: auto;
-    padding: 10px;
-    position: fixed;
-    top: 25%;
-    left: calc(50% - 150px);
-    z-index: 1000;
 }
 
 .successful{
     color: white;
-    background-color: #00815a;
+    background-color: #01b15f;
+}
+#message{
     width: 300px;
     height: auto;
     padding: 10px;

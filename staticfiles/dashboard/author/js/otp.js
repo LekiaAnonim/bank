@@ -1,4 +1,4 @@
-console.log('Working!!!!!!!!!!!!!');
+
 const otpInput = document.querySelector('#id_otp');
 
 const otpButton = document.querySelector('.otp-button');

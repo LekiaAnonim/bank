@@ -100,7 +100,7 @@ class CustomerCreate(LoginRequiredMixin, CreateView):
 
     def get_form(self):
         form = super().get_form()
-        form.fields['DOB'].widget = DateTimePickerInput()
+        form.fields['DOB'].widget = DatePickerInput()
         return form
 
     def get_success_url(self):
@@ -230,7 +230,6 @@ class AccountUpdate(UpdateView):
 class AccountDelete(DeleteView):
     model = Account
     template_name = 'dashboard/author/account_confirm_delete.html'
-    # success_url = reverse_lazy('accounts')
 
     def get_success_url(self):
         return reverse('bank:dashboard_home')
@@ -260,12 +259,6 @@ class PostTransactionCreate(SuccessMessageMixin, CreateView):
     model = PostTransaction
     fields = '__all__'
     success_message = "Transaction successful"
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(PostTransactionCreate,
-    #                     self).get_context_data(**kwargs)
-    #     context['transhistory'] = CreateHistoryForm(**self.get_form_kwargs())
-    #     return context
 
     def get_success_url(self):
         return reverse('bank:dashboard_home')
@@ -322,7 +315,6 @@ class PostTransactionListView(generic.ListView):
         return context
 
 
-# @api_view(['POST'])
 class PaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
     fields = ['account_name', 'account_number', 'bank', 'amount',
@@ -357,10 +349,7 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             customer__user__username=username, suspend_account=True)
 
         if account_suspend:
-            messages.error(request,
-                           f"This account has been suspended. "
-                           f"Kindly contact the administrator to learn more "
-                           f"Or enter a valid username and password.")
+            messages.error(request, account_suspend.suspend_account_message)
             return render(request, self.template_name, self.context_object)
 
         else:
@@ -384,15 +373,9 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
     fields = ['account_name', 'account_number', 'bank', 'amount',
               'receiver_email', 'routing_number', 'bank_address', 'otp']
-
-    # form_class = CustomerPaymentForm
     context = {}
     context_object_name = 'payment'
     template_name = 'bank/customer_payment_form.html'
-
-    # def form_valid(self, form):
-    #     form.instance.account.customer = self.request.user.customer
-    #     return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
         self.context = super(CustomerPaymentCreate,
@@ -400,11 +383,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
-
-        # print(transaction_list)
-        # debit_transaction_list = transaction_list.filter(top_up_type='Debit')
-        # credit_transaction_list = transaction_list.filter(top_up_type='Credit')
-
         payments_sent_list = Payment.objects.all()
 
         all_withdrawals = sum(
@@ -415,27 +393,23 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
-
+        print(account_suspend[0])
         if account_suspend:
-            messages.error(request,
-                           f"This account has been suspended. "
-                           f"Kindly contact the administrator to learn more "
-                           f"Or enter a valid username and password.")
-            return render(request, self.template_name, self.context_object)
+            # message = messages.error(request, account_suspend[0].suspend_account_message)
+            return HttpResponse(account_suspend[0].suspend_account_message, status=406)
 
-        else:
+        else: 
 
             balance = all_deposits - all_withdrawals
 
             success_message = "Transaction successful"
             if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
                 return HttpResponse("Transaction Denied - Insufficience balance", status=406)
-                # HttpResponse({"Transaction Denied": "Insufficience balance"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
                 self.context['success_message'] = success_message
 
                 return self.context
-    
+
     def form_valid(self, form):
         form.instance.account = self.request.user
         return super().form_valid(form)
@@ -491,35 +465,12 @@ class DashboardHomeView(LoginRequiredMixin, View):
         Returns the author details
         """
 
-        # transaction_list = PostTransaction.objects.all().order_by("-date")
-        # debit_transaction_list = transaction_list.filter(top_up_type='Debit')
-        # credit_transaction_list = transaction_list.filter(top_up_type='Credit')
-
-        # payments_sent_list = Payment.objects.all().order_by("-date")
-
         customers = Customer.objects.all()
         accounts = Account.objects.all()
 
         login_user_accounts = Account.objects.filter(
             customer_id=request.user.id)
         login_customer = Customer.objects.filter(id=request.user.id)
-
-        # all_deposits = sum(
-        #     transaction.amount for transaction in transaction_list)
-        # all_withdrawals = sum(
-        #     transaction.amount for transaction in payments_sent_list)+sum(
-        #     transaction.amount for transaction in debit_transaction_list)
-
-        # balance = (all_deposits - all_withdrawals)
-
-        # self.context['all_deposits'] = all_deposits
-        # self.context['all_withdrawals'] = all_withdrawals
-        # self.context['transaction_list'] = credit_transaction_list
-        # self.context['payments_sent_list'] = payments_sent_list
-        # self.context['debit_transaction_list'] = debit_transaction_list
-        # # self.context['all_transactions'] = all_transactions
-        # self.context['balance'] = balance
-        # self.context['previous_bal'] = previous_bal
         self.context['customers'] = customers
         self.context['accounts'] = accounts
         self.context['login_user_accounts'] = login_user_accounts
@@ -569,10 +520,8 @@ class UserLoginView(View):
 
             if user:
                 if account_block:
-                    messages.error(request,
-                                   f"This account has been blocked. "
-                                   f"Kindly contact the administrator to learn more "
-                                   f"Or enter a valid username and password.")
+                    messages.error(
+                        request, account_block[0].block_account_message)
                     return render(request, self.template_name, self.context_object)
 
                 else:
@@ -652,7 +601,6 @@ class AccountActivationSentView(View):
         return render(request, 'registration/account_activation_sent.html')
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class ActivateView(View):
 
@@ -739,20 +687,13 @@ class CustomerDashView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
 
-        # debit_transaction_list = transaction_list.filter(top_up_type='Debit')
-        # credit_transaction_list = transaction_list.filter(top_up_type='Credit')
         if request.user:
             payments_sent_list = Payment.objects.filter(
                 account__id=request.user.id)
 
         last_payment_received = transaction_list.last()
 
-        # payments_sent_list = Payment.objects.filter(account_id=request.user.id).order_by("-date")
-        # if payments_sent_list.last().date > debit_transaction_list.last().date:
         last_payment_sent = payments_sent_list.last()
-
-        # else:
-        # last_topup_sent = debit_transaction_list.last()
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
@@ -767,19 +708,14 @@ class CustomerDashView(LoginRequiredMixin, View):
             transaction.amount for transaction in payments_sent_list)
 
         balance = (all_deposits - all_withdrawals)
-        # print(balance)
 
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
         self.context['transaction_list'] = transaction_list
         self.context['payments_sent_list'] = payments_sent_list
-        # self.context['debit_transaction_list'] = debit_transaction_list
         self.context['last_payment_received'] = last_payment_received
         self.context['last_payment_sent'] = last_payment_sent
-        # self.context['last_topup_sent'] = last_topup_sent
-        # self.context['all_transactions'] = all_transactions
         self.context['balance'] = balance
-        # self.context['previous_bal'] = previous_bal
         self.context['customers'] = customers
         self.context['accounts'] = accounts
         self.context['login_user_accounts'] = login_user_accounts
@@ -808,17 +744,16 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             account__customer__user_id=request.user.id).order_by("-date")
 
         debit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
-            top_up_type='Debit').order_by("-date")
+                                                             top_up_type='Debit').order_by("-date")
         credit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
-            top_up_type='Credit').order_by("-date")
+                                                              top_up_type='Credit').order_by("-date")
 
         if request.user:
             payments_sent_list = Payment.objects.filter(
-                account__id = request.user.id).order_by("-date")
+                account__id=request.user.id).order_by("-date")
 
         transaction_data = {'Date': [],
                             'Account Name': [], 'Credit': [], 'Debit': []}
-        # transaction_data = {}
 
         for transaction in transaction_list:
             transaction_data['Date'].append(transaction.date)
@@ -848,7 +783,8 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction_data['Debit'].append('-$'+str(transaction.amount))
 
         transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
-        transaction_dataframe['Date'] = pd.to_datetime(transaction_dataframe.Date)
+        transaction_dataframe['Date'] = pd.to_datetime(
+            transaction_dataframe.Date)
         transaction_dataframe['Date'] = transaction_dataframe['Date'].dt.date
         transaction_dataframe.style.format(
             {"Date": lambda t: t.strftime("%m/%d/%Y")})
@@ -866,21 +802,5 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list)
 
-        # balance = (sum(transaction.amount for transaction in transaction_list) -
-        #            sum(transaction.amount for transaction in payments_sent_list))
-
-        # self.context['all_deposits'] = all_deposits
-        # self.context['all_withdrawals'] = all_withdrawals
-        # self.context['transaction_list'] = credit_transaction_list
-        # self.context['payments_sent_list'] = payments_sent_list
-        # self.context['debit_transaction_list'] = debit_transaction_list
-
         self.context['transaction_dataframe'] = transaction_dataframe
-        # self.context['balance'] = balance
-        # self.context['previous_bal'] = previous_bal
-        # self.context['customers'] = customers
-        # self.context['accounts'] = accounts
-        # self.context['login_user_accounts'] = login_user_accounts
-        # self.context['login_customer'] = login_customer
-
         return render(request, self.template_name, self.context)

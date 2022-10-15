@@ -31,6 +31,8 @@
     <script src="{% static '/Scripts/datatables.min.js' %}"></script>
 
     <script src="{% static '/Scripts/scripts.js' %}"></script>
+    <script src="{% static 'dashboard/author/js/message.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/customer_dash.css' %}">
     <!-- Google Tag Manager -->
     {% endblock static %}
     <script>
@@ -214,143 +216,7 @@
             return result;
         }
     </script>
-    <!-- <script
-      src="https://adsmu.cadencebank.com/527522/comra.js?r=0.6364580936016337"
-      async="true"
-      type="text/javascript"
-    ></script>
-    <script
-      src="https://adsmu.cadencebank.com/527522/table.js?dt=login_bb&amp;r=0.37067204141335064"
-      type="text/javascript"
-      async="true"
-    ></script>
-    <meta
-      http-equiv="origin-trial"
-      content="A9wkrvp9y21k30U9lU7MJMjBj4USjLrGwV+Z8zO3J3ZBH139DOnCv3XLK2Ii40S94HG1SZ/Zeg2GSHOD3wlWngYAAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1RoaXJkUGFydHkiOnRydWV9"
-    />
-    <script
-      async=""
-      src="https://static.hotjar.com/c/hotjar-1766901.js?sv=6"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/973394382/?random=1660833283421&amp;cv=9&amp;fst=1660833283421&amp;num=1&amp;bg=ffffff&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=376635470&amp;u_h=768&amp;u_w=1366&amp;u_ah=738&amp;u_aw=1366&amp;u_cd=24&amp;u_his=2&amp;u_tz=60&amp;u_java=false&amp;u_nplug=5&amp;u_nmime=2&amp;gtm=2wg8h0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fcadencebank.com%2F&amp;tiba=Cadence%20Bank%20%7C%20Home&amp;auid=1539371126.1660833283&amp;hn=www.googleadservices.com&amp;async=1&amp;rfmt=3&amp;fmt=4"
-    ></script>
-    <script
-      async=""
-      src="https://script.hotjar.com/modules.8b83be320cd47888a36c.js"
-      charset="utf-8"
-    ></script>
-    <style type="text/css">
-      iframe#_hjRemoteVarsFrame {
-        display: none !important;
-        width: 1px !important;
-        height: 1px !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-    </style>
-    <script
-      charset="UTF-8"
-      id="_lpTagScriptId_0"
-      src="https://lptag.liveperson.net/lptag/api/account/26055208/configuration/applications/taglets/.jsonp?v=2.0&amp;df=undefined&amp;b=undefined"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://adsmu.cadencebank.com/527522/vifry.js"
-      id="6fzv0g"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://adsmu.cadencebank.com/527522/mobistu.js"
-      id="djjk8n"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://adsmu.cadencebank.com/igop/mansu.js"
-      id="ioa8o"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://adsmu.cadencebank.com/527522/hige.js"
-      id="esh9go"
-    ></script>
-    <script
-      async=""
-      id="lp-ui-framework"
-      src="https://lpcdn.lpsnmedia.net/le_unified_window/10.20.0.17-release_5509/ui-framework.js?version=10.20.0.17-release_5509"
-      charset="UTF-8"
-    ></script>
-    <script
-      async=""
-      id="lp-api-messaging"
-      src="https://lpcdn.lpsnmedia.net/le_unified_window/10.20.0.17-release_5509/UMSClientAPI.min.js?version=10.20.0.17-release_5509"
-      charset="UTF-8"
-    ></script>
-    <script
-      async=""
-      id="lp-api-chat"
-      src="https://lpcdn.lpsnmedia.net/le_unified_window/10.20.0.17-release_5509/lpChatV3.min.js?version=10.20.0.17-release_5509"
-      charset="UTF-8"
-    ></script>
-    <script
-      async=""
-      id="lp-survey-logic"
-      src="https://lpcdn.lpsnmedia.net/le_unified_window/10.20.0.17-release_5509/surveylogicinstance.min.js?version=10.20.0.17-release_5509"
-      charset="UTF-8"
-    ></script>
-    <script
-      async=""
-      id="lp-uw-embedded"
-      src="https://lpcdn.lpsnmedia.net/le_unified_window/10.20.0.17-release_5509/desktopEmbedded.js?version=10.20.0.17-release_5509"
-      charset="UTF-8"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEBmd1dxaWxkZ2paRUdjdmFzaHp6aFI4SmtaUkZmWEoxbW9rc1ladGJEWTdtMmVoT2w1SG9BWlNmbnRVakx5UHNxajVzR2dsM1BpNTU1engvUjVpVFdwNGxsVnJkVXJ4dUpWVElXNWlRejB0OW02MlRUVTBLWDEvdTB2RFJXNnhqMEJEbU1DbGREMUNlVVRqaVczYitNaGE4TEp2V203VEV3VyttUWdzUlMxWlFPNnVJcytlK1p8MmRjYTI0MjgxY2NhYjMwNDZhZmFlZjE2ZTZlMjY2YTE4ODE5YTkzYjIwZjE2ODIzY2M0YzBlM2NiNjY5NDA2MjFlNmQwMmZlOWU3N2FmYjc1Y2UzODhhZWUzYzYwZWUwZDU5YTU4Nzg0MDYzNGZjOWFjNTgyYzVhMjVlNDg2ZmE3NDU4Zjk3MzAyYmNhNTc2MDk1OWQyMzA2MGQxZDNmYjI0Zjc0ZDM1ZjcxYTBlNTM0MTI1ZDg0OGIwYWRjMjJhM2FjNzk3YjVlMDRhNjdkYTY2YjgzMGUyZjdjOTExZTNjMGNhOWRhYzNlMzUyNTM4YmEzM2U5NDZjMzkwNjUwMWRiNjM4ZjAxN2E0MWJhNGZjZThlMjBkZWZjYTE4NmYxZjM2Y2MxZmRmMjc4YWMzMzg1YzA4Yzc4YzU5ZjI0OTYxYTE2OTVhMzI2MDY5ZjYxNWJiZGRhZTRjMDk2MzNiYjBjMmM1NWVmMTQxZjAyYTc3OTM4NmZjYTY5ZTAyNzZkMGMzNTAyZDY1ZjU1ZDA1NjFkYThlNDMxMjBiMTRmZTI4NzJlY2EyZWI1NjcyY2YyYzMxNWFlOWE0N2NhYWNkNWQ2MzY5NWVhODQ3NjBhNTg5ZDdjNGUxOTA4OTMxMjcwNjcyZWE4MDUxYjU0NjljOTAxMTNjZjJlMGYyZmIyOWN8MDBlZTBiNjJlY2FhYzg5Zg%3D%3D&amp;cid=13&amp;si=0&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=qgerqnonmqprbxyu&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script>
-    <script
-      type="text/javascript"
-      charset="UTF-8"
-      src="https://maps.googleapis.com/maps-api-v3/api/js/50/1/common.js"
-    ></script>
-    <script
-      type="text/javascript"
-      charset="UTF-8"
-      src="https://maps.googleapis.com/maps-api-v3/api/js/50/1/util.js"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEBYNzYyRWhidDZTZEx2N1VKMVdpY1RabmIxa09HOU10UW5iUFBNSW16bW0xaVFhbm8wZlEyRUgwb2FRTlE2R3ptdGFQV2p6bDk5U3gxeTZEQVFWd0JVRXlYMS96eTk4ZzVOU1BVTFByTnRjMWxBSEY2amJyTDRCWWlmaE9URXdsRkhVdWUxME1HTUpYbXAybE1aQnh5SmFwRUR4RnhhZW9CakI4dXdXc1d3ZHdBaHBXMkJSYmlHTlJmOTB3bng0UlJhRUdJT0JOcW9kMVFianNQSWNGZjhOYWtxajFYc1BTL3BJTnFYbDFnWVRONk4xa21YZFV6dXd3R2IzMmZUUXNFdDgzMzBnaXRqM0NBNk9oUCtGeGk3TzVOQm41ZzdaSkJsaFJ4Tm5PVXIrMElpc3pnNGdCVXcyQTJheUpOMzhybStaVXZXUTc4UnF5a2ZVQTNSR3JKU1M1RVFrdVlUb08ra1RBS2RmVzV0YzBhTkZRT0NKYWh3bndjYldxNjBQdkJCdz09fDk3ODhkODUwYTExN2EyY2VlNzAzODAwNjA0NDQyN2FiZThhNjkwYzYzMmY0YTM3MWZiNDY0MmI1NWI2YTNjMTIzYzc1ODI1ZDIxYTc5NTA3ZjZjZTNiOTMzZWJiZGM0NTM0NmMxMTY3MGNkNTBiZDczMDQ4NWFiMTc3ZjFhM2IxYTYwY2NmM2I3MTNhYzM2NzQyN2U5OGZiMDdiOWMxYjIzYzM4YTAwN2NhNDJkOGNkZjRlODcxMDM2MmM1OTM2NzhiMmQzMjViMmEyNjUwNWQyNTZmNDM1ODM5YjdmNjUxMWVjMzJiYTkyMmY0NGY2NTM5ODdjYWQwYjhhNWM0OWE2MDA5MTk0MzYxMTQ0MzE3OTUxZWEyZmFiYTlmNTJjOTkwYTA5YzM4MmQ1ZWQ4ODE2ZDhkMDYxNGMwMmY0ZDQyYzNmZWU5NDc3YmQ5NmQxMjJhMTUxY2ZiNjRkYjMwOGVkNDc5NDRkMjcxYWYzYjg2ZTEwMjUxZTM2MzdhNGUwMGNjMTU3NzNhZjhjNDU2ZDJmMDk3MjQ0NjNlZTg1MGY1NzkyNjJmNTZiNmNlZjU5MzY2YzJhMDk1NmY5OTlkZjU1MDZjYjcxNTNkMjcwMDk2NTgyZDY0NzZhMGIwMzFkYTBlNzI3NWY2YzNhMWUyMjJmNTE2ZDgzOTVhY2FlZTM1fDAwZWUwYjYyZWNhYWM4OWY%3D&amp;cid=8&amp;si=1&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=pavphgruhikb_cmm&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEBRS0FhZzhvUUNyMHk4ditsT0IzOEQzZzU2TXZaMHFDKzFFY1haeTRjUkkrekM1NjMvV1J6SWphdGR1ZUlTYlFvdTNPRWlNNUh1c3J1NTFsa1dFRDZPZmRpNmZEaDIxaU5WV2JKcVJWSU90K01LSWFqYlEwNHE0NmxQU0o5RWpZZS9aQ2l8MjdkY2ZjOWI5NWRhMGUyOGVmNjk4YzE0ODY4NTNjNWY4NjcyZTAwMDAxZGUzZmRhNTMxNWQ3ZDE2MTlmNzUyN2I5ZTkxOGFmNmIyMmYxNzAwMjdhZGQ4MTZhYWJlZGQ1ZDZjZWMxY2Q0OTE4MDA3MGI5ZGJjNjIwNzFmMDFiMjk4YmI4OTg2YjFmNGU4YzZkYTBlY2VhOWRmNWMyMzNiOTZkZWQwNTlhMDAxNDgzZGRhOTMxNDQ0MmZjMjE3NWVlYTIxZThiNzVmYjc0ZTk3ZjAxZjU3N2I3ZmRhYmJkYTNlOWIzNDI0NThjZDJhZjVjNjUwOWRjOWNiNjFjODNlZDkwZDdkZjQ3ZDIwNTAxMzlmNTI3ODExNWE1ZmJlM2I2OWU5OWQzMDM4ZTE5ZWQyYmQ3MTJjNzcyNDE3MTg2ZDU1NzRmNWUwNzRiM2Y2NGM4OWRiNWQ0OWVjNTRmODU0YTU2NzdiNzkyZGNlZWYyNTI4ZmQxYzFhYjI3M2U2M2M3OGM0MzdkZGMxODUwNzY2MjliY2ZlNzc4YTcyMjA2YWI0MmMwZTA1M2IyYWQ1OTUyZTk4YTYwMGI3ZmQzMDBkZTc2NzQ5ZDg0OGQzOWZkYzg3YTU4YzJiY2Q4YWY0YWNhMzQ4YTFhODMwNjIwYzE4OGI5ODEwMzhhMGI1YmQ1YjF8MDBlZTBiNjJlY2FhYzg5Zg%3D%3D&amp;cid=17&amp;si=0&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=rghqfra_wxnchaxk&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEAvMzUvQzhQNjNGd3RUNmtUQXREcCs0dmlPOFM1N3puWEpCRFZIQklod0oyYzJXUEg3VGRrS3Y5M1FVRC9rT0M4bzFMTW81cGNsOExLcWYycE14b2JMaGQ0UDJ2S0ovdk5TQ29XYkQ0TGU0dFVML3gvdFhhdWRTTm02M0VHZHBjUnl0c245bjA9fGQ5YmE2Nzc0NDY0MzUyYjY2OGViZmIxNTNlNjNhZjdmOTA4Nzg3YzM2M2U3NTJlZmYyOGVkMmRhZTg2OWQ2MWIwZDNjOWVhOWRiOGUwYmUxMmQxNTlhYzg1ZWNiZTdkMjUzNjJiZmVkYjA2M2ExZDIxZWIyODZkODI0YjhiNzU5NTIzNzg2OTFlYTVjZjBjYTg0NjM0ZmFjYmRkOTUzZjYzNDU3OTY0MWZlMzk4NDM4ZmRiMTI5MDg3NmU4OGQyNTZhMDBkMTM5NDAyZGQwNTQ0MTY2MmI0MDQyZjFjZTNjN2M1NmViMmZlYTM1M2Y2ZDVhMzc2YzczYjcxYTExMzBmNGVmNWJiODM1NTBmY2Y5NDU1MGIzNDgyMTMwMTE4NzVhNjY2MTEwMjNiNmQ1NzQ0NjA2NmQ0NGRlZDI1ZGUxNDg1MmI5ZjBjYjk0MWU5MTI4MDg0ZDQ5YmE1ZmU1MGJkYjU2MjEwYmFhMDA4NjBjY2JmNGQ2NTZkM2NkYTNjZGVkYjU0YWIyNWE5Yzk4ZmJmYzE3NmJkMTAyMjE3ZDg3YzZkNGUxNTNlNDM5MGZiYzlkY2UwYWFmODY0ZjQ2MzFmNGJkMTY4ZTdhNjY4ZjVkYjZiNTMyNGNlNzk4ZjE2YWY3ZTBhZDdlNWU4ZWMxNTIyYmZhYTA3OGVmZjdmNzkwfDAwZWUwYjYyZWNhYWM4OWY%3D&amp;cid=28&amp;si=0&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=otylyumkdvsvasht&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script>
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEBERXFuVCtxMWFtV0toMytNOXdYSDBscDh0dGxxbWlKVmJ2N05uMDc4UVFYa3pEbmN1VFR6Vi9UVmsrMDM4LzVlWWtmZkhVWVgwbjRlcXlkMmhsYjVXc3BlZjgrcDl1VHp3Q2RjeE13TmtydzRPNENrS1Nvb1h5RjllamtFL2VOVmw1NHRxZ3hDSy82d0Zuc3FoOHNYTjIxOE1kdHZTdVAzUzdwdWhndWlwL2x4YnVQbURTOTc3VlltK1JYVWZaMWplS3F3ZjEwNXhXSmRvaDR5QVEwc3JBRy9Xb09JK1RJZVgvcmYrbmZQSXE1ZmNNR2FJK21rTEJMUkdTY1Vsa0lYSFhBWEhSYjJsTjFpdGZzcEJaY2pVUVUzZVZrNmg2NlVqakxUTTc1UGV3MTd0NEk4R213bHlKWGMyLzhSenc1SUFjTzA0UXduZjlkV29rY1c5REZLZnZ1Ty9VdytJdmxLN2U2UFViOVltSjJmZEUrYzZUOTMyM1JFd0ttbUJSY0ZBUT09fDZkOTBmNWM5NzczODUyZDRjYTFhYjRkYTk5MmUwZmNjZDEwMjI3YjdlNzAyZGMzZDM3ZDQyYjdkMjJjNGVkZmFlNzg3ZDg4OWU1OTNiODhkZTcyNGQ5Y2I0MmJhZGFmMmQxNWEyNjgwMDFiMzc1ZjJkZjhkMzZlYzJkMjAyYzQyNDY4ZTdmMGI5OWMxMjk0ODEwZWZmNThiMTQ1YjBmOWMzYWQyMzVhN2FkZDM4ZTdjM2FhYjA3MGQxN2NlN2ZjYTQxYjI3NTkxNWRhYzZkZTMxYWM5OWI2MmI1NDRlMzcyOTExZDM1YTcyN2E3MjI3YjIwMGExOWZkNTlmZGNhM2Q4OGIyYzQ2NGNhZTI0YWM2NjMxNzVjZDZlYzkwNGVlYmU0YmNkNGI1ZDRlYThjMTE2ZDMyZjdlMjQ3ZDE3YTBiYTM1YzMyNzI5Mzc5NTVkZTc0NzM3NTdlZDAyZDUzZjAyNzliNjZjYmE5NTRmOGI2MDM0NWM1ODY4MGFmNDBlZDYxNjExYTE5YmQ2Y2M3M2E1MDU1MmJlOGY5NjQwNTQ5OTMxMjFiNjM1MjIyZTJlZjM0NWZmMDZkYjczNGUwMjBlYWZiOWQ3NjJiMjQyYzc3OWNjMzQwYmI5NzU4ZDE2YmI0YTkzMDQxYjBlMjRiNTk2ZjBiZjJiMDVjYTdlZDNifDAwZWUwYjYyZWNhYWM4OWY%3D&amp;cid=8&amp;si=1&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=uvcxvywvbvdnzctf&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/layouts/system/VIChecker.aspx?tstamp=637964300809963852"
-    />
-    <script
-      type="text/javascript"
-      async=""
-      src="https://adsmu.cadencebank.com/527522/iTus?d=ZW5jZEBRZzRWRHc2ejZjUGtsUFVHQklwM3dHU3B6QlB1Q1BVSHhSb2FqYmZuZ0ZKRUdmYU1Da1VhTi9PN3JwVUhEUXNOamwzTWMxT0xBRFY0RWlOZ0FNNXlGa25yS0JQZUZnelhTTGtJRWcxT28rUG5EeDlTdkdnTE1oOUJqbjVTK3lpbkZIQ0RuaG94SXRESEtYeTB6VkxKQmdpRkJkaWVRY3poR1BhRWJjUDFGNXN1VDR2Q0tSRTFRVXhuRG1HOS9zSDNzWkhGalZhL0VZNVFDMEJqV3dOd21aaWFmSDhhcGhkeEluNW1NOGlmY3hBaEh4anNQTWExR1VpZDZ3b0ZFV1hteW91VGJveHdBdHpMZjFSMHZuOEpuWG5wS2t2b2I0ZzdwNWFXWkNHdm91SlF4MkhuU0hCYnVYNFlmZzZWTEF5cjBaWjBkYmhvdnEwd0NlMVpmSDRjbXJLMEZtQVZPSk9CQis5MVVzbVR1TndGc01ZN0hSY3FiY0RDQmlWeHlsK3VJdExQekhnKytyemxiby9rZm5Lc2tTRzZqN0ZncDdrNXFjK3V2R0VXZ2ljc3NVYk1rRXM1U015dll4Tmdab05WekV6bUxnN09zQUwxNVhHTVk4aElUWDVyTzJmZHkyM0VrZGhsOEdYSnBjUlFvSytHdTFVNTlLelk4VC9paGsrYVJCZDJmQlpCZlUxU1QvZUpwTFBHRlRxRzhJRFF0ZkkxSzFsTHd6enR6cWlMVVhmUnRVWnBKRi9oMTFUUy9tOHlEUTQ4YXlzRXNzcTZnaE16NWZnajNta1lPTTBwN2dRRWU3NXNlb3NqaW15NHNOQklEODRTSjczM1FGQndVbG9aTzBoWHJjMmdFTElQbCs3cGZ0OFNnNzl6Zll2d1JRS2FGa04vZWxBV0ovWWlCdWlIQ3VhZUp3dkJ1UzAxU3pkUVhVWE12RDhwcHVJYnU1S1FDNWNQWkF0MXNGRHpUUDd4aGhqUEZxb0NjZ2pNeDM1bG9YS3lVOWhsSG1pdDBWZXlNcjgvTUttc1IrVGorRDhsL3RwdU9lVEpNa2s9fDQzMDUxOTNiYzlmYWIzOGQwZGUxYjRmYjgxZTM0YTI3NmI5ZTlhNDMyOTZmYmE3NmQ0MDFiY2QwNmU5ZDNkMTIwMDVmNmY2NTk0ZWQ1YjgyNTlhZWRhZjUyMmVjM2Y3ZDdkYWM5MDFlNzFlMmY1YzhlMTkwNTA0MzNmYmJmZDk0MmUxMjdjYjI0M2M4ZTUxOGYyNjVmZjVmYjdkMmNlMzk5MWM2MWZiOTQyNmYxYTE1NDk4MTRmYjY3MzYxMDk5ZWRlYTAyY2U0MGRkODZkODVjYjE5MjJlZTdkYjFmMDYwYjI0MmVmMDA2ZGRjODk0YWIxNTQxNTc4NzNjOGQxZjQzYzUxZDE4OWVlZmYwNzI4ZDBkNmQ0Mzk5ZThhYWExMmY5ZWZjYTBhOWQ0ZmIxZjQxMzljOTBjZWNhYzVjNDE2ODNhMmY5YTJmOWZlMDlkYzA4NjIwMTE0MDNlYmU3ZGIzZDc2ZDRhNTg5OTQ5YjNkZmNjNzcwMmU4ZWM5Zjg5MmEzNTE3ZmFkYzQzZjM4MDE5ZmE2N2Q4ODczZDgyMTQzODNkZTJjYmVmYWRjZjhkNDAxMjNmMWVhMGRiMjJhOWNlMDRmNWEyMTA4OTUzZDA0NjFlODExNTBkZjlkZTcxYWMwYTUzNDQ4Nzc1MTEwY2U4MjZmYmRhMTVjOWNmNjExfDAwZWUwYjYyZWNhYWM4OWY%3D&amp;cid=15%2C8&amp;si=1&amp;e=https%3A%2F%2Fcadencebank.com&amp;LSESSIONID=eyJpIjoiYktKWDRkcXBHWTdEcmpcL2NiTmVsZ2c9PSIsImUiOiJHOTU2MVVLZkJZVHlnbUZLdld1d0NtVisyWWpRSUVyb3loN0ZJMjdRcllUZ2RRTWhYbk5zZFl5OWl5aU9waldNSFZLSFJaQURLK3FKdkczRVBMVVwvOGNDcTRyeWxaNjJna1J4d0RONTQxcjQ0UnI0MU5QTDRXVmFyeUdrQllSeHBLem5XNXhtY3ZFc1wvMTNBOEpzTGladz09In0%3D.36d8ed0f9bcbed71.NjE0MzAwMGUxZTc2M2ZiODY3MmFmNGQ2ZTNiMDBkNzAwOTkzYTQyZWNlMWYwODFiZDRjMTI4ODhhODAwMTVjMg%3D%3D&amp;t=jsonp&amp;__tp=login_bb&amp;c=eznuybrmrpwskigh&amp;eu=https%3A%2F%2Fcadencebank.com%2F"
-    ></script> -->
+   
 </head>
 
 <body ontouchstart="" data-new-gr-c-s-check-loaded="14.1073.0" data-gr-ext-installed=""
@@ -2746,7 +2612,7 @@
             </header>
     {% endblock head %}
     {% block messages %} {% if messages %} {% for message in messages %}
-    <div class="text-center font-weight-bold alert alert-dismissible fade show
+    <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
                                             {% if message.level_tag == 'error' %}
                                             alert-danger
                                             {% else %}
@@ -3461,7 +3327,7 @@
                                 <div class="icon"><img
                                         src="https://cadcdnprod01.azureedge.net/-/media/feature/contact/mobilephoneicon2x.ashx?rev=4b7d703007cf48a4b828863d09415a5b&amp;h=32&amp;w=20&amp;la=en&amp;hash=2A13F9C6720640F1140E068C40CE9D02"
                                         alt="Phone"></div>
-                                1-800-636-7622
+                                +1(408)-758-8463
                             </a>
                         </div>
                         <div class="email item">
@@ -3595,7 +3461,28 @@
     </footer>
     {% endblock footer %}
 
-
+    {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="{% static '
+                        dashboard / author / src / js / vendor / jquery - 3.3 .1.min.js ' %}"><\/script>')
+    </script>
+    <script src="{% static 'dashboard/author/plugins/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'dashboard/author/plugins/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/author/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'dashboard/author/plugins/screenfull/dist/screenfull.js' %}"></script>
+    <script src="{% static 'dashboard/author/plugins/moment/moment.js' %}"></script>
+    <script
+        src="{% static 'dashboard/author/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'dashboard/author/plugins/c3/c3.min.js' %}"></script>
+    <script src="{% static 'dashboard/author/dist/js/theme.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="{%  static 'dashboard/author/js/bootstrap-tagsinput.js' %}"></script>
+    <script src="{% static 'dashboard/author/js/prism.js' %}"></script>
+    <script src="{% static 'dashboard/author/js/generate-account-no.js' %}"></script>
+    <script src="{% static 'dashboard/author/js/otp.js' %}"></script>
+    <script src="{% static 'dashboard/author/js/message.js' %}"></script>
+    {% endblock scripts %}
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 

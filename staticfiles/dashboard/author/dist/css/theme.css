@@ -2267,14 +2267,22 @@ hr { box-sizing: content-box; height: 0; margin-top: 1rem; border: 0; border-top
   left: calc(50% - 150px);
   z-index: 1000;
 }
-.successful{
-    color: white;
-    background-color: #008081;
-    width: 300px;
-    height: auto;
-    padding: 10px;
-    position: fixed;
-    top: 25%;
-    left: calc(50% - 150px);
-    z-index: 1000;
+.message {
+  color: white;
+  background-color: #d65437;
+}
+
+.successful {
+  color: white;
+  background-color: #01b15f;
+}
+
+#message {
+  width: 300px;
+  height: auto;
+  padding: 10px;
+  position: fixed;
+  top: 25%;
+  left: calc(50% - 150px);
+  z-index: 1000;
 }

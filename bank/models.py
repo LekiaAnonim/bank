@@ -9,27 +9,22 @@ from django.core.mail import send_mail
 from django.template import Context, Template
 from cloudinary.models import CloudinaryField
 
+
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # CUSTOMER_ID = models.CharField(max_length=255, null=True)
-    # first_name = models.CharField(max_length=255, null=True)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     DOB = models.DateField(null=True)
-    # last_name = models.CharField(max_length=255, null=True)
     SSN = USSocialSecurityNumberField(max_length=9)
     mobile_number = PhoneNumberField()
     home_address = models.CharField(max_length=255, null=True, blank=True)
-    # email_address = models.EmailField(max_length=254, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    # image = models.ImageField(default='avatar.png', upload_to='avatar')
     image = CloudinaryField('image')
-    # email_confirmed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
-        return f'{self.user.email}'
+        return f'{self.user.first_name} {self.user.last_name} \n {self.user.email}'
 
     def account_name(self):
         return f'{self.user.first_name} {self.middle_name} {self.user.last_name}'
@@ -43,7 +38,6 @@ class Customer(models.Model):
 class Account(models.Model):
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, null=True)
-    # balance = models.IntegerField(blank=True, null=True)
     CHOICES = (
         ('Checking', 'Checking'),
         ('Savings', 'Savings'),
@@ -61,7 +55,10 @@ class Account(models.Model):
     created_on = models.DateField(auto_now_add=True)
     suspend_account = models.BooleanField(default=False)
     block_account = models.BooleanField(default=False)
-    
+    block_account_message = models.TextField(
+        default='This account has been blocked Kindly contact the administrator to learn more. Or, enter a valid username and password.')
+    suspend_account_message = models.TextField(
+        default='This account has been suspended Kindly contact the administrator to learn more. Or, enter a valid username and password.')
 
     class Meta:
         ordering = ['account_type', 'created_on']
@@ -93,15 +90,9 @@ class PostTransaction(models.Model):
 class CreateHistory(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True)
-    # account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
-    #     RegexValidator(r'^\d{1,12}$')])
     company_name = models.CharField(max_length=255, null=True, blank=True)
-    # account_name = models.CharField(
-    #     max_length=255, blank=True, null=True)
     date = models.DateField()
     amount = models.IntegerField(blank=False, null=False)
-
-    # error_message = models.TextField(blank=True)
     CHOICES = (
         ('Credit', 'Credit'),
         ('Debit', 'Debit'),
@@ -114,6 +105,7 @@ class CreateHistory(models.Model):
 
     class Meta:
         ordering = ['-date']
+
 
 class Payment(models.Model):
     account = models.ForeignKey(
@@ -132,54 +124,5 @@ class Payment(models.Model):
     routing_number = models.CharField(max_length=255, blank=True, null=True)
     bank_address = models.CharField(max_length=255, blank=True, null=True)
 
-
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})
-
-    # def get_throttle_factor(self):
-    #     return settings.OTP_EMAIL_THROTTLE_FACTOR
-
-    # def generate_challenge(self, extra_context=None):
-    #     """
-    #     Generates a random token and emails it to the user.
-
-    #     :param extra_context: Additional context variables for rendering the
-    #         email template.
-    #     :type extra_context: dict
-
-    #     """
-    #     self.generate_token(valid_secs=settings.OTP_EMAIL_TOKEN_VALIDITY)
-
-    #     context = {'token': self.token, **(extra_context or {})}
-    #     if settings.OTP_EMAIL_BODY_TEMPLATE:
-    #         body = Template(settings.OTP_EMAIL_BODY_TEMPLATE).render(
-    #             Context(context))
-    #     else:
-    #         body = get_template(
-    #             settings.OTP_EMAIL_BODY_TEMPLATE_PATH).render(context)
-
-    #     send_mail(settings.OTP_EMAIL_SUBJECT,
-    #               body,
-    #               settings.OTP_EMAIL_SENDER,
-    #               [self.account.customer.user.email])
-
-    #     message = "sent by email"
-
-    #     return message
-
-    # def verify_token(self, token):
-    #     verify_allowed, _ = self.verify_is_allowed()
-    #     if verify_allowed:
-    #         verified = super().verify_token(token)
-
-    #         if verified:
-    #             self.throttle_reset()
-    #         else:
-    #             self.throttle_increment()
-    #     else:
-    #         verified = False
-
-    #     return verified
-
-    # class Meta:
-    #     ordering = ['-date']

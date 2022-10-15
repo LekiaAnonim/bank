@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{% static 'css/customer_dash.css' %}">
     {% endblock stylesheets %}
 </head>
-<body style="background: url('{% static 'image/1ea2bf43d262adc533f6ba78a7772a9c.gif' %}')">
+<body style="background: url('{% static 'image/4170074f.jpg' %}'); background-size: cover;">
     <div class="body-container">
         {% block sidebar %}
         <div class="customer-header">
@@ -140,7 +140,7 @@
             <div class="col-md-12">
                 {% if messages %}
                 {% for message in messages %}
-                <div class="successful text-center font-weight-bold alert alert-dismissible fade show
+                <div id="message" class="successful text-center font-weight-bold alert alert-dismissible fade show
                                                            {% if message.level_tag == 'error' %}
                                                            message
                                                            {% else %}
@@ -176,6 +176,7 @@
         <script src="{% static 'dashboard/author/js/prism.js' %}"></script>
         <script src="{% static 'dashboard/author/js/generate-account-no.js' %}"></script>
         <script src="{% static 'dashboard/author/js/otp.js' %}"></script>
+        <script src="{% static 'dashboard/author/js/message.js' %}"></script>
    {% endblock scripts %}
 </body>
 </html>
