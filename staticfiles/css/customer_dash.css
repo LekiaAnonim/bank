@@ -17,17 +17,22 @@ body{
     background-size: cover;
 }
 .body-container{
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.301);
+    
+    
     background-size: contain;
     /* background-repeat: no-repeat; */
 }
+.cover-container{
+    background-color: #000066a6;
+    margin: 0;
+    padding: 10px;
+}
 .username-nav{
-    color: #000000;
+    color: #ffffff;
 }
 
 .content-head{
-    color: #000000;
+    color: #ffffff;
     font-weight: 900;
 }
 .customer-sidenav{
@@ -50,12 +55,12 @@ body{
 .customer-user-info .customer-name{
     font-size: 25px;
     /* color: #2c2b2b; */
-    color: #000000;
+    color: #ffffff;
     font-weight: 800;
 }
 .customer-user-info .customer-user_email{
     font-size: 14px;
-    color: rgb(31, 31, 31);
+    color: rgb(255, 254, 254);
     display: none;
 }
 .customer-photo{
