@@ -13,9 +13,14 @@
         margin-right: 50px;
     }
 }
-
+body{
+    background-size: cover;
+}
 .body-container{
-    background-color: rgba(255, 255, 255, 0);
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.301);
+    background-size: contain;
+    /* background-repeat: no-repeat; */
 }
 .username-nav{
     color: #000000;
@@ -303,6 +308,9 @@ p, h5, h4{
 }
 
 @media (max-width:865px) {
+    body{
+        background-position: -20% 0%;
+    }
     .customer-sidenav{
         float: none;
     }

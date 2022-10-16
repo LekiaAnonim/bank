@@ -31,8 +31,8 @@
     <link rel="stylesheet" href="{% static 'css/customer_dash.css' %}">
     {% endblock stylesheets %}
 </head>
-<body style="background: url('{% static 'image/4170074f.jpg' %}'); background-size: cover;">
-    <div class="body-container">
+<body>
+    <div class="body-container" style="background-image: url('{% static 'image/4170074f.jpg' %}')">
         {% block sidebar %}
         <div class="customer-header">
             {% if request.user.is_authenticated %}
