@@ -1,4 +1,15 @@
-console.clear();
+
+const message = document.querySelector('#message');
+
+setTimeout(() => {
+    message.style.display = "none";
+}, 5000);
+
+document.querySelectorAll('.messages').forEach((mess) => {
+    setTimeout(() => {
+        mess.style.display = "none";
+    }, 5000);
+});
 
 
 const accountSuspendBtn = document.querySelectorAll('.account_suspend_btn');
@@ -18,10 +29,6 @@ accountSuspendBtn.forEach((btn) => {
     )
 })
 
-const message = document.querySelector('#message');
 
-setTimeout(() => {
-    message.style.display = "none";
-}, 5000);
 
                             

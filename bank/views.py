@@ -390,7 +390,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             return render(request, self.template_name, self.context)
 
         else:
-    
+            self.context = super(CustomerPaymentCreate,
+                                 self).get(request, **kwargs)
 
             transaction_list = PostTransaction.objects.filter(
                 account__customer__user_id=request.user.id)

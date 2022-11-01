@@ -53,10 +53,10 @@
                                     <input class="send-payment" type="submit" value="Submit">
                                 {% endif %}
                                 {% if messages %}
-                                <ul class="messages" id = "messages">
+                                <ul class="messages" id="message">
                                     {% for message in messages %}
                                     <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}">
-                                    <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                                    <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
                                     {% endfor %}
                                 </ul>
                                 {% endif %}
