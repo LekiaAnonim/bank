@@ -395,6 +395,22 @@ p, h5, h4{
     background-color: #d65437;
 }
 
+.suspend {
+    color: white;
+    background-color: #d65437;
+    width: 300px;
+    height: auto;
+    padding: 10px;
+    position: fixed;
+    top: 25%;
+    left: calc(50% - 150px);
+    z-index: 1000;
+}
+
+.suspend_message{
+    display: none;
+}
+
 .successful{
     color: white;
     background-color: #01b15f;
