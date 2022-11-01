@@ -43,11 +43,19 @@
                                 <table class="payment-table">
                                     {{ form.as_table }}
                                 </table>
-                                <button class="otp-button">Get OTP</button>
-                                <input class="send-payment" type="submit" value="Submit">
+                                {% if account_suspend %}
+                                    <button class="otp-button account_suspend_btn">Get OTP</button>
+                                    <input class="send-payment otp-button account_suspend_btn" type="button" value="Submit">
+                                    
+    
+                                {% else %}
+                                    <button class="otp-button">Get OTP</button>
+                                    <input class="send-payment" type="submit" value="Submit">
+                                {% endif %}
                                 {% if messages %}
-                                <ul class="messages">
+                                <ul class="messages" id = "messages">
                                     {% for message in messages %}
+                                    <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}">
                                     <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
                                     {% endfor %}
                                 </ul>
@@ -60,5 +68,6 @@
                 </div>
             </div>
         </div>
+        
     </div>
 {% endblock content %}

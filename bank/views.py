@@ -378,26 +378,29 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     template_name = 'bank/customer_payment_form.html'
 
     def get(self, request, *args, **kwargs):
-        self.context = super(CustomerPaymentCreate,
-                             self).get(request, **kwargs)
-
-        transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id)
-        payments_sent_list = Payment.objects.all()
-
-        all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
-
-        all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
         if account_suspend:
-            # message = messages.error(request, account_suspend[0].suspend_account_message)
-            return HttpResponse(account_suspend[0].suspend_account_message, status=406)
+            message = messages.error(
+                request, account_suspend[0].suspend_account_message)
+            # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
+            self.context['account_suspend'] = account_suspend
+            self.context['message'] = message
+            return render(request, self.template_name, self.context)
 
-        else: 
+        else:
+    
+
+            transaction_list = PostTransaction.objects.filter(
+                account__customer__user_id=request.user.id)
+            payments_sent_list = Payment.objects.all()
+
+            all_withdrawals = sum(
+                transaction.amount for transaction in payments_sent_list)
+
+            all_deposits = sum(
+                transaction.amount for transaction in transaction_list)
 
             balance = all_deposits - all_withdrawals
 

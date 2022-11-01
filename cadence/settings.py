@@ -39,7 +39,7 @@ from django.core.management.utils import get_random_secret_key
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = 'RENDER' not in os.environ
 # DEBUG = os.getenv("DEBUG", False) == True
 
@@ -138,7 +138,7 @@ OTP_EMAIL_BODY_TEMPLATE = 'Use the OTP provided below verify your transaction'
 #     if os.getenv("DATABASE_URL", None) is None:
 #         raise Exception("DATABASE_URL environment variable not defined")
 DATABASES = {
-    "default": dj_database_url.config(default='postgresql://postgres:ZZcOfjZpOKSQMF5W02ej@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
+    "default": dj_database_url.config(default='postgresql://postgres:OT9eTsnvjYv6ghkvTR0s@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
 }
 
 # Static files (CSS, JavaScript, Images)
