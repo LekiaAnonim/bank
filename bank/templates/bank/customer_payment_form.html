@@ -53,12 +53,23 @@
                                     <input class="send-payment" type="submit" value="Submit">
                                 {% endif %}
                                 {% if messages %}
-                                <ul class="messages" id="message">
+                                <div class="messages" id = "messages">
                                     {% for message in messages %}
                                     <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}">
-                                    <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                                    {% if account_suspend %}
+                                    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                                        <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                                        <hr>
+                                        {{ message }}
+                                    </div>
+                                    {% else %}
+                                    <div {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    
                                     {% endfor %}
-                                </ul>
+                                </div>
                                 {% endif %}
                                 <div class="clearfix"></div>
                             </form>
@@ -71,3 +82,44 @@
         
     </div>
 {% endblock content %}
+
+{% block messages %}
+<div class="row">
+    <div class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+
+        {% if account_suspend %}
+        <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+            <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+            <hr>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+            <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+            <hr>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock messages %}

@@ -519,6 +519,8 @@ class UserLoginView(View):
             account_block = Account.objects.filter(
                 customer__user__username=username, block_account=True)
 
+            self.context_object['account_block'] = account_block
+
             user = authenticate(request, username=username, password=password)
 
             if user:

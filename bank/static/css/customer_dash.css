@@ -392,12 +392,13 @@ p, h5, h4{
 }
 .message{
     color: white;
-    background-color: #d65437;
+    background-color: #f31f1f;
+
 }
 
 .suspend {
     color: white;
-    background-color: #d65437;
+    background-color: #f31f1f;
     width: 300px;
     height: auto;
     padding: 10px;

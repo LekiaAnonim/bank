@@ -2610,18 +2610,37 @@
         
             </header>
     {% endblock head %}
+    
     {% block messages %} {% if messages %} {% for message in messages %}
-    <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
-                                            {% if message.level_tag == 'error' %}
-                                            alert-danger
-                                            {% else %}
-                                            alert-{{ message.tags }}
-                                            {% endif %}">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+
+    {% if account_block %}
+        <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                    {% if message.level_tag == 'error' %}
+                                                    message
+                                                    {% else %}
+                                                    successful
+                                                    {% endif %}">
+            <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Blocked!</h3>
+            <hr>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% else %}
+        <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                    {% if message.level_tag == 'error' %}
+                                                    message
+                                                    {% else %}
+                                                    successful
+                                                    {% endif %}">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    
     {% endfor %} {% endif %} {% endblock messages %}
     {% block content%}
     <main id="main">
