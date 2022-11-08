@@ -16,7 +16,8 @@ app_name = 'bank'
 
 
 urlpatterns = [
-     # path('', views.CustomerLoginView.as_view(), name='index'),
+    path('customer/account_suspended',
+         views.SuspendAccount.as_view(), name='suspend_account'),
      path(
           route="my_dashboard",
           view=views.DashboardHomeView.as_view(),

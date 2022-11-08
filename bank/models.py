@@ -13,7 +13,7 @@ from cloudinary.models import CloudinaryField
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
-    DOB = models.DateField(null=True)
+    DOB = models.DateField(null=True, blank=True)
     SSN = USSocialSecurityNumberField(max_length=9)
     mobile_number = PhoneNumberField()
     home_address = models.CharField(max_length=255, null=True, blank=True)

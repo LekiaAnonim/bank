@@ -368,6 +368,35 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         def get_success_url(self):
             return reverse('bank:dashboard_home')
 
+# def suspend_account(request):
+#     context = {}
+#     account_suspend = Account.objects.filter(
+#         customer__user__username=request.user.username, suspend_account=True)
+#     message = messages.error(
+#                 request, account_suspend[0].suspend_account_message)
+#             # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
+#     context['account_suspend'] = account_suspend
+#     context['message'] = message
+#     return render(request, 'bank/suspend_error.html', context)
+
+
+class SuspendAccount(LoginRequiredMixin, View):
+    """
+    Displays Suspend Account Error Message
+    """
+    template_name = "bank/suspend_error.html"
+    context = {}
+
+    def get(self, request):
+        account_suspend = Account.objects.filter(
+            customer__user__username=request.user.username, suspend_account=True)
+        message = messages.error(
+            request, account_suspend[0].suspend_account_message)
+        # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
+        self.context['account_suspend'] = account_suspend
+        self.context['message'] = message
+        return render(request, self.template_name, self.context)
+
 
 class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
@@ -378,38 +407,35 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     template_name = 'bank/customer_payment_form.html'
 
     def get(self, request, *args, **kwargs):
+        self.context = super(CustomerPaymentCreate,
+                             self).get(request, **kwargs)
+        return self.context
+
+    def post(self, request, *args, **kwargs):
 
         account_suspend = Account.objects.filter(
             customer__user__username=request.user.username, suspend_account=True)
-        if account_suspend:
-            message = messages.error(
-                request, account_suspend[0].suspend_account_message)
-            # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
-            self.context['account_suspend'] = account_suspend
-            self.context['message'] = message
-            return render(request, self.template_name, self.context)
 
+        transaction_list = PostTransaction.objects.filter(
+            account__customer__user_id=request.user.id)
+        payments_sent_list = Payment.objects.all()
+
+        all_withdrawals = sum(
+            transaction.amount for transaction in payments_sent_list)
+
+        all_deposits = sum(
+            transaction.amount for transaction in transaction_list)
+
+        balance = all_deposits - all_withdrawals
+
+        success_message = "Transaction successful"
+        if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
+            return HttpResponse("Transaction Denied - Insufficience balance", status=406)
         else:
-            self.context = super(CustomerPaymentCreate,
-                                 self).get(request, **kwargs)
-
-            transaction_list = PostTransaction.objects.filter(
-                account__customer__user_id=request.user.id)
-            payments_sent_list = Payment.objects.all()
-
-            all_withdrawals = sum(
-                transaction.amount for transaction in payments_sent_list)
-
-            all_deposits = sum(
-                transaction.amount for transaction in transaction_list)
-
-            balance = all_deposits - all_withdrawals
-
-            success_message = "Transaction successful"
-            if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
-                return HttpResponse("Transaction Denied - Insufficience balance", status=406)
+            self.context['success_message'] = success_message
+            if account_suspend:
+                return redirect('bank:suspend_account')
             else:
-                self.context['success_message'] = success_message
 
                 return self.context
 
