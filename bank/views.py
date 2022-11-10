@@ -409,6 +409,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     def get(self, request, *args, **kwargs):
         self.context = super(CustomerPaymentCreate,
                              self).get(request, **kwargs)
+        message = "Transaction successful"
+        self.context['message'] = message
         return self.context
 
     def post(self, request, *args, **kwargs):
@@ -428,16 +430,20 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         balance = all_deposits - all_withdrawals
 
-        success_message = "Transaction successful"
+        
         if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
             return HttpResponse("Transaction Denied - Insufficience balance", status=406)
         else:
-            self.context['success_message'] = success_message
+            
             if account_suspend:
                 return redirect('bank:suspend_account')
             else:
-
-                return self.context
+                # self.context = super(CustomerPaymentCreate,
+                #                      self).post(request, **kwargs)
+                
+                
+                # return render(request, self.template_name, self.context)
+                return super(CustomerPaymentCreate, self).post(request)
 
     def form_valid(self, form):
         form.instance.account = self.request.user
