@@ -43,7 +43,7 @@
             <div class="nav-2">
                 <div class="nav-2-1">
                     <div class="logo" style="font-weight: 800; font-size: 25px; color:rgb(8, 30, 105);">SKYHIGH</div>
-                    <a href="#about"><div class="menu">About Us</div></a>
+                    <a href="#about"><div class="menu">About</div></a>
                     <a href="#services"><div class="menu">Services</div></a>
                     <!-- <a href="#vision"></a><div class="menu">Vision</div>
                     <a href="#vision"></a><div class="menu">Leadership</div> -->
@@ -91,46 +91,46 @@
     {% endfor %} {% endif %} {% endblock messages %}
     {% block content%}
             <div class="carousel" style="background: url('{% static 'image/images/tech-daily-pz_L0YpSVvE-unsplash.jpg' %}'); background-size:cover; margin-top: 0;">
-                <div class="carousel-text">
+                <!-- <div class="carousel-text">
                     <h1 class="about-h1">About Us</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus natus provident.</p>
                     <a href="#about">
                         <div class="read-more">Read More</div>
                     </a>
-                </div>
+                </div> -->
                 <div class="carousel-login">
-                <section class="login-widget">
-                    <h2 class="login-title">Login</h2>
-                    <h3 class="login-subtitle">Online Banking Access</h3>
-                
-                    <div class="form-wrapper">
-                        <form action="{% url 'bank:login' %}" class="login100-form validate-form p-b-33 p-t-5" method="post"
-                            novalidate="novalidate">
-                            {% csrf_token %}
-                
-                            <div class="wrap-input100 validate-input" data-validate="Enter username">
-                                {{ login_form.username }}
-                                <span class="focus-input100" data-placeholder="&#xe82a;"></span>
-                            </div>
-                
-                            <div class="wrap-input100 validate-input" data-validate="Enter password">
-                                {{ login_form.password }}
-                                <span class="focus-input100" data-placeholder="&#xe80f;"></span>
-                            </div>
-                
-                            <div class="container-login100-form-btn m-t-32">
-                                <button type="submit" class="login-btn online-banking-button">
-                                    LOGIN
-                                </button>
-                            </div>
-                            <hr />
-                            <div class="text-center">
-                                <a href="{% url 'bank:register' %}" class="btn btn-inverted-blue mobile" rel="noopener noreferrer"
-                                    target="_blank">Enroll Now</a>
-                            </div>
-                        </form>
-                    </div>
-                </section>
+                    <section class="login-widget">
+                        <h2 class="login-title">Login</h2>
+                        <h3 class="login-subtitle">Online Banking Access</h3>
+                    
+                        <div class="form-wrapper">
+                            <form action="{% url 'bank:login' %}" class="login100-form validate-form p-b-33 p-t-5" method="post"
+                                novalidate="novalidate">
+                                {% csrf_token %}
+                    
+                                <div class="wrap-input100 validate-input" data-validate="Enter username">
+                                    {{ login_form.username }}
+                                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                                </div>
+                    
+                                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                    {{ login_form.password }}
+                                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                </div>
+                    
+                                <div class="container-login100-form-btn m-t-32">
+                                    <button type="submit" class="login-btn online-banking-button">
+                                        LOGIN
+                                    </button>
+                                </div>
+                                <hr />
+                                <div class="text-center">
+                                    <a href="{% url 'bank:register' %}" class="btn btn-inverted-blue mobile" rel="noopener noreferrer"
+                                        target="_blank">Enroll Now</a>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
                 </div>
             </div>
             <div class="banking-options" id="services">
@@ -263,7 +263,7 @@
             <div class="leadership-vision-mission" id="vision">
                 <div class="card-1">
                     <div class="card-1-image">
-                        <img src="{% static 'image/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg' %}" alt="">
+                        <img src="{% static 'image/images/dylan-gillis-KdeqA3aTnBY-unsplash.jpg' %}" alt="">
                     </div>
                     <div class="card-1-text">
                         <h2>Our Leadership</h2>
@@ -274,7 +274,7 @@
                 </div>
                 <div class="card-1">
                     <div class="card-1-image">
-                        <img src="{% static 'image/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg' %}" alt="">
+                        <img src="{% static 'image/images/jason-goodman-Oalh2MojUuk-unsplash.jpg' %}" alt="">
                     </div>
                     <div class="card-1-text">
                         <h2>Our Vision</h2>
@@ -302,8 +302,8 @@
                     </a>
                 </div>
                 <div class="email item">
-                    <a href="mailto:cadenceportals@gmail.com" title="Email us at cadenceportals@gmail.com" class="img-link">
-                        <div class="icon"><img src="{% static 'image/images/secured_letter_100px.png' %}" alt="Email"> cadenceportals@gmail.com
+                    <a href="mailto:skyhighpremiumbnk@gmail.com" title="Email us at cadenceportals@gmail.com" class="img-link">
+                        <div class="icon"><img src="{% static 'image/images/secured_letter_100px.png' %}" alt="Email"> skyhighpremiumbnk@gmail.com
                         </div>
         
                     </a>
