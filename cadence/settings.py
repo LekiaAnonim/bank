@@ -138,7 +138,7 @@ OTP_EMAIL_BODY_TEMPLATE = 'Use the OTP provided below verify your transaction'
 #     if os.getenv("DATABASE_URL", None) is None:
 #         raise Exception("DATABASE_URL environment variable not defined")
 DATABASES = {
-    "default": dj_database_url.config(default='postgresql://postgres:OT9eTsnvjYv6ghkvTR0s@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
+    "default": dj_database_url.config(default='postgresql://postgres:HjYwL44lz7MHLTA3A11H@containers-us-west-66.railway.app:7303/railway', conn_max_age=1800),
 }
 
 # Static files (CSS, JavaScript, Images)

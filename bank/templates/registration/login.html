@@ -42,7 +42,7 @@
             </div>
             <div class="nav-2">
                 <div class="nav-2-1">
-                    <div class="logo">SKYHIGH PREMIUM</div>
+                    <div class="logo" style="font-weight: 800; font-size: 25px; color:rgb(8, 30, 105);">SKYHIGH PREMIUM</div>
                     <a href="#about"><div class="menu">About Us</div></a>
                     <a href="#services"><div class="menu">Services</div></a>
                     <!-- <a href="#vision"></a><div class="menu">Vision</div>
@@ -50,7 +50,7 @@
                 </div>
             
                 <div class="nav-2-1 nav-2-2">
-                    <div class="search"><img src="/images/search_48px.png" alt=""></div>
+                    <div class="search"><img src="{% static 'image/images/search_48px.png' %}" alt=""></div>
                     <div class="online-banking-button">Online Banking</div>
                     
                 </div>
@@ -90,7 +90,7 @@
     
     {% endfor %} {% endif %} {% endblock messages %}
     {% block content%}
-            <div class="carousel">
+            <div class="carousel" style="background: url('{% static 'image/images/tech-daily-pz_L0YpSVvE-unsplash.jpg' %}'); background-size:cover; margin-top: 0;">
                 <div class="carousel-text">
                     <h1 class="about-h1">About Lorem</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus natus provident.</p>
@@ -119,10 +119,7 @@
                             </div>
                 
                             <div class="container-login100-form-btn m-t-32">
-                                <button type="submit" class="btn desktop">
-                                    LOGIN
-                                </button>
-                                <button type="submit" class="btn btn-inverted-blue mobile" style="background-color: rgb(28, 170, 253);">
+                                <button type="submit" class="login-btn online-banking-button">
                                     LOGIN
                                 </button>
                             </div>
@@ -130,10 +127,6 @@
                             <div class="text-center">
                                 <a href="{% url 'bank:register' %}" class="btn btn-inverted-blue mobile" rel="noopener noreferrer"
                                     target="_blank">Enroll Now</a>
-                                <div class="additionalLinks">
-                                    <a href="{% url 'bank:register' %}" class="additionalLink" rel="noopener noreferrer"
-                                        target="_blank">Enroll Now</a>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -143,43 +136,43 @@
             <div class="banking-options" id="services">
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/add_administrator_100px.png" alt="">
+                        <img src="{% static 'image/images/add_administrator_100px.png' %}" alt="">
                     </div>
                     <p>Open Account</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/lease_240px.png" alt="">
+                        <img src="{% static 'image/images/lease_240px.png' %}" alt="">
                     </div>
                     <p>Agent Banking</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/phone_128px.png" alt="">
+                        <img src="{% static 'image/images/phone_128px.png' %}" alt="">
                     </div>
                     <p>Contact Us</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/address_100px.png" alt="">
+                        <img src="{% static 'image/images/address_100px.png' %}" alt="">
                     </div>
                     <p>Find a Branch</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/graph_report_script_100px.png" alt="">
+                        <img src="{% static 'image/images/graph_report_script_100px.png' %}" alt="">
                     </div>
                     <p>Annual Report</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/calculator_240px.png" alt="">
+                        <img src="{% static 'image/images/calculator_240px.png' %}" alt="">
                     </div>
                     <p>Loan Calculator</p>
                 </div>
                 <div class="option">
                     <div class="option-image-container">
-                        <img src="/images/world_100px.png" alt="">
+                        <img src="{% static 'image/images/world_100px.png' %}" alt="">
                     </div>
                     <p>Sustainability</p>
                 </div>
@@ -193,7 +186,7 @@
                 <div class="card-container">
                     <div class="card text-left">
                         <div class="card-image-container">
-                            <img class="card-img-top" src="/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg" alt="">
+                            <img class="card-img-top" src="{% static 'image/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg' %}" alt="">
                         </div>
                         <div class="card-body">
                             <h4 class="card-title">Open an account</h4>
@@ -204,7 +197,7 @@
             
                     <div class="card text-left">
                         <div class="card-image-container"><img class="card-img-top"
-                                src="/images/thomas-william-kStAM22qoww-unsplash.jpg" alt=""></div>
+                                src="{% static 'image/images/thomas-william-kStAM22qoww-unsplash.jpg' %}" alt=""></div>
                         <div class="card-body">
                             <h4 class="card-title">Bank from home</h4>
                             <!-- <p class="card-text">Body</p> -->
@@ -214,7 +207,7 @@
             
                     <div class="card text-left">
                         <div class="card-image-container"><img class="card-img-top"
-                                src="/images/petr-machacek-BeVGrXEktIk-unsplash.jpg" alt=""></div>
+                                src="{% static 'image/images/petr-machacek-BeVGrXEktIk-unsplash.jpg' %}" alt=""></div>
                         <div class="card-body">
                             <h4 class="card-title">Get support</h4>
                             <!-- <p class="card-text">Body</p> -->
@@ -224,7 +217,7 @@
             
                     <div class="card text-left">
                         <div class="card-image-container"><img class="card-img-top"
-                                src="/images/krakenimages-376KN_ISplE-unsplash.jpg" alt=""></div>
+                                src="{% static 'image/images/krakenimages-376KN_ISplE-unsplash.jpg' %}" alt=""></div>
                         <div class="card-body">
                             <h4 class="card-title">Grow your business</h4>
                             <!-- <p class="card-text">Body</p> -->
@@ -234,7 +227,7 @@
             
                     <div class="card text-left">
                         <div class="card-image-container"><img class="card-img-top"
-                                src="/images/paige-cody-bOVZ_f3fbQM-unsplash.jpg" alt=""></div>
+                                src="{% static 'image/images/paige-cody-bOVZ_f3fbQM-unsplash.jpg' %}" alt=""></div>
                         <div class="card-body">
                             <h4 class="card-title">Get a home</h4>
                             <!-- <p class="card-text">Body</p> -->
@@ -244,7 +237,7 @@
             
                     <div class="card text-left">
                         <div class="card-image-container"><img class="card-img-top"
-                                src="/images/stephen-phillips-hostreviews-co-uk-em37kS8WJJQ-unsplash.jpg" alt=""></div>
+                                src="{% static 'image/images/stephen-phillips-hostreviews-co-uk-em37kS8WJJQ-unsplash.jpg' %}" alt=""></div>
                         <div class="card-body">
                             <h4 class="card-title">Send and receive money</h4>
                             <!-- <p class="card-text">Body</p> -->
@@ -254,7 +247,7 @@
             </div>
             <div class="about-us" id="about">
                 <div class="card-1-text">
-                    <h2 class="heading">About Merchant Bank</h2>
+                    <h2 class="heading">About SkyHigh Premium Bank</h2>
                     <p>Merchant Bank Limited is a financial institution with solid operational base.
                         Our watchwords are RELIABILITY AND EXCELLENCE.
                         We offer unbeatable financial services across the globe as we continue to grow into the top
@@ -264,13 +257,13 @@
                     </p>
                 </div>
                 <div class="card-2-image">
-                    <img src="/images/pngwing.com (3).png" alt="">
+                    <img src="{% static 'image/images/pngwing.com (3).png' %}" alt="">
                 </div>
             </div>
             <div class="leadership-vision-mission" id="vision">
                 <div class="card-1">
                     <div class="card-1-image">
-                        <img src="/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg" alt="">
+                        <img src="{% static 'image/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg' %}" alt="">
                     </div>
                     <div class="card-1-text">
                         <h2>Our Leadership</h2>
@@ -281,7 +274,7 @@
                 </div>
                 <div class="card-1">
                     <div class="card-1-image">
-                        <img src="/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg" alt="">
+                        <img src="{% static 'image/images/jonathan-borba-DUrU_bZV8So-unsplash.jpg' %}" alt="">
                     </div>
                     <div class="card-1-text">
                         <h2>Our Vision</h2>
@@ -304,13 +297,13 @@
             <div class="company-info">
                 <div class="phone item">
                     <a href="tel:+1(408)-758-8463" title="Call us at +1(408)-758-8463" class="img-link">
-                        <div class="icon"><img src="/images/phone_100px.png" alt="Phone"> +1(408)-758-8463</div>
+                        <div class="icon"><img src="{% static 'image/images/phone_100px.png' %}" alt="Phone"> +1(408)-758-8463</div>
         
                     </a>
                 </div>
                 <div class="email item">
                     <a href="mailto:cadenceportals@gmail.com" title="Email us at cadenceportals@gmail.com" class="img-link">
-                        <div class="icon"><img src="/images/secured_letter_100px.png" alt="Email"> cadenceportals@gmail.com
+                        <div class="icon"><img src="{% static 'image/images/secured_letter_100px.png' %}" alt="Email"> cadenceportals@gmail.com
                         </div>
         
                     </a>
@@ -322,11 +315,11 @@
                     <!-- <div class="select-language">Select Language</div> -->
                 </div>
                 <div class="footer-socials">
-                    <div class="social"><img src="/images/facebook_48px.png" alt=""></div>
-                    <div class="social"><img src="/images/twitter_60px.png" alt=""></div>
-                    <div class="social"><img src="/images/instagram_48px.png" alt=""></div>
-                    <div class="social"><img src="/images/youtube_48px.png" alt=""></div>
-                    <div class="social"><img src="/images/linkedin_48px.png" alt=""></div>
+                    <div class="social"><img src="{% static 'image/images/facebook_48px.png' %}" alt=""></div>
+                    <div class="social"><img src="{% static 'image/images/twitter_60px.png' %}" alt=""></div>
+                    <div class="social"><img src="{% static 'image/images/instagram_48px.png' %}" alt=""></div>
+                    <div class="social"><img src="{% static 'image/images/youtube_48px.png' %}" alt=""></div>
+                    <div class="social"><img src="{% static 'image/images/linkedin_48px.png' %}" alt=""></div>
                 </div>
             </div>
             <div class="footer-2-container">

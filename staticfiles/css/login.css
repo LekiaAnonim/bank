@@ -1,0 +1,598 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #d8dee2;
+}
+
+header {
+    padding: 0;
+    width: 100%;
+    /* border: red solid; */
+    margin: 0;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-1 {
+    display: flex;
+    justify-content: space-between;
+    background-color: #003B65;
+    margin: 0;
+    width: 100%;
+    /* border: red solid; */
+}
+
+.nav-1-1 {
+    display: flex;
+    width: 100%;
+}
+
+.menu:hover {
+    cursor: pointer;
+    border-bottom: solid #eca816;
+}
+
+.nav-1-1 .menu {
+    margin-left: 20px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    color: #cdd2d6;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.nav-1-1 .menu:hover {
+    color: #ffffff;
+}
+
+.nav-1-2 {
+    justify-content: right;
+    /* margin-right: 20px; */
+}
+
+.active-menu {
+    /* margin-left: 20px; */
+    text-transform: uppercase;
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: #fff;
+    color: rgb(3, 55, 114);
+    font-weight: 700;
+}
+
+.nav-2 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px 10px;
+    background-color: #ffffff;
+}
+
+.nav-2-1 {
+    display: flex;
+
+}
+
+.nav-2-1 .menu {
+    color: #002065;
+    margin-left: 20px;
+    padding: 10px 20px;
+    font-weight: 700;
+
+}
+
+.nav-2-2 {
+    display: flex;
+    align-items: center;
+}
+
+.search img {
+    width: 25px;
+    height: 25px;
+}
+
+.online-banking-button {
+    background-color: #eca816;
+    color: #002065;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-weight: 700;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.online-banking-button:hover {
+    color: #eca816;
+    background-color: #002065;
+
+}
+
+.carousel {
+    width: 100%;
+    background-size: cover;
+    padding: 0;
+    height: 83.6vh;
+    padding-bottom: 0;
+    /* margin-top: 80px; */
+}
+
+.carousel-text {
+    padding: 60px 50px;
+    background-color: #4747477a;
+    width: 400px;
+    position: absolute;
+    bottom: 0;
+}
+
+.carousel-login {
+    padding: 30px 10px 30px 10px;
+    background-color: #ffffff;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    bottom: 25%;
+    right: 0;
+}
+.wrap-input100{
+    margin-bottom: 5px;
+}
+.login-btn{
+    margin-top: 10px;
+    border: none;
+    margin-left: 0;
+}
+.btn-inverted-blue{
+    background-color: #073994;
+    color: #fff;
+    padding: 5px;
+}
+.carousel-text h1 {
+    font-size: 50px;
+    color: white;
+    /* width: 80%; */
+    line-height: 0.8;
+    margin: 0;
+}
+
+.carousel-text p {
+    font-size: 15px;
+    color: white;
+}
+
+.carousel-text .read-more {
+    margin-top: 40px;
+    background-color: #f7b629;
+    color: #002065;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
+.carousel-text .read-more:hover {
+    color: #eca816;
+    background-color: #002065;
+    cursor: pointer;
+}
+
+
+
+
+.banking-options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 30px;
+    background-color: #002065;
+    height: fit-content;
+    position: relative;
+    /* margin-top: 50px; */
+}
+
+.banking-options .option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.banking-options .option-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #f79400;
+    margin-bottom: 0px;
+    transition: 0.5s;
+}
+
+.banking-options .option-image-container:hover {
+    transform: scale(1.2);
+}
+
+.banking-options .option-image-container img {
+    width: 40px;
+    height: 40px;
+}
+
+.banking-options p {
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+
+.recommended {
+    margin-top: 50px;
+}
+
+.section-heading {
+    margin-left: 50px;
+}
+
+.recommended h1 {
+    color: #002065;
+    font-size: 50px;
+}
+
+.recommended .head-subtitle {
+    font-size: 20px;
+    color: #696969;
+}
+
+.card {
+    width: 380px;
+    height: 400px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    transition: 1s;
+}
+
+.card:hover {
+    background-color: #053f81;
+    cursor: pointer;
+}
+
+.card-image-container {
+    width: 100%;
+    height: 80%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    /* border: solid red; */
+}
+
+.card .card-img-top {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    overflow: hidden;
+    transition: 1s;
+}
+
+.card-body {
+    margin-top: 0;
+    padding: 0 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: solid red; */
+}
+
+.card-title {
+    margin-top: 0;
+    padding: 0;
+    font-size: 25px;
+    color: #002065;
+}
+
+.card-text {
+    margin-top: 0;
+    padding: 0;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card:hover {
+    background-color: #053f81;
+}
+
+.card:hover .card-title {
+    color: #eca816;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.3);
+}
+
+
+/* ABOUT US */
+.about-us {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.about-us .card-1-text {
+    width: 60%;
+    padding: 20px 20px 20px 40px;
+    background-color: #fff;
+    height: 550px;
+}
+
+.about-us .card-1-text h2 {
+    color: #002065;
+    font-size: 40px;
+    font-weight: 700;
+    margin-top: 15%;
+}
+
+.about-us .card-1-text p {
+    font-size: 22px;
+    padding-right: 30%;
+    margin-top: 20px;
+    line-height: 1.5;
+    color: #667580;
+}
+
+.about-us .card-2-image {
+    width: 500px;
+    height: 450px;
+}
+
+.about-us .card-2-image img {
+    width: 100%;
+    height: 100%;
+    margin-left: -50%;
+    transition: 1s;
+}
+
+.about-us .card-2-image img:hover {
+    margin-left: 0;
+}
+
+.leadership-vision-mission {
+    display: flex;
+    padding: 30px;
+    justify-content: space-around;
+}
+
+.card-1 {
+    width: 40%;
+    background-color: #fff;
+}
+
+.card-1-image {
+    width: 100%;
+    overflow: hidden;
+}
+
+.card-1:hover .card-1-image img {
+    transform: scale(1.3);
+}
+
+.card-1-image img {
+    max-width: 100%;
+    transition: 1s;
+}
+
+.card-1-text {
+    padding: 10px;
+}
+
+.card-1-text h2 {
+    color: #002065;
+    font-size: 30px;
+}
+
+.card-1-text p {
+    color: #667580;
+    font-size: 20px;
+}
+
+.footer {
+    padding: 30px 100px;
+    background-color: #053f81;
+    width: 100%;
+}
+
+.company-info {
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.company-info a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.company-info .icon {
+    display: flex;
+    align-items: center;
+}
+
+.company-info img {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
+
+.footer-1-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: thin #eca816 solid;
+    padding-bottom: 40px;
+    width: 100%;
+}
+
+.logo-language {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+    width: 100%;
+}
+
+.logo-language .footer-logo {
+    color: #ffffff;
+}
+
+.logo-language .select-language {
+    background-color: #ffffff;
+    width: 150px;
+    padding: 10px;
+    color: #002065;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    /* border: red solid; */
+    /* width: 100%; */
+}
+
+.footer-socials .social {
+    background-color: #02193341;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.footer-socials .social:hover {
+    background-color: #2478d8ea;
+    cursor: pointer;
+}
+
+.footer-socials .social img {
+    width: 25px;
+    height: 25px;
+}
+
+.footer-2-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    border-bottom: thin #eca816 solid;
+    padding-bottom: 30px;
+    width: 100%;
+    /* align-items: center; */
+}
+
+.footer-2-section h4 {
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.footer-2-section p {
+    margin-bottom: 20px;
+    color: #6bbefa;
+}
+
+@media (max-width:865px) {
+    .nav-1 {
+        flex-wrap: wrap;
+    }
+
+    .nav-2 {
+        flex-wrap: wrap;
+    }
+
+    .banking-options {
+        flex-wrap: wrap;
+    }
+
+    .footer-1-container {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width:650px) {
+    .carousel-text {
+        padding: 30px 25px;
+        max-width: 300px;
+        position: relative;
+        bottom: -12%;
+    }
+
+    .carousel-login {
+        padding: 8px 5px 8px 10px;
+        position: relative;
+        max-width: 300px;
+        margin-top: 300px;
+
+    }
+
+    .carousel {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-us {
+        flex-direction: column-reverse;
+    }
+
+    .about-us .card-1-text {
+        width: 100%;
+    }
+
+    .about-us .card-1-text p {
+        font-size: 20px;
+        padding-right: 5%;
+    }
+
+    .about-us .card-2-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .leadership-vision-mission {
+        flex-direction: column;
+    }
+
+    .card-1 {
+        width: 100%;
+    }
+
+    .footer-2-section h4 {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .footer {
+        padding: 30px 10px;
+    }
+
+    .footer-socials {
+        flex-wrap: wrap;
+    }
+}

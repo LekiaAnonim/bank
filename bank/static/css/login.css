@@ -119,13 +119,12 @@ header {
 }
 
 .carousel {
-    background: url('/images/tech-daily-pz_L0YpSVvE-unsplash.jpg');
     width: 100%;
     background-size: cover;
     padding: 0;
     height: 83.6vh;
     padding-bottom: 0;
-    margin-top: 120px;
+    /* margin-top: 80px; */
 }
 
 .carousel-text {
@@ -145,7 +144,19 @@ header {
     bottom: 25%;
     right: 0;
 }
-
+.wrap-input100{
+    margin-bottom: 5px;
+}
+.login-btn{
+    margin-top: 10px;
+    border: none;
+    margin-left: 0;
+}
+.btn-inverted-blue{
+    background-color: #073994;
+    color: #fff;
+    padding: 5px;
+}
 .carousel-text h1 {
     font-size: 50px;
     color: white;
@@ -401,10 +412,12 @@ header {
 .footer {
     padding: 30px 100px;
     background-color: #053f81;
+    width: 100%;
 }
 
 .company-info {
     margin-bottom: 50px;
+    width: 100%;
 }
 
 .company-info a {
@@ -429,6 +442,7 @@ header {
     align-items: center;
     border-bottom: thin #eca816 solid;
     padding-bottom: 40px;
+    width: 100%;
 }
 
 .logo-language {
@@ -487,6 +501,7 @@ header {
     margin-top: 30px;
     border-bottom: thin #eca816 solid;
     padding-bottom: 30px;
+    width: 100%;
     /* align-items: center; */
 }
 
