@@ -204,6 +204,7 @@ header {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .banking-options .option-image-container {
@@ -244,7 +245,7 @@ header {
 
 .recommended h1 {
     color: #002065;
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .recommended .head-subtitle {
@@ -538,14 +539,14 @@ header {
         padding: 30px 25px;
         max-width: 300px;
         position: relative;
-        bottom: -12%;
+        bottom: -40%;
     }
 
     .carousel-login {
         padding: 8px 5px 8px 10px;
         position: relative;
         max-width: 300px;
-        margin-top: 300px;
+        margin-top: 540px;
 
     }
 
@@ -594,5 +595,8 @@ header {
 
     .footer-socials {
         flex-wrap: wrap;
+    }
+    .section-heading {
+        margin-left: 10px;
     }
 }
