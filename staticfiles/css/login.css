@@ -196,7 +196,7 @@ header {
     background-color: #002065;
     height: fit-content;
     position: relative;
-    /* margin-top: 50px; */
+    margin-top: 50px;
 }
 
 .banking-options .option {
@@ -337,7 +337,7 @@ header {
     width: 60%;
     padding: 20px 20px 20px 40px;
     background-color: #fff;
-    height: 550px;
+    height: fit-content;
 }
 
 .about-us .card-1-text h2 {
