@@ -18,7 +18,7 @@ header {
     width: 100%;
     /* border: red solid; */
     margin: 0;
-    position: fixed;
+    position: absolute;
     top: 0;
     z-index: 1000;
 }
@@ -539,14 +539,14 @@ header {
         padding: 30px 25px;
         max-width: 300px;
         position: relative;
-        bottom: -40%;
+        bottom: -42%;
     }
 
     .carousel-login {
         padding: 8px 5px 8px 10px;
         position: relative;
         max-width: 300px;
-        margin-top: 540px;
+        margin-top: 525px;
 
     }
 
