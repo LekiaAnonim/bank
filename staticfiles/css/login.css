@@ -539,14 +539,14 @@ header {
         padding: 30px 25px;
         max-width: 300px;
         position: relative;
-        bottom: -42%;
+        bottom: -38%;
     }
 
     .carousel-login {
         padding: 8px 5px 8px 10px;
         position: relative;
         max-width: 300px;
-        margin-top: 525px;
+        margin-top: 515px;
 
     }
 
@@ -599,4 +599,7 @@ header {
     .section-heading {
         margin-left: 10px;
     }
+        .nav-1 {
+            display: none;
+        }
 }
