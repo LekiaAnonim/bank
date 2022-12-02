@@ -382,6 +382,7 @@ header {
 .card-1 {
     width: 40%;
     background-color: #fff;
+    margin: 10px;
 }
 
 .card-1-image {
@@ -541,14 +542,14 @@ header {
         padding: 30px 25px;
         max-width: 300px;
         position: relative;
-        bottom: -38%;
+        /* bottom: -38%; */
     }
 
     .carousel-login {
         padding: 8px 5px 8px 10px;
         position: relative;
         max-width: 300px;
-        margin-top: 515px;
+        /* margin-top: 515px; */
 
     }
 
