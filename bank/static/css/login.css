@@ -196,7 +196,7 @@ header {
     background-color: #002065;
     height: fit-content;
     position: relative;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 
 .banking-options .option {
@@ -309,6 +309,8 @@ header {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 .card:hover {
@@ -380,6 +382,7 @@ header {
 .card-1 {
     width: 40%;
     background-color: #fff;
+    margin-bottom: 20px;
 }
 
 .card-1-image {
@@ -555,6 +558,7 @@ header {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        height: 90vh;
     }
 
     .about-us {
@@ -599,7 +603,20 @@ header {
     .section-heading {
         margin-left: 10px;
     }
-        .nav-1 {
-            display: none;
-        }
+    .nav-1 {
+        display: none;
+    }
+
+    .banking-options .option-image-container {
+        width: 80px;
+        height: 80px;
+    }
+
+    .banking-options p {
+        font-size: 14px;
+    }
+    .card {
+        width: 300px;
+        height: 350px;
+    }
 }
