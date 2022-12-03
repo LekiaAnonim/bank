@@ -72,15 +72,16 @@ header {
 
 .nav-2 {
     display: flex;
+    align-items: center;
     width: 100%;
     justify-content: space-between;
-    padding: 20px 10px;
+    padding: 0px 10px;
     background-color: #ffffff;
 }
 
 .nav-2-1 {
     display: flex;
-
+    align-items: center;
 }
 
 .nav-2-1 .menu {
@@ -469,7 +470,14 @@ header {
     margin-left: 10px;
     margin-bottom: 20px;
 }
-
+.logo{
+    width: 180px;
+    height: 100px;
+}
+.logo img{
+    max-width: 100%;
+    max-height: 100%;
+}
 .footer-socials {
     display: flex;
     justify-content: space-between;

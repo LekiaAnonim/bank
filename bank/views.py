@@ -620,7 +620,7 @@ class UserRegisterView(View):
             user.save()
             login(request, user)
             messages.success(
-                request, f'Hi {user.username}, thank you for registering for Cadence online Banking.')
+                request, f'Hi {user.username}, thank you for registering forSkyHigh Premium online Banking.')
 
             return redirect('bank:enrol-customer-create')
 
