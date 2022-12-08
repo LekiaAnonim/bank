@@ -630,4 +630,10 @@ header {
         width: 300px;
         height: 350px;
     }
+    .nav-2-1 .menu {
+        margin-left: 5px;
+        padding: 10px 20px;
+        font-weight: 500;
+
+    }
 }

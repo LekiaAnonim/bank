@@ -145,9 +145,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_STORAGE = 'cloudinary_strorage.storage.StaticHashedCloudCloudinaryStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-# STATIC_ROOT = "/var/www/bank-production.up.railway.app/static/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "bank/static"),)
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -164,8 +162,7 @@ cloudinary.config(
   api_key = "666558139559246", 
   api_secret = "msWiQ9tiGPF5oT28VwwaZz_bXSA",
 )
-# CLOUDINARY_URL='cloudinary://666558139559246:msWiQ9tiGPF5oT28VwwaZz_bXSA@lekiaprosper'
-# MEDIA SETTINGS
+
 MEDIA_URL = '/media/'
 # DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.MediaCloudinaryStorage'
 # 
@@ -195,9 +192,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app', 'https://skypremium.org']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 CSRF_USE_SESSIONS = False
-# SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_DOMAIN = 'bank-production.up.railway.app'
 SECURE_BROWSER_XSS_FILTER = True
 
 CORS_ALLOW_CREDENTIALS = True
@@ -210,7 +205,6 @@ SECURE_HSTS_SECONDS = 2592000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-# xframe_options_exempt = False
 SECURE_REFERRER_POLICY = 'same-origin'
 
 # Internationalization
