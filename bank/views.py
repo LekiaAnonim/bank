@@ -340,9 +340,9 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             account__customer__user_id=request.user.id)
 
         debit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Debit')
+            top_up_type='Debit', account__customer__user_id=request.user.id)
         credit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Credit')
+            top_up_type='Credit', account__customer__user_id=request.user.id)
 
 
         all_withdrawals = sum(
@@ -436,11 +436,10 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             account__customer__user_id=request.user.id)
 
         debit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Debit')
+            top_up_type='Debit', account__customer__user_id=request.user.id)
         credit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Credit')
+            top_up_type='Credit', account__customer__user_id=request.user.id)
 
-        payments_sent_list = Payment.objects.all().order_by("-date")
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) + sum(
