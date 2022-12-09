@@ -852,8 +852,9 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         transaction_dataframe['Date'] = transaction_dataframe['Date'].dt.date
         transaction_dataframe.style.format(
             {"Date": lambda t: t.strftime("%m/%d/%Y")})
-        transaction_dataframe.sort_values(by='Date', ascending=False)
-
+        transaction_dataframe.sort_values(
+            by=['Date'], ascending=False, inplace=True)
+        print(transaction_dataframe)
         customers = Customer.objects.all()
         accounts = Account.objects.all()
 

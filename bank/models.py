@@ -77,7 +77,7 @@ class PostTransaction(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True)
     company_name = models.CharField(max_length=255, null=True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(null=True)
     amount = models.IntegerField(blank=False, null=False)
 
     def get_absolute_url(self):

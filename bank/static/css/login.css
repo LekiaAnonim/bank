@@ -632,12 +632,12 @@ header {
         height: 350px;
     }
     .nav-2-1 .menu {
-        margin-left: 0;
+        margin-left: 5px;
         padding: 10px 0px;
         font-weight: 500;
 
     }
     .nav-2-1 a{
-        font-size: 11px;
+        font-size: 12px;
     }
 }
