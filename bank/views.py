@@ -331,19 +331,27 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         self.context = super(PaymentCreate, self).get(request, **kwargs)
 
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id).order_by("-date")
+            account__customer__user_id=request.user.id)
 
-        debit_transaction_list = transaction_list.filter(top_up_type='Debit')
-        credit_transaction_list = transaction_list.filter(top_up_type='Credit')
+        transaction_history_list = CreateHistory.objects.filter(
+            account__customer__user_id=request.user.id)
+
+        payments_sent_list = Payment.objects.all()
+
+        debit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Debit')
+        credit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Credit')
 
         payments_sent_list = Payment.objects.all().order_by("-date")
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) + sum(
-            transaction.amount for transaction in debit_transaction_list)
+            transaction.amount for transaction in debit_transaction_history_list)
 
         all_deposits = sum(
-            transaction.amount for transaction in credit_transaction_list)
+            transaction.amount for transaction in credit_transaction_history_list) + sum(
+            transaction.amount for transaction in transaction_list)
 
         account_suspend = Account.objects.filter(
             customer__user__username=username, suspend_account=True)
@@ -420,13 +428,32 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
+
+        transaction_history_list = CreateHistory.objects.filter(
+            account__customer__user_id=request.user.id)
+
         payments_sent_list = Payment.objects.all()
 
+        debit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Debit')
+        credit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Credit')
+
+        payments_sent_list = Payment.objects.all().order_by("-date")
+
         all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+            transaction.amount for transaction in payments_sent_list) + sum(
+            transaction.amount for transaction in debit_transaction_history_list)
 
         all_deposits = sum(
+            transaction.amount for transaction in credit_transaction_history_list) + sum(
             transaction.amount for transaction in transaction_list)
+
+        # all_withdrawals = sum(
+        #     transaction.amount for transaction in payments_sent_list)
+
+        # all_deposits = sum(
+        #     transaction.amount for transaction in transaction_list)
 
         balance = all_deposits - all_withdrawals
 
