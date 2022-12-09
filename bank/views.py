@@ -751,9 +751,9 @@ class CustomerDashView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
 
-        if request.user:
-            payments_sent_list = Payment.objects.filter(
-                account__id=request.user.id)
+        
+        payments_sent_list = Payment.objects.filter(
+                account__customer__user_id=request.user.id)
 
         last_payment_received = transaction_list.last()
 

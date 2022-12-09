@@ -631,8 +631,8 @@ header {
         height: 350px;
     }
     .nav-2-1 .menu {
-        margin-left: 5px;
-        padding: 10px 20px;
+        margin-left: 0;
+        padding: 10px 5px;
         font-weight: 500;
 
     }
