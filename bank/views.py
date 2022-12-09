@@ -336,14 +336,14 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
         transaction_history_list = CreateHistory.objects.filter(
             account__customer__user_id=request.user.id)
 
-        payments_sent_list = Payment.objects.all()
+        payments_sent_list = Payment.objects.filter(
+            account__customer__user_id=request.user.id)
 
         debit_transaction_history_list = transaction_history_list.filter(
             top_up_type='Debit')
         credit_transaction_history_list = transaction_history_list.filter(
             top_up_type='Credit')
 
-        payments_sent_list = Payment.objects.all().order_by("-date")
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) + sum(
@@ -365,7 +365,7 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             balance = all_deposits - all_withdrawals
 
             success_message = "Transaction successful"
-            if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
+            if bool(balance <= 0) and bool(str(self.model.amount) >= str(balance)):
                 return HttpResponse("Transaction Denied - Insufficience balance", status=406)
                 # HttpResponse({"Transaction Denied": "Insufficience balance"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
@@ -432,7 +432,8 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
         transaction_history_list = CreateHistory.objects.filter(
             account__customer__user_id=request.user.id)
 
-        payments_sent_list = Payment.objects.all()
+        payments_sent_list = Payment.objects.filter(
+            account__customer__user_id=request.user.id)
 
         debit_transaction_history_list = transaction_history_list.filter(
             top_up_type='Debit')

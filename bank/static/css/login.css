@@ -82,6 +82,7 @@ header {
 .nav-2-1 {
     display: flex;
     align-items: center;
+    justify-content: space-around;
 }
 
 .nav-2-1 .menu {
@@ -632,8 +633,11 @@ header {
     }
     .nav-2-1 .menu {
         margin-left: 0;
-        padding: 10px 5px;
+        padding: 10px 0px;
         font-weight: 500;
 
+    }
+    .nav-2-1 a{
+        font-size: 11px;
     }
 }
