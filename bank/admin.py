@@ -36,9 +36,9 @@ class AccountInline(admin.TabularInline):
 
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('account', 'account_number', 'bank',
-                    'account_name', 'amount', 'date', 'otp', 'receiver_email', 'routing_number', 'bank_address')
+                    'account_name', 'amount', 'date', 'otp', 'receiver_email', 'routing_number', 'bank_address', 'remark')
     fields = ['account', 'account_number', 'bank',
-              'account_name', 'amount', 'otp', 'receiver_email', 'routing_number', 'bank_address']
+              'account_name', 'amount', 'otp', 'receiver_email', 'routing_number', 'bank_address', 'remark']
 
 
 admin.site.register(Payment, PaymentAdmin)

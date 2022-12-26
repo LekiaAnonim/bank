@@ -123,6 +123,7 @@ class Payment(models.Model):
     receiver_email = models.EmailField(blank=True)
     routing_number = models.CharField(max_length=255, blank=True, null=True)
     bank_address = models.CharField(max_length=255, blank=True, null=True)
+    remark = models.CharField(max_length=255, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})

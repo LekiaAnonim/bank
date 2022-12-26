@@ -318,7 +318,7 @@ class PostTransactionListView(generic.ListView):
 class PaymentCreate(SuccessMessageMixin, CreateView):
     model = Payment
     fields = ['account_name', 'account_number', 'bank', 'amount',
-              'receiver_email', 'routing_number', 'bank_address', 'otp']
+              'receiver_email', 'routing_number', 'bank_address', 'otp', 'remark']
     context = {}
     context_object_name = 'payment'
     template_name = 'bank/payment_form.html'
@@ -343,7 +343,6 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             top_up_type='Debit', account__customer__user_id=request.user.id)
         credit_transaction_history_list = transaction_history_list.filter(
             top_up_type='Credit', account__customer__user_id=request.user.id)
-
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) + sum(
@@ -440,7 +439,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
         credit_transaction_history_list = transaction_history_list.filter(
             top_up_type='Credit', account__customer__user_id=request.user.id)
 
-
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) + sum(
             transaction.amount for transaction in debit_transaction_history_list)
@@ -457,18 +455,16 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         balance = all_deposits - all_withdrawals
 
-        
         if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
             return HttpResponse("Transaction Denied - Insufficience balance", status=406)
         else:
-            
+
             if account_suspend:
                 return redirect('bank:suspend_account')
             else:
                 # self.context = super(CustomerPaymentCreate,
                 #                      self).post(request, **kwargs)
-                
-                
+
                 # return render(request, self.template_name, self.context)
                 return super(CustomerPaymentCreate, self).post(request)
 
@@ -477,7 +473,7 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('bank:transaction_history')
+        return reverse('bank:transaction_success')
 
 
 class PaymentUpdate(UpdateView):
@@ -751,9 +747,8 @@ class CustomerDashView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id)
 
-        
         payments_sent_list = Payment.objects.filter(
-                account__customer__user_id=request.user.id)
+            account__customer__user_id=request.user.id)
 
         last_payment_received = transaction_list.last()
 
@@ -854,7 +849,6 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             {"Date": lambda t: t.strftime("%m/%d/%Y")})
         transaction_dataframe.sort_values(
             by=['Date'], ascending=False, inplace=True)
-        print(transaction_dataframe)
         customers = Customer.objects.all()
         accounts = Account.objects.all()
 
@@ -868,4 +862,25 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction.amount for transaction in payments_sent_list)
 
         self.context['transaction_dataframe'] = transaction_dataframe
+        return render(request, self.template_name, self.context)
+
+
+class TransactionSuccessful(LoginRequiredMixin, View):
+    """
+    Display homepage of the dashboard.
+    """
+    context = {}
+    template_name = 'customer_dashboard/transaction_success.html'
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+        """
+        Returns the author details
+        """
+
+        if request.user:
+            payments_sent_list = Payment.objects.filter(
+                account__id=request.user.id).order_by("-date")
+
+        self.context['payments_sent_list'] = payments_sent_list
         return render(request, self.template_name, self.context)

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import os
 import dj_database_url
@@ -33,7 +34,6 @@ environ.Env.read_env()
 
 # SECRET_KEY = env('SECRET_KEY')
 # SECRET_KEY = os.environ.get('SECRET_KEY')
-from django.core.management.utils import get_random_secret_key
 
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
@@ -43,7 +43,8 @@ DEBUG = False
 # DEBUG = 'RENDER' not in os.environ
 # DEBUG = os.getenv("DEBUG", False) == True
 
-ALLOWED_HOSTS = ['bank-production.up.railway.app', '127.0.0.1', '127.0.0.1:8000', 'skypremium.org']
+ALLOWED_HOSTS = ['bank-production.up.railway.app',
+                 '127.0.0.1', '127.0.0.1:8000', 'skypremium.org']
 
 # ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')if RENDER_EXTERNAL_HOSTNAME:    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -61,12 +62,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap_datepicker_plus',
     'cloudinary_storage',
-    'cloudinary', 
+    'cloudinary',
     'bank.apps.BankConfig',
     'localflavor',
     'phonenumber_field',
     'mathfilters',
-    
+
 ]
 
 
@@ -157,15 +158,15 @@ STATICFILES_FINDERS = [
 #     'API_KEY': os.getenv('API_KEY'),
 #     'API_SECRET': os.getenv('API_SECRET'),
 # }
-cloudinary.config( 
-  cloud_name = "lekiaprosper", 
-  api_key = "666558139559246", 
-  api_secret = "msWiQ9tiGPF5oT28VwwaZz_bXSA",
+cloudinary.config(
+    cloud_name="lekiaprosper",
+    api_key="666558139559246",
+    api_secret="msWiQ9tiGPF5oT28VwwaZz_bXSA",
 )
 
 MEDIA_URL = '/media/'
 # DEFAULT_FILE_STORAGE = 'cloudinary_strorage.storage.MediaCloudinaryStorage'
-# 
+#
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -188,8 +189,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-CSRF_TRUSTED_ORIGINS = ['https://bank-production.up.railway.app', 'https://skypremium.org']
+CSRF_TRUSTED_ORIGINS = [
+    'https://bank-production.up.railway.app', 'https://skypremium.org']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_SECURE = True
