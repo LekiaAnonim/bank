@@ -449,6 +449,10 @@ p, h5, h4{
     .customer-payment-container{
         padding: 5px;
     }
+    .receipt-body p {
+        padding: 10px;
+        font-size: 10.5px;
+    }
 }
 .customer-container h5, .customer-container span{
     color: #ffffff;

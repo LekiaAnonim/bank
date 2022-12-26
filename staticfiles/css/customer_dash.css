@@ -312,6 +312,79 @@ p, h5, h4{
     margin: 10px;
 }
 
+
+.transaction-success{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.thumbs-up-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+}
+.thumbs-up-image img{
+    width: 100%;
+    height: 100%;
+}
+
+.get-receipt-close{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.receipt-button{
+    margin: 20px;
+    padding: 5px;
+}
+.get-receipt{
+    background-color: white;
+    color: #FF5733;
+}
+.close-successpage{
+    background-color: #f31f1f;
+    color: #ffffff;
+}
+.receipt{
+    /* display: none; */
+    padding: 30px;
+    background-color: #ffffff;
+}
+.receipt-button:hover{
+    cursor: pointer;
+}
+.receipt-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.receipt-heading .logo{
+    width: 150px;
+}
+.receipt-heading .logo img{
+    width: 100%;
+}
+.receipt-heading p{
+    color: #030a77;
+}
+
+.receipt-body p{
+    border-bottom: #afafaf solid thin;
+    color: #030a77;
+    padding: 20px;
+}
+.receipt-body p span{
+    color: #FF5733;
+}
+.receipt-body p .name {
+    text-transform: uppercase;
+}
+
+
 @media (max-width:865px) {
     body{
         background-position: -20% 0%;
@@ -375,6 +448,10 @@ p, h5, h4{
     }
     .customer-payment-container{
         padding: 5px;
+    }
+    .receipt-body p {
+        padding: 10px;
+        font-size: 10.5px;
     }
 }
 .customer-container h5, .customer-container span{
