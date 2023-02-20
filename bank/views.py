@@ -273,11 +273,6 @@ class TransactionHistoryCreate(SuccessMessageMixin, CreateView):
     # success_url = '/success/'
     success_message = "Transaction successful"
 
-    # def get_form(self):
-    #     form = super().get_form()
-    #     form.fields['date'].widget = DatePickerInput()
-    #     return form
-
     def get_success_url(self):
         return reverse('bank:dashboard_home')
 
@@ -366,7 +361,6 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             success_message = "Transaction successful"
             if bool(balance <= 0) and bool(str(self.model.amount) >= str(balance)):
                 return HttpResponse("Transaction Denied - Insufficience balance", status=406)
-                # HttpResponse({"Transaction Denied": "Insufficience balance"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
                 self.context['success_message'] = success_message
 
@@ -374,17 +368,6 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
 
         def get_success_url(self):
             return reverse('bank:dashboard_home')
-
-# def suspend_account(request):
-#     context = {}
-#     account_suspend = Account.objects.filter(
-#         customer__user__username=request.user.username, suspend_account=True)
-#     message = messages.error(
-#                 request, account_suspend[0].suspend_account_message)
-#             # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
-#     context['account_suspend'] = account_suspend
-#     context['message'] = message
-#     return render(request, 'bank/suspend_error.html', context)
 
 
 class SuspendAccount(LoginRequiredMixin, View):
@@ -401,6 +384,22 @@ class SuspendAccount(LoginRequiredMixin, View):
             request, account_suspend[0].suspend_account_message)
         # return HttpResponse(account_suspend[0].suspend_account_message, status=406)
         self.context['account_suspend'] = account_suspend
+        self.context['message'] = message
+        return render(request, self.template_name, self.context)
+
+
+class InsufficientFund(LoginRequiredMixin, View):
+    """
+    Displays transaction error where entered amount is greater than available balance
+    """
+    template_name = "bank/insufficient_fund_error.html"
+    context = {}
+
+    def get(self, request):
+
+        message = messages.error(
+            request, 'Amount entered is greater than available balance')
+
         self.context['message'] = message
         return render(request, self.template_name, self.context)
 
@@ -447,12 +446,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             transaction.amount for transaction in credit_transaction_history_list) + sum(
             transaction.amount for transaction in transaction_list)
 
-        # all_withdrawals = sum(
-        #     transaction.amount for transaction in payments_sent_list)
-
-        # all_deposits = sum(
-        #     transaction.amount for transaction in transaction_list)
-
         balance = all_deposits - all_withdrawals
 
         if bool(all_deposits <= all_withdrawals) and bool(str(self.model.amount) >= str(balance)):
@@ -462,15 +455,40 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             if account_suspend:
                 return redirect('bank:suspend_account')
             else:
-                # self.context = super(CustomerPaymentCreate,
-                #                      self).post(request, **kwargs)
 
-                # return render(request, self.template_name, self.context)
                 return super(CustomerPaymentCreate, self).post(request)
 
     def form_valid(self, form):
         form.instance.account = self.request.user
-        return super().form_valid(form)
+        transaction_list = PostTransaction.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        transaction_history_list = CreateHistory.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        payments_sent_list = Payment.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        debit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Debit', account__customer__user_id=self.request.user.id)
+        credit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Credit', account__customer__user_id=self.request.user.id)
+
+        all_withdrawals = sum(
+            transaction.amount for transaction in payments_sent_list) + sum(
+            transaction.amount for transaction in debit_transaction_history_list)
+
+        all_deposits = sum(
+            transaction.amount for transaction in credit_transaction_history_list) + sum(
+            transaction.amount for transaction in transaction_list)
+
+        balance = all_deposits - all_withdrawals
+
+        amount = form.instance.amount
+        if amount > balance:
+            return redirect('bank:insufficient_fund')
+        else:
+            return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('bank:transaction_success')
@@ -745,10 +763,12 @@ class CustomerDashView(LoginRequiredMixin, View):
         """
 
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id)
+            account__customer__user_id=request.user.id).order_by("date")
+
+        # print(transaction_list)
 
         payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=request.user.id)
+            account__customer__user_id=request.user.id).order_by("date")
 
         last_payment_received = transaction_list.last()
 

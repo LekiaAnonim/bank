@@ -1,0 +1,39 @@
+<!doctype html>
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+{% load env_extras %}
+
+{% block title %}
+Account Suspended
+{% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
+{% endblock stylesheets %}
+
+
+{% block messages %}
+<div class="row">
+    <div class="col-md-12">
+        {% if messages %}
+        {% for message in messages %}
+
+        <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+            <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Invalid Transaction!</h3>
+            <hr>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock messages %}

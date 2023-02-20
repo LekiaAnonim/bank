@@ -16,8 +16,11 @@ app_name = 'bank'
 
 
 urlpatterns = [
-    path('customer/account_suspended',
+     path('customer/account_suspended',
          views.SuspendAccount.as_view(), name='suspend_account'),
+
+     path('customer/invalid_transaction/insufficient_fund',
+          views.InsufficientFund.as_view(), name='insufficient_fund'),
      path(
           route="my_dashboard",
           view=views.DashboardHomeView.as_view(),
