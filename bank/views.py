@@ -348,7 +348,7 @@ class PaymentCreate(SuccessMessageMixin, CreateView):
             transaction.amount for transaction in transaction_list)
 
         account_suspend = Account.objects.filter(
-            customer__user__username=username, suspend_account=True)
+            customer__user__username=request.user.username, suspend_account=True)
 
         if account_suspend:
             messages.error(request, account_suspend.suspend_account_message)
@@ -482,7 +482,9 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             transaction.amount for transaction in credit_transaction_history_list) + sum(
             transaction.amount for transaction in transaction_list)
 
-        balance = all_deposits - all_withdrawals
+        balance = (all_deposits - all_withdrawals)
+
+        
 
         amount = form.instance.amount
         if amount > balance:
@@ -760,15 +762,37 @@ class CustomerDashView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         """
         Returns the author details
-        """
 
+        """
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id).order_by("date")
+            account__customer__user_id=self.request.user.id)
+
+        transaction_history_list = CreateHistory.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        payments_sent_list = Payment.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        debit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Debit', account__customer__user_id=self.request.user.id)
+        credit_transaction_history_list = transaction_history_list.filter(
+            top_up_type='Credit', account__customer__user_id=self.request.user.id)
+
+        all_withdrawals = sum(
+            transaction.amount for transaction in payments_sent_list) + sum(
+            transaction.amount for transaction in debit_transaction_history_list)
+
+        all_deposits = sum(
+            transaction.amount for transaction in credit_transaction_history_list) + sum(
+            transaction.amount for transaction in transaction_list)
+
+        # transaction_list = PostTransaction.objects.filter(
+        #     account__customer__user_id=request.user.id).order_by("date")
 
         # print(transaction_list)
 
-        payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=request.user.id).order_by("date")
+        # payments_sent_list = Payment.objects.filter(
+        #     account__customer__user_id=request.user.id).order_by("date")
 
         last_payment_received = transaction_list.last()
 
@@ -781,10 +805,10 @@ class CustomerDashView(LoginRequiredMixin, View):
             customer_id=request.user.id)
         login_customer = Customer.objects.filter(id=request.user.id)
 
-        all_deposits = sum(
-            transaction.amount for transaction in transaction_list)
-        all_withdrawals = sum(
-            transaction.amount for transaction in payments_sent_list)
+        # all_deposits = sum(
+        #     transaction.amount for transaction in transaction_list)
+        # all_withdrawals = sum(
+        #     transaction.amount for transaction in payments_sent_list)
 
         balance = (all_deposits - all_withdrawals)
 
