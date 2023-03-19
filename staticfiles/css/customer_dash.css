@@ -453,6 +453,9 @@ p, h5, h4{
         padding: 10px;
         font-size: 10.5px;
     }
+    .receipt-footer p {
+        font-size: 9.5px;
+    }
 }
 .customer-container h5, .customer-container span{
     color: #ffffff;

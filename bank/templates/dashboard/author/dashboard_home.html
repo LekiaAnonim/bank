@@ -17,6 +17,14 @@
     
     <div class="container-fluid">
         <div class="create">
+            {% if currency %}
+            {% for cur in currency %}
+            <div class="new-customer"><a href="{{ cur.get_absolute_url }}">Change currency ({{cur.currency}})</a></div>
+            {% endfor %}
+            {% endif %}
+            
+        </div>
+        <div class="create">
             <div class="new-customer"><a href="{% url 'bank:user-create' %}">Create New Customer</a></div>
             <div class="new-customer"><a href="{% url 'bank:posttransaction-create' %}">Top Up Account</a></div>
             <div class="new-customer"><a href="{% url 'bank:transactionhistory-create' %}">Create Transaction History</a></div>

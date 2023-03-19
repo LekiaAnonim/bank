@@ -106,6 +106,22 @@ class CreateHistory(models.Model):
     class Meta:
         ordering = ['-date']
 
+class Currency(models.Model):
+    CURRENCY_CHOICES = (
+        ('$', 'Dollar'),
+        ('£', 'Pounds' ),
+        ('€', 'Euro'),
+        ('₩', 'Korean Won'),
+        ('₹', 'Indian Rupees'),
+        ('¥', 'Chinese Yuan'),
+    )
+    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
+
+    class Meta:
+        verbose_name_plural = "currencies"
+
+    def get_absolute_url(self):
+        return reverse('bank:currency-update', kwargs={'pk': self.pk})
 
 class Payment(models.Model):
     account = models.ForeignKey(

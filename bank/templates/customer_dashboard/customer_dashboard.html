@@ -10,15 +10,15 @@
         <div class="customer-transaction-summary">
             <div class="customer-transaction-card">
                 <h5>Current Balance</h5>
-                <p>${{balance}}.00</p>
+                <p>{{cur.currency}}{{balance}}.00</p>
             </div>
             <div class="customer-transaction-card">
                 <h5>Last Payment Received</h5>
-                <p>${{last_payment_received.amount}}.00</p>
+                <p>{{cur.currency}}{{last_payment_received.amount}}.00</p>
             </div>
             <div class="customer-transaction-card">
                 <h5>Last Payment Sent</h5>
-                <p>${{last_payment_sent.amount}}.00</p>
+                <p>{{cur.currency}}{{last_payment_sent.amount}}.00</p>
             </div>
         </div>
     </div>

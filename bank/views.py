@@ -14,7 +14,7 @@ from bank.forms import UserLoginForm, CustomerLoginForm, CreateHistoryForm, Cust
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -399,7 +399,11 @@ class InsufficientFund(LoginRequiredMixin, View):
 
         message = messages.error(
             request, 'Amount entered is greater than available balance')
-
+        
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+        cur = Currency.objects.all()[0]
+        self.context['cur'] = cur
         self.context['message'] = message
         return render(request, self.template_name, self.context)
 
@@ -415,6 +419,10 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
     def get(self, request, *args, **kwargs):
         self.context = super(CustomerPaymentCreate,
                              self).get(request, **kwargs)
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+        cur = Currency.objects.all()[0]
+        self.context['cur'] = cur
         message = "Transaction successful"
         self.context['message'] = message
         return self.context
@@ -500,6 +508,14 @@ class PaymentUpdate(UpdateView):
     model = Payment
     fields = '__all__'
 
+class CurrencyUpdate(UpdateView):
+    model = Currency
+    fields = '__all__'
+    template_name = 'bank/currency_form.html'
+
+    def get_success_url(self):
+        return reverse('bank:dashboard_home')
+
 
 class PaymentDelete(DeleteView):
     model = Payment
@@ -549,6 +565,10 @@ class DashboardHomeView(LoginRequiredMixin, View):
         login_user_accounts = Account.objects.filter(
             customer_id=request.user.id)
         login_customer = Customer.objects.filter(id=request.user.id)
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+        cur = Currency.objects.all()[0]
+        self.context['cur'] = cur
         self.context['customers'] = customers
         self.context['accounts'] = accounts
         self.context['login_user_accounts'] = login_user_accounts
@@ -812,6 +832,10 @@ class CustomerDashView(LoginRequiredMixin, View):
 
         balance = (all_deposits - all_withdrawals)
 
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+        cur = Currency.objects.all()[0]
+        self.context['cur'] = cur
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
         self.context['transaction_list'] = transaction_list
@@ -839,7 +863,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         """
         Returns the author details
         """
-
+        cur = Currency.objects.all()[0]
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=request.user.id).order_by("date")
 
@@ -863,27 +887,27 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction_data['Account Name'].append(
                 transaction.company_name)
 
-            transaction_data['Credit'].append('$'+str(transaction.amount))
+            transaction_data['Credit'].append(str(transaction.amount))
             transaction_data['Debit'].append('---')
 
         for transaction in credit_createhistory_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(
                 transaction.company_name)
-            transaction_data['Credit'].append('$'+str(transaction.amount))
+            transaction_data['Credit'].append(str(cur.currency) + str(transaction.amount))
             transaction_data['Debit'].append('---')
 
         for transaction in payments_sent_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(transaction.account_name)
             transaction_data['Credit'].append('---')
-            transaction_data['Debit'].append('-$' + str(transaction.amount))
+            transaction_data['Debit'].append('-'+str(cur.currency) + str(transaction.amount))
 
         for transaction in debit_createhistory_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(transaction.company_name)
             transaction_data['Credit'].append('---')
-            transaction_data['Debit'].append('-$'+str(transaction.amount))
+            transaction_data['Debit'].append('-'+str(cur.currency)+str(transaction.amount))
 
         transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
         transaction_dataframe['Date'] = pd.to_datetime(
@@ -904,6 +928,12 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction.amount for transaction in transaction_list)
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list)
+        
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+
+        
+        self.context['cur'] = cur
 
         self.context['transaction_dataframe'] = transaction_dataframe
         return render(request, self.template_name, self.context)
@@ -926,5 +956,9 @@ class TransactionSuccessful(LoginRequiredMixin, View):
             payments_sent_list = Payment.objects.filter(
                 account__id=request.user.id).order_by("-date")
 
+        currency = Currency.objects.all()
+        self.context['currency'] = currency
+        cur = Currency.objects.all()[0]
+        self.context['cur'] = cur
         self.context['payments_sent_list'] = payments_sent_list
         return render(request, self.template_name, self.context)

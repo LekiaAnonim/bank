@@ -46,6 +46,9 @@ urlpatterns = [
     path('customer/<int:pk>/update/',
          views.CustomerUpdate.as_view(), name='customer-update'),
 
+     path('currency/<int:pk>/update/',
+         views.CurrencyUpdate.as_view(), name='currency-update'),
+
     path('customer/<int:pk>/delete/',
          views.CustomerDelete.as_view(), name='customer-delete'),
 

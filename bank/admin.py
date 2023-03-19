@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 # Register your models here.
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency
 
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -14,6 +14,14 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Customer, CustomerAdmin)
+
+
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = ('currency',)
+    fields = ['currency',]
+
+
+admin.site.register(Currency, CurrencyAdmin)
 
 
 class CustomerInline(admin.TabularInline):
