@@ -10,15 +10,15 @@
         <div class="customer-transaction-summary">
             <div class="customer-transaction-card">
                 <h5>Current Balance</h5>
-                <p>{{cur.currency}}{{balance}}.00</p>
+                <p>{{login_user_accounts.currency}}{{balance}}.00</p>
             </div>
             <div class="customer-transaction-card">
                 <h5>Last Payment Received</h5>
-                <p>{{cur.currency}}{{last_payment_received.amount}}.00</p>
+                <p>{{login_user_accounts.currency}}{{last_payment_received.amount}}.00</p>
             </div>
             <div class="customer-transaction-card">
                 <h5>Last Payment Sent</h5>
-                <p>{{cur.currency}}{{last_payment_sent.amount}}.00</p>
+                <p>{{login_user_accounts.currency}}{{last_payment_sent.amount}}.00</p>
             </div>
         </div>
     </div>
@@ -51,15 +51,15 @@
             </div>
             
         </div>
-        {% if accounts %}
-        {% for account in login_user_accounts %}
-        <div class="customer-account-info">
-            <p class="customer-acct-no"> <span>Account Number:</span> {{account.account_number}}</p>
+        {% comment %} {% if accounts %} {% endcomment %}
+        {% comment %} {% for account in login_user_accounts %}
+        <div class="customer">
+            <p class="customer-acct-no"> <span>Account Number:</span> Hello</p>
             <p class="customer-acct-type"><span>Account Type:</span> {{account.account_type}}</p>
         </div>
             
-        {% endfor %}
-        {% endif %}
+        {% endfor %} {% endcomment %}
+        {% comment %} {% endif %} {% endcomment %}
     </div>
     
 {% endblock content %}

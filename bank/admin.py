@@ -30,9 +30,9 @@ class CustomerInline(admin.TabularInline):
 
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('created_on', 'customer', 'account_number', 'account_type',
-                    'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message')
+                    'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message', 'currency')
     fields = ['customer', 'account_number',
-              'account_type', 'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message']
+              'account_type', 'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message', 'currency']
 
 
 admin.site.register(Account, AccountAdmin)

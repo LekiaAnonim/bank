@@ -59,6 +59,16 @@ class Account(models.Model):
         default='This account has been blocked Kindly contact the administrator to learn more. Or, enter a valid username and password.')
     suspend_account_message = models.TextField(
         default='This account has been suspended Kindly contact the administrator to learn more. Or, enter a valid username and password.')
+    
+    CURRENCY_CHOICES = (
+        ('$', 'Dollar'),
+        ('£', 'Pounds' ),
+        ('€', 'Euro'),
+        ('₩', 'Korean Won'),
+        ('₹', 'Indian Rupees'),
+        ('¥', 'Chinese Yuan'),
+    )
+    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
 
     class Meta:
         ordering = ['account_type', 'created_on']
@@ -115,7 +125,7 @@ class Currency(models.Model):
         ('₹', 'Indian Rupees'),
         ('¥', 'Chinese Yuan'),
     )
-    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
+    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='$', null=True)
 
     class Meta:
         verbose_name_plural = "currencies"

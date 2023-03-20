@@ -16,14 +16,13 @@
 {% block content %}
     
     <div class="container-fluid">
-        <div class="create">
+        {% comment %} <div class="create">
             {% if currency %}
             {% for cur in currency %}
             <div class="new-customer"><a href="{{ cur.get_absolute_url }}">Change currency ({{cur.currency}})</a></div>
             {% endfor %}
             {% endif %}
-            
-        </div>
+        </div> {% endcomment %}
         <div class="create">
             <div class="new-customer"><a href="{% url 'bank:user-create' %}">Create New Customer</a></div>
             <div class="new-customer"><a href="{% url 'bank:posttransaction-create' %}">Top Up Account</a></div>
@@ -38,6 +37,7 @@
                         <th>USER ID</th>
                         <th>Account Name</th>
                         <th>Account Number</th>
+                        <th>Currency</th>
                         <th>Account Type</th>
                         <th>Suspend</th>
                         <th>Block</th>
@@ -53,6 +53,7 @@
                                 <td><a href="{% url 'bank:user-update' account.customer.user.id %}">{{account.customer.user.username}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_name}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_number}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.currency}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.account_type}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.suspend_account}}</a></td>
                                 <td><a href="{{ account.get_absolute_url }}">{{account.block_account}}</a></td>

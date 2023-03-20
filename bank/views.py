@@ -820,10 +820,9 @@ class CustomerDashView(LoginRequiredMixin, View):
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
-
-        login_user_accounts = Account.objects.filter(
-            customer_id=request.user.id)
-        login_customer = Customer.objects.filter(id=request.user.id)
+        login_user_accounts = Account.objects.filter(customer__user_id=request.user.id)[0]
+        
+        login_customer = Customer.objects.filter(id=self.request.user.id)
 
         # all_deposits = sum(
         #     transaction.amount for transaction in transaction_list)
@@ -865,19 +864,19 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         """
         cur = Currency.objects.all()[0]
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=request.user.id).order_by("date")
+            account__customer__user_id=self.request.user.id).order_by("date")
 
         createhistory_list = CreateHistory.objects.filter(
-            account__customer__user_id=request.user.id).order_by("date")
+            account__customer__user_id=self.request.user.id).order_by("date")
 
-        debit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
+        debit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
                                                              top_up_type='Debit').order_by("date")
-        credit_createhistory_list = createhistory_list.filter(account__customer__user_id=request.user.id,
+        credit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
                                                               top_up_type='Credit').order_by("date")
 
-        if request.user:
-            payments_sent_list = Payment.objects.filter(
-                account__id=request.user.id).order_by("-date")
+        # if request.user:
+        payments_sent_list = Payment.objects.filter(
+            account__id=self.request.user.id).order_by("-date")
 
         transaction_data = {'Date': [],
                             'Account Name': [], 'Credit': [], 'Debit': []}
@@ -894,20 +893,20 @@ class TransactionHistoryView(LoginRequiredMixin, View):
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(
                 transaction.company_name)
-            transaction_data['Credit'].append(str(cur.currency) + str(transaction.amount))
+            transaction_data['Credit'].append(str(transaction.amount))
             transaction_data['Debit'].append('---')
 
         for transaction in payments_sent_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(transaction.account_name)
             transaction_data['Credit'].append('---')
-            transaction_data['Debit'].append('-'+str(cur.currency) + str(transaction.amount))
+            transaction_data['Debit'].append('-'+str(transaction.amount))
 
         for transaction in debit_createhistory_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Account Name'].append(transaction.company_name)
             transaction_data['Credit'].append('---')
-            transaction_data['Debit'].append('-'+str(cur.currency)+str(transaction.amount))
+            transaction_data['Debit'].append('-'+str(transaction.amount))
 
         transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
         transaction_dataframe['Date'] = pd.to_datetime(
@@ -921,8 +920,8 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         accounts = Account.objects.all()
 
         login_user_accounts = Account.objects.filter(
-            id=request.user.id)
-        login_customer = Customer.objects.filter(id=request.user.id)
+            id=self.request.user.id)
+        login_customer = Customer.objects.filter(id=self.request.user.id)
 
         all_deposits = sum(
             transaction.amount for transaction in transaction_list)
