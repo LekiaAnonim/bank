@@ -139,7 +139,7 @@ class Payment(models.Model):
     account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
         RegexValidator(r'^\d{1,12}$')])
     bank = models.CharField(
-        max_length=255, null=True, blank=True, default='SkyHigh Premium')
+        max_length=255, null=True, blank=True)
     account_name = models.CharField(
         max_length=255, blank=True, null=True)
     date = models.DateField(auto_now_add=True)

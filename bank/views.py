@@ -862,6 +862,9 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=self.request.user.id).order_by("date")
 
+        # transaction_list = PostTransaction.objects.filter(
+        #     account__customer__user_id=self.request.user.id)
+
         createhistory_list = CreateHistory.objects.filter(
             account__customer__user_id=self.request.user.id).order_by("date")
 
