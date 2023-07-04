@@ -779,7 +779,7 @@ class CustomerDashView(LoginRequiredMixin, View):
 
         """
         transaction_list = PostTransaction.objects.filter(
-            account__customer__user_id=self.request.user.id)
+            account__customer__user_id=self.request.user.id).order_by("date")
 
         transaction_history_list = CreateHistory.objects.filter(
             account__customer__user_id=self.request.user.id)
