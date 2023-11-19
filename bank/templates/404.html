@@ -1,0 +1,16 @@
+<!doctype html>
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+
+{% block sidebar %}
+<p></p>
+{% endblock sidebar %}
+
+{% block content %}
+    
+    <div class="error-container" style="padding: 50px;">
+        <h2 style="color: white;">You should not be here.</h2>
+        <h4 style="color: white;">Looks like you lost you way again.</h4>
+        <p><a style="color: white;" href="{% url 'bank:customerdash_home' %}">Go back Home 👈</a></p>
+    </div>
+{% endblock content %}

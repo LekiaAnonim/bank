@@ -8,9 +8,9 @@
 {% block content %}
 
 				<span class="login100-form-title p-b-41">
-					Register CADENCE BANK
+					Register SKYHIGH PREMIUM BANK
 				</span>
-				<form action="{% url 'bank:register' %}" class="login100-form p-b-33 p-t-5"
+				<form action="" class="login100-form p-b-33 p-t-5"
                       method="post" novalidate>
                     {% csrf_token %}
 
@@ -45,7 +45,7 @@
                         >Already Have an Account!</a>
                     </div>
                     <div class="text-center font-weight-bold">
-                      <a class="small text-info" href="{% url 'bank:dashboard_home' %}">
+                      <a class="small text-info" href="{% url 'bank:login' %}">
                           Home
                       </a>
                     </div>

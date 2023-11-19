@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load cloudinary %}
 <html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
@@ -9,7 +10,7 @@
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf_token" content="{{ csrf_token }}">
-
+        <meta name="google-site-verification" content="J3uHWKo6UkFGmEz_dmaJ0wpGwPO95_IPH39yPCXV3DI" />
         <!-- Favicon-->
         <link rel="icon" href="{% static 'blog/images/favicon.png' %}" type="image/x-icon" />
 
@@ -72,7 +73,10 @@
                                 <a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="d-none d-lg-inline text-gray-700">{{ user.username }}</span>
-                                    <img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic">
+                                   
+                                    
+                                    <img class="avatar" src="{{ user.customer.image.url }}" alt="{{user.username}}">
+                                    
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="{% url 'bank:customer-update' user.id %}">
@@ -93,62 +97,34 @@
 
             <div class="page-wrap">
                 <div class="app-sidebar colored">
-                    <div class="sidebar-header" style="display: flex; flex-direction:column; height:30%;">
+                    <div class="sidebar-header">
                         <a class="header-brand" href="{% url 'bank:dashboard_home' %}">
-                            <div class="logo">
+                            <!-- <div class="logo">
                                 <a href="/" class="img-link"><img src="{% static 'cadence.png' %}" alt="Cadence Bank" width="197" height="46"></a>
-                            </div>
+                            </div> -->
                             <span class="text" style="color: white; font-size:large;">Dashboard</span>
                         </a>
                         <button type="button" class="nav-toggle">
                             <i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
                         <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
-                        <div class="logo" style="background: none; border-radius: 50%; width: 80px; height: 80px;">
-                            <a href="/" class="img-link"><img class="avatar" src="{{ user.customer.image.url }}" alt="user-profile-pic" style="max-width:100%; max-height:100%;"
-                                    ></a>
-                        </div>
+                        <!-- <div class="logo" style="border-radius: 50%; width: 80px; height: 80px;">
+                            <a href="/" class="img-link">
+                                <img class="avatar" style="border-radius: 50%; width:95%; height:95%;" src="{{ user.customer.image.url }}" alt="{{user.username}}">
+                            </a>
+                        </div> -->
                     </div>
                     
 
-              {% block sidebar %}
-                    <div class="sidebar-content">
-                        <div class="nav-container">
-                            <nav id="main-menu-navigation" class="navigation-main">
+                {% block sidebar %}
+                <div class="sidebar-content" >
+                    <div class="nav-container">
+                        <nav id="main-menu-navigation" class="navigation-main">
 
                                 <div class="nav-lavel">Home</div>
                                 <div class="nav-item">
                                     <a href="{% url 'bank:dashboard_home' %}"><i class="ik ik-home"></i><span>Home</span></a>
                                 </div>
-                                <div class="nav-lavel">Create Customer Profile</div>
-                                <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="fa fa-newspaper"></i><span>User | Customer</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{% url 'bank:user-create' %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>New User Profile</span></a>
-                                        <a href="{% url 'bank:user-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>Update User Profile</span></a>
-                                        <a href="{% url 'bank:customer-create' %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>New Customer</span></a>
-                                        <a href="{% url 'bank:customer-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>Update Customer Profile</span></a>
-                                        <a href="{% url 'bank:customers-list' user.id%}" class="menu-item">
-                                            <i class="ik ik-edit-2"></i><span>List of Customers</span></a>
-                                    </div>
-                                </div>
-
-                                <div class="nav-lavel">Create Bank Account</div>
-                                <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-users"></i><span>Account</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{% url 'bank:account-create' %}" class="menu-item">
-                                            <i class="ik ik-user"></i><span>New Account</span></a>
-                                        <a href="{% url 'bank:account-update' user.id %}" class="menu-item">
-                                            <i class="ik ik-user-plus"></i><span>Update Account</span></a>
-
-                                        <a href="{% url 'bank:accounts-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-user-plus"></i><span>List of Accounts</span></a>
-                                    </div>
-                                </div>
+                               
 
                                 <div class="nav-lavel">Utilities</div>
                                 <div class="nav-item has-sub">
@@ -158,18 +134,14 @@
                                             <i class="ik ik-edit-2"></i><span>Account Topup</span></a>
                                         <a href="{% url 'bank:payment-create' %}" class="menu-item">
                                             <i class="ik ik-edit-2"></i><span>Transfer Money</span></a>
-                                        <a href="{% url 'bank:payment-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-layers"></i><span>Customer's Payment History</span></a>
-                                        <a href="{% url 'bank:posttransactions-list' user.id %}" class="menu-item">
-                                            <i class="ik ik-file-text"></i><span>Posted Transactions</span></a>
                                     </div>
                                 </div>
 
 
-                                <div class="nav-lavel">About</div>
+                                <!-- <div class="nav-lavel">About</div>
                                 <div class="nav-item">
                                     <a href="javascript:void(0)"><i class="ik ik-info"></i><span>About</span></a>
-                                </div>
+                                </div> -->
                             </nav>
                         </div>
                     </div>
@@ -183,9 +155,9 @@
                             <div class="col-md-12">
                                 {% if messages %}
                                     {% for message in messages %}
-                                      <div class="text-center font-weight-bold alert alert-dismissible fade show
+                                      <div id="message" class="successful text-center font-weight-bold alert alert-dismissible fade show
                                            {% if message.level_tag == 'error' %}
-                                           alert-danger
+                                           message
                                            {% else %}
                                            alert-{{ message.tags }}
                                            {% endif %}">
@@ -280,42 +252,41 @@
                   >
                     <span aria-hidden="true">×</span>
                   </button>
-                </div>
-                <div class="modal-body">
-                  Select "Logout" below if you are ready to end your current session.
-                </div>
-                <div class="modal-footer">
-                  <button
-                    class="btn btn-secondary"
-                    type="button"
-                    data-dismiss="modal"
-                  >
+                        </div>
+                        <div class="modal-body">
+                            Select "Logout" below if you are ready to end your current session.
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">
                     Cancel
                   </button>
-                  <a class="btn btn-danger" href="accounts/logged_out">Logout</a>
+                            <a class="btn btn-danger" href="accounts/logged_out">Logout</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
 
-    {% block scripts %}
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>
-            window.jQuery || document.write('<script src="{% static 'dashboard/author/src/js/vendor/jquery-3.3.1.min.js' %}"><\/script>')
-        </script>
-        <script src="{% static 'dashboard/author/plugins/popper.js/dist/umd/popper.min.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/screenfull/dist/screenfull.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/moment/moment.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}"></script>
-        <script src="{% static 'dashboard/author/plugins/c3/c3.min.js' %}"></script>
-        <script src="{% static 'dashboard/author/dist/js/theme.min.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-        <script src="{%  static 'dashboard/author/js/bootstrap-tagsinput.js' %}"></script>
-        <script src="{% static 'dashboard/author/js/prism.js' %}"></script>
-        <script src="{% static 'dashboard/author/js/generate-account-no.js' %}"></script>
-        <script src="{% static 'dashboard/author/js/otp.js' %}"></script>
-   {% endblock scripts %}
-    </body>
+            {% block scripts %}
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script>
+                window.jQuery || document.write('<script src="{% static '
+                    dashboard / author / src / js / vendor / jquery - 3.3 .1.min.js ' %}"><\/script>')
+            </script>
+            <script src="{% static 'dashboard/author/plugins/popper.js/dist/umd/popper.min.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/screenfull/dist/screenfull.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/moment/moment.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+            <script src="{% static 'dashboard/author/plugins/c3/c3.min.js' %}"></script>
+            <script src="{% static 'dashboard/author/dist/js/theme.min.js' %}"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+            <script src="{%  static 'dashboard/author/js/bootstrap-tagsinput.js' %}"></script>
+            <script src="{% static 'dashboard/author/js/prism.js' %}"></script>
+            <script src="{% static 'dashboard/author/js/generate-account-no.js' %}"></script>
+            <script src="{% static 'dashboard/author/js/otp.js' %}"></script>
+            <script src="{% static 'dashboard/author/js/message.js' %}"></script>
+            {% endblock scripts %}
+</body>
+
 </html>

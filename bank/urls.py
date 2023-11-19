@@ -1,4 +1,7 @@
 from django.urls import path
+from django.contrib.staticfiles.storage import staticfiles_storage
+
+from django.views.generic.base import RedirectView
 
 from . import views
 
@@ -13,7 +16,11 @@ app_name = 'bank'
 
 
 urlpatterns = [
-     # path('', views.CustomerLoginView.as_view(), name='index'),
+     path('customer/account_suspended',
+         views.SuspendAccount.as_view(), name='suspend_account'),
+
+     path('customer/invalid_transaction/insufficient_fund',
+          views.InsufficientFund.as_view(), name='insufficient_fund'),
      path(
           route="my_dashboard",
           view=views.DashboardHomeView.as_view(),
@@ -29,12 +36,24 @@ urlpatterns = [
           view=views.TransactionHistoryView.as_view(),
           name="transaction_history"
      ),
+    path(
+        route="customer/transaction_successful",
+        view=views.TransactionSuccessful.as_view(),
+        name="transaction_success"
+    ),
     path('customer/create/', views.CustomerCreate.as_view(), name='customer-create'),
+    path('enrol-customer/create/', views.EnrolCustomerCreate.as_view(), name='enrol-customer-create'),
     path('customer/<int:pk>/update/',
          views.CustomerUpdate.as_view(), name='customer-update'),
 
+     path('currency/<int:pk>/update/',
+         views.CurrencyUpdate.as_view(), name='currency-update'),
+
     path('customer/<int:pk>/delete/',
          views.CustomerDelete.as_view(), name='customer-delete'),
+
+    path('customer-user/<int:pk>/update/',
+         views.CustomerUserUpdate.as_view(), name='customer-user-update'),
 
     path('customer/<int:pk>',
          views.CustomerDetailView.as_view(), name='customer-detail'),
@@ -47,6 +66,8 @@ urlpatterns = [
     path('user/<int:pk>/delete/',
          views.UserDelete.as_view(), name='user-delete'),
 
+    path('enrol-account/create/', views.EnrolAccountCreate.as_view(),
+         name='enrol-account-create'),
     path('account/create/', views.AccountCreate.as_view(), name='account-create'),
     path('account/<int:pk>/update/',
          views.AccountUpdate.as_view(), name='account-update'),
@@ -71,6 +92,9 @@ urlpatterns = [
 
     path('<int:pk>/posttransactions',
          views.PostTransactionListView.as_view(), name='posttransactions-list'),
+
+    path('transactionhistory/create/', views.TransactionHistoryCreate.as_view(),
+         name='transactionhistory-create'),
 
     path('payment/create/', views.PaymentCreate.as_view(),
          name='payment-create'),

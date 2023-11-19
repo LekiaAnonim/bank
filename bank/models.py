@@ -4,29 +4,27 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.urls import reverse
-# from django_otp.util import hex_validator, random_hex
 from django.conf import settings
 from django.core.mail import send_mail
-
 from django.template import Context, Template
+from cloudinary.models import CloudinaryField
+
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    CUSTOMER_ID = models.CharField(max_length=255, null=True)
-    # first_name = models.CharField(max_length=255, null=True)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
-    # last_name = models.CharField(max_length=255, null=True)
+    DOB = models.DateField(null=True, blank=True)
     SSN = USSocialSecurityNumberField(max_length=9)
     mobile_number = PhoneNumberField()
-    # email_address = models.EmailField(max_length=254, null=True)
+    home_address = models.CharField(max_length=255, null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(default='avatar.png', upload_to='avatar')
+    image = CloudinaryField('image')
 
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
-        return f'{self.user.first_name} {self.middle_name} {self.user.last_name}'
+        return f'{self.user.first_name} {self.user.last_name} \n {self.user.email}'
 
     def account_name(self):
         return f'{self.user.first_name} {self.middle_name} {self.user.last_name}'
@@ -39,8 +37,7 @@ class Customer(models.Model):
 
 class Account(models.Model):
     customer = models.ForeignKey(
-        Customer, on_delete=models.SET_NULL, null=True)
-    # balance = models.IntegerField(blank=True, null=True)
+        Customer, on_delete=models.CASCADE, null=True)
     CHOICES = (
         ('Checking', 'Checking'),
         ('Savings', 'Savings'),
@@ -55,7 +52,23 @@ class Account(models.Model):
     account_type = models.CharField(max_length=300, choices=CHOICES, null=True)
     account_number = models.CharField(max_length=12, unique=True, null=True, validators=[
                                       RegexValidator(r'^\d{1,12}$')])
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateField(auto_now_add=True)
+    suspend_account = models.BooleanField(default=False)
+    block_account = models.BooleanField(default=False)
+    block_account_message = models.TextField(
+        default='This account has been blocked Kindly contact the administrator to learn more. Or, enter a valid username and password.')
+    suspend_account_message = models.TextField(
+        default='This account has been suspended Kindly contact the administrator to learn more. Or, enter a valid username and password.')
+    
+    CURRENCY_CHOICES = (
+        ('$', 'Dollar'),
+        ('£', 'Pounds' ),
+        ('€', 'Euro'),
+        ('₩', 'Korean Won'),
+        ('₹', 'Indian Rupees'),
+        ('¥', 'Chinese Yuan'),
+    )
+    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
 
     class Meta:
         ordering = ['account_type', 'created_on']
@@ -73,30 +86,60 @@ class Account(models.Model):
 class PostTransaction(models.Model):
     account = models.ForeignKey(
         Account, on_delete=models.SET_NULL, null=True)
-    account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
-        RegexValidator(r'^\d{1,12}$')])
-    bank = models.CharField(
-        max_length=255, null=True, default='Cadence')
-    account_name = models.CharField(
-        max_length=255, blank=True, null=True)
-    date = models.DateField(auto_now_add=True)
+    company_name = models.CharField(max_length=255, null=True)
+    date = models.DateField(null=True)
     amount = models.IntegerField(blank=False, null=False)
-    error_message = models.TextField(blank=True)
 
     def get_absolute_url(self):
-        return reverse('bank:posttransactions-list', kwargs={'pk': self.pk})
+        return reverse('bank:posttransaction-update', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['-date']
 
 
+class CreateHistory(models.Model):
+    account = models.ForeignKey(
+        Account, on_delete=models.SET_NULL, null=True)
+    company_name = models.CharField(max_length=255, null=True, blank=True)
+    date = models.DateField()
+    amount = models.IntegerField(blank=False, null=False)
+    CHOICES = (
+        ('Credit', 'Credit'),
+        ('Debit', 'Debit'),
+    )
+
+    top_up_type = models.CharField(max_length=300, choices=CHOICES, null=True)
+
+    def get_absolute_url(self):
+        return reverse('bank:createhistory-update', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['-date']
+
+class Currency(models.Model):
+    CURRENCY_CHOICES = (
+        ('$', 'Dollar'),
+        ('£', 'Pounds' ),
+        ('€', 'Euro'),
+        ('₩', 'Korean Won'),
+        ('₹', 'Indian Rupees'),
+        ('¥', 'Chinese Yuan'),
+    )
+    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='$', null=True)
+
+    class Meta:
+        verbose_name_plural = "currencies"
+
+    def get_absolute_url(self):
+        return reverse('bank:currency-update', kwargs={'pk': self.pk})
+
 class Payment(models.Model):
     account = models.ForeignKey(
-        Account, on_delete=models.SET_NULL, null=True, blank=True)
+        User, on_delete=models.SET_NULL, null=True, blank=True)
     account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
         RegexValidator(r'^\d{1,12}$')])
     bank = models.CharField(
-        max_length=255, null=True, blank=True, default='Cadence')
+        max_length=255, null=True, blank=True)
     account_name = models.CharField(
         max_length=255, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
@@ -106,55 +149,7 @@ class Payment(models.Model):
     receiver_email = models.EmailField(blank=True)
     routing_number = models.CharField(max_length=255, blank=True, null=True)
     bank_address = models.CharField(max_length=255, blank=True, null=True)
-
+    remark = models.CharField(max_length=255, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})
-
-    # def get_throttle_factor(self):
-    #     return settings.OTP_EMAIL_THROTTLE_FACTOR
-
-    # def generate_challenge(self, extra_context=None):
-    #     """
-    #     Generates a random token and emails it to the user.
-
-    #     :param extra_context: Additional context variables for rendering the
-    #         email template.
-    #     :type extra_context: dict
-
-    #     """
-    #     self.generate_token(valid_secs=settings.OTP_EMAIL_TOKEN_VALIDITY)
-
-    #     context = {'token': self.token, **(extra_context or {})}
-    #     if settings.OTP_EMAIL_BODY_TEMPLATE:
-    #         body = Template(settings.OTP_EMAIL_BODY_TEMPLATE).render(
-    #             Context(context))
-    #     else:
-    #         body = get_template(
-    #             settings.OTP_EMAIL_BODY_TEMPLATE_PATH).render(context)
-
-    #     send_mail(settings.OTP_EMAIL_SUBJECT,
-    #               body,
-    #               settings.OTP_EMAIL_SENDER,
-    #               [self.account.customer.user.email])
-
-    #     message = "sent by email"
-
-    #     return message
-
-    # def verify_token(self, token):
-    #     verify_allowed, _ = self.verify_is_allowed()
-    #     if verify_allowed:
-    #         verified = super().verify_token(token)
-
-    #         if verified:
-    #             self.throttle_reset()
-    #         else:
-    #             self.throttle_increment()
-    #     else:
-    #         verified = False
-
-    #     return verified
-
-    # class Meta:
-    #     ordering = ['-date']

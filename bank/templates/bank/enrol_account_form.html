@@ -1,0 +1,44 @@
+<!doctype html>
+{% extends 'registration/account_base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}
+Create Article
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="content-section">
+
+        <div class="card shadow-sm mb-3 w-100">
+
+            <h4 class="card-header">Account</h4>
+            <!-- <button class="generate-account-no"> Generate Account Number</button> -->
+            <div>
+                <p class="display-generate-no"></p>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="articleForm" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
+                    <input type="submit" class="login100-form-btn" value="Submit">
+                </form>
+            </div>
+            <hr />
+            <div class="text-center">
+                <a class="small text-primary" href="{% url 'bank:login' %}">You can login now!</a>
+            </div>
+            <div class="text-center font-weight-bold">
+                <a class="small text-info" href="{% url 'bank:login' %}">
+                    Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

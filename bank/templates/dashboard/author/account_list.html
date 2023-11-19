@@ -1,6 +1,6 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% load static %}
-
+{% load cloudinary %}
 
 {% block title %}
 All Accounts
@@ -87,7 +87,7 @@ All Accounts
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">
                           Cancel
                         </button>
-                        <a class="btn btn-danger" href="{% url 'bank:account-delete' user.id %}">Delete Account</a>
+                        <a class="btn btn-danger" href="{% url 'bank:account-delete' account.id %}">Delete Account</a>
                       </div>
                     </div>
                   </div>

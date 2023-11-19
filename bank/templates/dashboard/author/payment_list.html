@@ -1,7 +1,7 @@
 <!doctype html>
 {% extends 'dashboard/dashboard_base.html' %}
 {% load static %}
-
+{% load cloudinary %}
 
 {% block title %}
 All Payments
@@ -46,47 +46,51 @@ All Payments
 
                     <div class="media-body">
                       {% if payment.account %}
-                      <h3 class="title mb-1"><a href="{% url 'bank:payment-update' payment.id %}">{{ payment.account.account_name}}</a></h3>
-                      <div class="meta mb-1">
-                        <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
-                        <span class="date">Receiver's Account Number:<b>{{ payment.account.account_number }} </b></span>
-                        <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
-                        <span class="time">{{ payment.date }}</span>
-
-                        <span class="time">
-                          <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                          </i>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'bank:payment-update' payment.id %}">Update</a>
-                            <div class="dropdown-divider w-100"></div>
-                            <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item"
-                              href="javascript:void(0)">Delete</a>
-                          </div>
-                        </span>
+                      <div class="trans-cont">
+                        <h3 class="title mb-1"><a href="{% url 'bank:payment-update' payment.id %}">{{ payment.account.account_name}}</a></h3>
+                        <div class="meta mb-1">
+                          <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
+                          <span class="date">Receiver's Account Number:<b>{{ payment.account.account_number }} </b></span>
+                          <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
+                          <span class="time">{{ payment.date }}</span>
+                        
+                          <span class="time">
+                            <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </i>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="{% url 'bank:payment-update' payment.id %}">Update</a>
+                              <div class="dropdown-divider w-100"></div>
+                              <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete</a>
+                            </div>
+                          </span>
+                        </div>
                       </div>
+                     
                       {% else %}
-                      <h3 class="title mb-1"><a href="{% url 'bank:payment-update' payment.id %}">{{ payment.account_name}}</a></h3>
-                      <div class="meta mb-1">
-                        <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
-                        <span class="date">Receiver's Account Number:<b>{{ payment.account_number }} </b></span>
-                        <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
-                        <span class="time">{{ payment.date }}</span>
-                      
-                        <span class="time">
-                          <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          </i>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'bank:payment-update' payment.id %}">Update</a>
-                            <div class="dropdown-divider w-100"></div>
-                            <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete</a>
-                          </div>
-                        </span>
+                      <div class="trans-cont">
+                        <h3 class="title mb-1"><a href="{% url 'bank:payment-update' payment.id %}">{{ payment.account_name}}</a></h3>
+                        <div class="meta mb-1">
+                          <span class="date"><b>Receiver's Bank</b>: <i>{{ payment.bank }}</i></span>
+                          <span class="date">Receiver's Account Number:<b>{{ payment.account_number }} </b></span>
+                          <span class="time"><b>Amount</b>: ${{ payment.amount }}</span>
+                          <span class="time">{{ payment.date }}</span>
+                        
+                          <span class="time">
+                            <i class="fas fa-chevron-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </i>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="{% url 'bank:payment-update' payment.id %}">Update</a>
+                              <div class="dropdown-divider w-100"></div>
+                              <a data-toggle="modal" data-target="#deleteModal" class="dropdown-item" href="javascript:void(0)">Delete</a>
+                            </div>
+                          </span>
+                        </div>
                       </div>
+                      
                       {% endif %}
                       
 
-                      <hr class="solid"><!-- Solid divider -->
+                      <!-- <hr class="solid">Solid divider -->
                     </div>
                     <!--//media-body-->
                   </div>

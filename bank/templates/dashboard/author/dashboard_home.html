@@ -1,6 +1,7 @@
 <!doctype html>
 {% extends 'dashboard/dashboard_base.html' %}
 {% load static %}
+{% load cloudinary %}
 {% load mathfilters %}
 
 {% block title %}
@@ -15,184 +16,57 @@
 {% block content %}
     
     <div class="container-fluid">
-        <div class="row clearfix">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="state">
-                                                <h6>Account Details</h6>
-                                                
-                                                <h2>{{ user.username }}</h2>
-                                                {% if is_superuser %}
-                                                    {% if accounts %}
-                                                    {% for account in accounts %}
-                                                        <small>{{ account.id }}</small>
-                                                        <h6 class="text-small"><span>Acount name: </span>{{ account.account_name }}</h6>
-                                                        <h6 class="text-small"><span>Acount number: </span>{{ account.account_number }}</h6>
-                                                        <h6 class="text-small"><span>Acount type: </span>{{ account.account_type }}</h6>
-                                                        <hr>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                {% else %}
-                                                    {% if accounts %}
-                                                    {% for account in login_user_accounts %}
-                                                        <small>{{ account.id }}</small>
-                                                        <h6 class="text-small"><span>Acount name: </span>{{ account.account_name }}</h6>
-                                                        <h6 class="text-small"><span>Acount number: </span>{{ account.account_number }}</h6>
-                                                        <h6 class="text-small"><span>Acount type: </span>{{ account.account_type }}</h6>
-                                                        <hr>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                {% endif %}
-                                                
-                                                
-                                                
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-edit-2"></i>
-                                            </div>
-                                        </div>
-                                        <small class="text-small mt-10 d-block">Account information</small>
-                                    </div>
-                                    <!-- <div class="progress progress-sm">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="widget">
-                                    <div class="widget-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            
-                                            <div class="state available-balance">
-                                                <h2>Transaction Summary</h2>
-                                                <hr>
-                                                <p>Deposits: ${{ all_deposits }}.00</p>
-                                                <hr>
-                                                <p>Withdrawals: ${{ all_withdrawals }}.00</p>
-                                                <hr>
-                                                <p>Available Balance: ${{ balance }}.00</p>
-                                                <hr>
-                                                
-                                            </div>
-                                            <div class="icon">
-                                                <i class="ik ik-layers"></i>
-                                            </div>
-                                        </div>
-                                        <small class="text-small mt-10 d-block">Transaction Summary</small>
-                                    </div>
-                                    <!-- <div class="progress progress-sm">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            
-       <!-- Content Row -->
-         <div class="container mb-3">
-            <div class="row">
-                <div class="col-md-12">
-                        <div class="card shadow-sm">
-                            <div class="card-header">
-                                <h4 class="title">Transaction Activity</h4>
-                            </div>
-                          <div class="card-body">
-                            <div class="content">
-                                <section class="blog-list px-3 py-5 p-md-5">
-                                    <!-- <h5 class="title">Received Transaction</h5> -->
-                                    
-                                            <div class="container">
-                                                <div class="item mb-5">
-                                                    <div class="media">
-                                                <table class="dashboard-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Date</th>
-                                                            <th>Payment Details</th>
-                                                            <th>Deposit</th>
-                                                            <th>Withdrawal</th>
-                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    {% if transaction_list or payments_sent_list %}
-                                                        
-                                                        <tbody>
-                                                            {% for transaction in transaction_list %}
-                                                            <tr class="deposit">
-                                                                <td>{{transaction.date}}</td>
-                                                                <td class="bold">{{transaction.account.customer.account_name}}</td>
-                                                                <td class="bold" style="color: green;">${{transaction.amount}}.00</td>
-                                                                <td>- - -</td>
-                                                            
-                                                            </tr>
-                                                            {% endfor %}
-                                                            {% for transaction in payments_sent_list %}
+        {% comment %} <div class="create">
+            {% if currency %}
+            {% for cur in currency %}
+            <div class="new-customer"><a href="{{ cur.get_absolute_url }}">Change currency ({{cur.currency}})</a></div>
+            {% endfor %}
+            {% endif %}
+        </div> {% endcomment %}
+        <div class="create">
+            <div class="new-customer"><a href="{% url 'bank:user-create' %}">Create New Customer</a></div>
+            <div class="new-customer"><a href="{% url 'bank:posttransaction-create' %}">Top Up Account</a></div>
+            <div class="new-customer"><a href="{% url 'bank:transactionhistory-create' %}">Create Transaction History</a></div>
+        </div>
         
-                                                            <tr class="withdrawal">
-                                                                <td>{{transaction.date}}</td>
-                                                                <td class="bold">{{transaction.account_name}}</td>
-                                                                <td>- - -</td>
-                                                                <td class="bold" style="color: red;">-${{transaction.amount}}.00</td>
-                                                                
-                                                            </tr>
-                                                    
-                                                            {% endfor %}
-                                                        </tbody>
-                                                        
-                                                        
-                                                    {% else %}
-                                                    <center>
-                                                        <div class="alert alert-info"><b>No Transaction History</b></div>
-                                                    </center>
-                                                    {% endif %}
-                
-                                                    </table>
-                                                    </div><!--//media-->
-                                                </div><!--//item-->
-                                                
-                                                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"><b>Ready to Delete Transaction?</b></h5>
-                                                            <button
-                                                            class="close"
-                                                            type="button"
-                                                            data-dismiss="modal"
-                                                            aria-label="Close"
-                                                            >
-                                                            <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Select "Delete Record" below if you want to delete the record.
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button
-                                                            class="btn btn-secondary"
-                                                            type="button"
-                                                            data-dismiss="modal"
-                                                            >
-                                                            Cancel
-                                                            </button>
-                                            
-                                                        </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
-                                            </div>
+        <div class="container-content">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>USER ID</th>
+                        <th>Account Name</th>
+                        <th>Account Number</th>
+                        <th>Currency</th>
+                        <th>Account Type</th>
+                        <th>Suspend</th>
+                        <th>Block</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if accounts %}
+                        {% for account in accounts %}
+                            {% if account %}
+                            <tr>
+                                <td><a class="email" href="{% url 'bank:customer-update' account.customer.id %}">{{account.customer.user.email}}</a></td>
+                                <td><a href="{% url 'bank:user-update' account.customer.user.id %}">{{account.customer.user.username}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.account_name}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.account_number}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.currency}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.account_type}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.suspend_account}}</a></td>
+                                <td><a href="{{ account.get_absolute_url }}">{{account.block_account}}</a></td>
+                                <td><a class="delete" href="{% url 'bank:account-delete' account.id %}">Delete</a></td>
                                 
-                                </section>
-                              </div>
-                  <!-- /.container-fluid -->
-                <!-- End of Main Content -->
-                          </div>
-                        </div>
-                </div>
-            </div>
-         </div>
-    </div>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>  
     
 {% endblock content %}
 

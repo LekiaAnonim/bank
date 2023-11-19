@@ -1,0 +1,50 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}
+Create Article
+{% endblock title %}
+
+{% block stylesheets %}
+{{ block.super }}
+<link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="{% static " ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static " ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="container-content">
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>USER ID</th>
+                        <th>Account Name</th>
+                        <th>Account Number</th>
+                        <th>Account Type</th>
+                        <th>Suspend</th>
+                        <th>Block</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for account in accounts %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock content %}

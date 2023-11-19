@@ -1,0 +1,49 @@
+<!doctype html>
+{% extends 'registration/account_base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}
+    Create and Update Customer Profile
+{% endblock title %}
+
+
+{% block content %}
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-file-text bg-blue"></i>
+                    <div class="d-inline">
+                        <h5>Create and Update Customer Profile</h5>
+                        <span>Create or Update your profile.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         <div class="container mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="card shadow-sm">
+                            <!-- <div class="card-header">
+                                <h4 class="title">Update Profile</h4>
+                            </div> -->
+                          <div class="card-body">
+                            <div class="content">
+                                <form method="post" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    <table>
+                                        {{ form.as_table }}
+                                    </table>
+                                    <input type="submit" class="login100-form-btn" value="Next">
+
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+{% endblock content %}

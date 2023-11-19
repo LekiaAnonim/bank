@@ -1,9 +1,27 @@
 <!doctype html>
 {% extends 'customer_dashboard/customer_sidenav.html' %}
 {% load static %}
+{% load cloudinary %}
 {% load mathfilters %}
 
 {% block content %}
+    <div class="customer-container customer-transaction-details">
+        <h4 class="content-head" >Your account summary</h4>
+        <div class="customer-transaction-summary">
+            <div class="customer-transaction-card">
+                <h5>Current Balance</h5>
+                <p>{{login_user_accounts.currency}}{{balance|floatformat:"2g"}}</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Received</h5>
+                <p>{{login_user_accounts.currency}}{{last_payment_received.amount|floatformat:"2g"}}</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Sent</h5>
+                <p>{{login_user_accounts.currency}}{{last_payment_sent.amount|floatformat:"2g"}}</p>
+            </div>
+        </div>
+    </div>
     <div class="customer-container customer-card-head">
         <div class="customer-atm-card">
             <div class="customer-logo">
@@ -33,31 +51,15 @@
             </div>
             
         </div>
-        {% if accounts %}
-        {% for account in login_user_accounts %}
-        <div class="customer-account-info">
-            <p class="customer-acct-no"> <span>Account Number:</span> {{account.account_number}}</p>
+        {% comment %} {% if accounts %} {% endcomment %}
+        {% comment %} {% for account in login_user_accounts %}
+        <div class="customer">
+            <p class="customer-acct-no"> <span>Account Number:</span> Hello</p>
             <p class="customer-acct-type"><span>Account Type:</span> {{account.account_type}}</p>
         </div>
             
-        {% endfor %}
-        {% endif %}
+        {% endfor %} {% endcomment %}
+        {% comment %} {% endif %} {% endcomment %}
     </div>
-    <div class="customer-container customer-transaction-details">
-        <h4>Your account summary</h4>
-        <div class="customer-transaction-summary">
-            <div class="customer-transaction-card">
-                <h5>Current Balance</h5>
-                <p>${{balance}}.00</p>
-            </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Received</h5>
-                <p>${{last_payment_received.amount}}.00</p>
-            </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Sent</h5>
-                <p>${{last_payment_sent.amount}}.00</p>
-            </div>
-        </div>
-    </div>
+    
 {% endblock content %}
