@@ -8,6 +8,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template import Context, Template
 from cloudinary.models import CloudinaryField
+from django.core.validators import MaxValueValidator, RegexValidator
 
 
 class Customer(models.Model):
@@ -153,3 +154,42 @@ class Payment(models.Model):
 
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})
+    
+
+class Bank(models.Model):
+    bank_fullname = models.CharField(
+        max_length=255, null=True, blank=True)
+    bank_abbr = models.CharField(
+        max_length=255, null=True, blank=True)
+    
+    bank_logo = CloudinaryField('image', null=True, blank=True)
+
+    class Meta:
+        ordering = ['bank_fullname']
+
+    def __str__(self):
+        return f'{self.bank_fullname}'
+    
+class CardType(models.Model):
+    company_name = models.CharField(max_length=200, null=True, help_text='E.g. Master Card')
+    company_logo = CloudinaryField('image', null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.company_name}'
+class Card(models.Model):
+    account = models.OneToOneField(
+        Account, on_delete=models.SET_NULL, null=True)
+    
+    card_number = models.CharField(max_length=16, validators=[RegexValidator(r'^\d{1,16}$')], unique=True, help_text='Card number should be 16 digits')
+    expiry_date = models.DateField()
+    card_type = models.ForeignKey(CardType, on_delete=models.SET_NULL, null=True)
+    cvv = models.PositiveIntegerField(validators=[MaxValueValidator(999)], help_text='CVV should be 3 digits')
+
+    def get_absolute_url(self):
+        return reverse('bank:my_cards', kwargs={'pk': self.pk})
+
+
+class Loan(models.Model):
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=14, null=True)
+    amount = models.PositiveIntegerField()

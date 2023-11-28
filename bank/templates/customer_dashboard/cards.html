@@ -1,0 +1,85 @@
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% block content %}
+    <main>
+        <div class="page-title">
+            <h1>Cards</h1>
+        </div>
+
+        <div class="balance-card-container">
+            {% if cards %} {% for card in cards %}
+            <div class="card">
+                <div class="logo-container-connection">
+                    <div class="logo">
+                        <a href="/"><img src="{% static 'image/Images/skyhigh.png' %}" alt="Sky Premium"></a>
+                    </div>
+                    <div class="connection">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 125" version="1.1" x="0px" y="0px"><title>chip - 2</title><desc>Created with Sketch.</desc><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-2562.000000, -1901.000000)" fill="#000000"><path d="M2616.95991,1968.03139 C2615.36384,1970.61117 2615.21092,1973.7766 2616.55059,1976.49981 L2623.19494,1990 L2648.49402,1990 C2653.18426,1990 2657,1986.16894 2657,1981.45895 L2657,1963.91164 L2624.34141,1963.91164 C2621.31592,1963.91164 2618.55599,1965.45069 2616.95991,1968.03139 Z M2648.49402,1913 L2623.19494,1913 L2616.55059,1926.49835 C2615.21092,1929.22156 2615.36384,1932.38791 2616.95991,1934.96769 C2618.5569,1937.54839 2621.31592,1939.08836 2624.34141,1939.08836 L2657,1939.08836 L2657,1921.53921 C2657,1916.83106 2653.18426,1913 2648.49402,1913 Z M2624.8194,1961.1535 L2657,1961.1535 L2657,1941.8465 L2624.8194,1941.8465 L2624.8194,1961.1535 Z M2614.6267,1966.57509 C2616.31984,1963.84085 2619.01109,1962.01588 2622.07229,1961.40081 L2622.07229,1941.59827 C2619.01109,1940.9832 2616.31984,1939.15823 2614.6267,1936.42307 C2612.52516,1933.0278 2612.32462,1928.86116 2614.08735,1925.27741 L2620.131,1913 L2604.13181,1913 L2610.17454,1925.27741 C2611.93911,1928.86208 2611.73674,1933.02872 2609.63519,1936.42399 C2607.96586,1939.12237 2605.32223,1940.93631 2602.31139,1941.57528 L2602.31139,1963.95394 L2567,1963.95394 L2567,1981.45895 C2567,1986.16894 2570.81574,1990 2575.50598,1990 L2601.18874,1990 L2607.06206,1978.0646 L2609.52531,1979.28553 L2604.25268,1990 L2620.131,1990 L2614.08735,1977.72075 C2612.32462,1974.13792 2612.52516,1969.97036 2614.6267,1966.57509 Z M2567,1961.19671 L2599.56428,1961.19671 L2599.56428,1941.8465 L2567,1941.8465 L2567,1961.19671 Z M2607.30198,1934.96769 C2608.89805,1932.38791 2609.05189,1929.22156 2607.7113,1926.49835 L2601.06878,1913 L2575.50598,1913 C2570.81574,1913 2567,1916.83106 2567,1921.53921 L2567,1939.08836 L2599.92232,1939.08836 C2602.94597,1939.08836 2605.70591,1937.54839 2607.30198,1934.96769 Z"/></g></g></svg>
+                    </div>
+                </div>
+                <div class="card-number">
+                    <span>Card Number</span>
+                    <p>{{card.card_number|slice:"0:4"}} *** *** {{card.card_number|slice:"12:16"}}</p>
+
+                </div>
+                <div class="exp-cvv-name">
+                    <div class="exp-cvv-container">
+                        <div class="exp-cvv">
+                            <p><span>Exp.: </span>{{card.expiry_date|date:"m"}}/{{card.expiry_date|date:"y"}} <span>CVV: </span>***</p>
+                        </div>
+                        <div class="card-owner">
+                            <p>{{user.customer.account_name}}</p>
+                        </div>
+                    </div>
+                    <div class="master-card">
+                        <img src="{{card.card_type.company_logo.url}}" alt="{{card.card_type.company_name}}">
+                    </div>
+                </div>
+            </div>
+            {% endfor %} {% endif %}
+
+        </div>
+        <div class="card-setting">
+            <div class="personal-setting change-personal-data">
+                <div class="click-expand" onclick="expand(this)">
+                    <a href="#">Manage Cards</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+                </div>
+
+                <div class="expand-container hide">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ullam autem ipsa officia minus? Aut quo perspiciatis suscipit. Nesciunt temporibus eligendi quam laborum atque? Nulla hic provident totam quos exercitationem.</div>
+            </div>
+            <div class="personal-setting change-password">
+                <div class="click-expand" onclick="expand(this)">
+                    <a href="#">Reset & Change Card Pin</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+                </div>
+
+                <div class="expand-container hide">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ullam autem ipsa officia minus? Aut quo perspiciatis suscipit. Nesciunt temporibus eligendi quam laborum atque? Nulla hic provident totam quos exercitationem.</div>
+            </div>
+            <div class="personal-setting person-logout">
+                <div class="click-expand" onclick="expand(this)">
+                    <a href="#">Request New Card</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+                </div>
+                <div class="expand-container hide">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur ullam autem ipsa officia minus? Aut quo perspiciatis suscipit. Nesciunt temporibus eligendi quam laborum atque? Nulla hic provident totam quos exercitationem.</div>
+            </div>
+            <script>
+                function expand(par) {
+                    par.nextElementSibling.classList.toggle('hide');
+                    // document.querySelector(`.expand-container`).classList.toggle('hide');
+                }
+            </script>
+        </div>
+
+    </main>
+    {% endblock content %}
+</body>
+
+</html>

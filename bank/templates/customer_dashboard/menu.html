@@ -1,0 +1,55 @@
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    {% block content %}
+    <main>
+        <div class="menu-container">
+            <a href="{% url 'bank:customerdash_home' %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M6 21H3a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1zm7 0h-3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1zm7 0h-3a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1z"></path></svg>
+                    <p>Overview</p>
+                </div>
+            </a>
+            <a href="{% url 'bank:my_cards' request.user.id %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 4H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM4 6h16v2H4V6zm0 12v-6h16.001l.001 6H4z"></path><path d="M6 14h6v2H6z"></path></svg>
+                    <p>Cards</p>
+                </div>
+            </a>
+            <a href="{% url 'bank:customer-payment-create' %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M20 3H5C3.346 3 2 4.346 2 6v12c0 1.654 1.346 3 3 3h15c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM5 19c-.552 0-1-.449-1-1V6c0-.551.448-1 1-1h15v3h-6c-1.103 0-2 .897-2 2v4c0 1.103.897 2 2 2h6.001v3H5zm15-9v4h-6v-4h6z"></path></svg>
+                    <p>Account</p>
+                </div>
+            </a>
+            <a href="{% url 'bank:personal-data' %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 2A10.13 10.13 0 0 0 2 12a10 10 0 0 0 4 7.92V20h.1a9.7 9.7 0 0 0 11.8 0h.1v-.08A10 10 0 0 0 22 12 10.13 10.13 0 0 0 12 2zM8.07 18.93A3 3 0 0 1 11 16.57h2a3 3 0 0 1 2.93 2.36 7.75 7.75 0 0 1-7.86 0zm9.54-1.29A5 5 0 0 0 13 14.57h-2a5 5 0 0 0-4.61 3.07A8 8 0 0 1 4 12a8.1 8.1 0 0 1 8-8 8.1 8.1 0 0 1 8 8 8 8 0 0 1-2.39 5.64z"></path><path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path></svg>
+                    <p>Personal Data</p>
+                </div>
+            </a>
+            <a href="{% url 'bank:loan-create' %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path d="M74,70.3c-9.9,7.1-33.5-0.6-17.4-2.1c15.5-1.5,14.4-12.4,6.3-9.7c-7.3,2.5-12.1-1.4-24.9,0.7c-8.4,1.4-11.6,2.7-16.5,7.9  c0,0-8,3.2-14.2,6.2c-1.2,0.6-1.9,1.7-1.9,3v19.4c0,0.9,0.7,1.6,1.6,1.6c0.3,0,0.5-0.1,0.8-0.2c8.8-4.8,21.9-13.2,22.7-12.8  c8.4,4,22.8,3.6,35.5,0.3c5.3-1.4,8.1-2.2,12.4-4.6c4.6-2.6,7.6-8.2,13.9-12.5C98.6,63.3,93.4,56.3,74,70.3z"/><path d="M56.7,18.3c-2.8,0.5-4.6,2.1-4.6,3.6s1.8,3,4.6,3.6V18.3z"/><path d="M65.6,33.7c0-1.5-1.8-3.1-4.6-3.6v7.2C63.8,36.8,65.6,35.2,65.6,33.7z"/><path d="M58.8,53.1c14,0,25.3-11.3,25.3-25.3S72.8,2.5,58.8,2.5S33.5,13.8,33.5,27.8C33.5,41.8,44.9,53.1,58.8,53.1z M47.8,21.9  c0-4,3.8-7.2,8.9-7.9v-4h4.2v4c5.1,0.7,8.9,3.9,8.9,7.9h-4.2c0-1.5-1.8-3.1-4.6-3.6v7.5c5.1,0.7,8.9,3.9,8.9,7.9s-3.8,7.2-8.9,7.9v4  h-4.2v-4c-5.1-0.7-8.9-3.9-8.9-7.9h4.2c0,1.5,1.8,3,4.6,3.6v-7.5C51.6,29.1,47.8,25.9,47.8,21.9z"/></svg>
+                    <p>Loan</p>
+                </div>
+            </a>
+            <a href="{% url 'bank:support' %}">
+                <div class="menu-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M17.707 12.293a.999.999 0 0 0-1.414 0l-1.594 1.594c-.739-.22-2.118-.72-2.992-1.594s-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a.999.999 0 0 0-1.414 0L3.581 5.005c-.38.38-.594.902-.586 1.435.023 1.424.4 6.37 4.298 10.268s8.844 4.274 10.269 4.298h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-4-4.001zm-.127 6.712c-1.248-.021-5.518-.356-8.873-3.712-3.366-3.366-3.692-7.651-3.712-8.874L7 4.414 9.586 7 8.293 8.293a1 1 0 0 0-.272.912c.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.991.991 0 0 0 .912-.271L17 14.414 19.586 17l-2.006 2.005z"></path></svg>
+                    <p>Support</p>
+                </div>
+            </a>
+        </div>
+    </main>
+    {% endblock %}
+</body>
+
+</html>

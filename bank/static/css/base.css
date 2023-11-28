@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: blue;
+    --orange: orange;
+    --body-background: rgb(225, 233, 241);
+    --grey: grey;
+}
+
+body {
+    /* padding: 20px; */
+    background-color: var(--body-background);
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* -------------------------HEADER CSS------------------------------------ */
+
+header {
+    background-color: #fff;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.logo {
+    width: 70px;
+    height: auto;
+}
+
+.logo img {
+    max-width: 100%;
+    height: 100%;
+}
+
+.top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.top-header svg {
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+    fill: var(--blue);
+}
+
+.account-category {
+    display: flex;
+    align-items: center;
+}
+
+.phone-sign {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.sub-div {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.sign {
+    margin-right: 0;
+}
+
+.notification svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--orange);
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+.user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid;
+}
+
+.user-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.bottom-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: fit-content;
+    padding: 5px;
+    border-top: 1px solid rgb(207, 207, 207);
+}
+
+header .navigation-menu nav ul {
+    display: flex;
+    align-items: center;
+}
+
+header .navigation-menu nav ul li {
+    margin-right: 20px;
+    list-style: none;
+}
+
+.notification-user-photo {
+    display: flex;
+    align-items: center;
+}
+
+#ham-lines {
+    display: none;
+}
+
+.hamburger {
+    padding: 15px;
+    width: fit-content;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+}
+
+.navigation-menu-ham {
+    padding: 10px 0 5px 0;
+}
+
+.navigation-menu-ham ul li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.ham-menu .logo {
+    margin-bottom: 12px;
+}
+
+.ham-menu svg {
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
+    fill: var(--blue);
+}
+
+.ham-menu .account-category {
+    display: block;
+}
+
+.ham-menu .phone-sign {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+@media (max-width:650px) {
+    .navigation-menu {
+        display: none;
+    }
+    .top-header {
+        display: none;
+    }
+    #ham-lines {
+        display: block;
+    }
+    .sidebar-menu nav ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .sidebar-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+    }
+    .media-remove {
+        display: none;
+    }
+}
+
+
+/* ------------------------------SIDEBAR CSS--------------------------------- */
+
+sidebar {
+    float: left;
+}
+
+.sidebar-menu {
+    padding: 30px 30px;
+    position: fixed;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    border-right: 1.5px solid var(--grey);
+}
+
+.sidebar-menu nav li {
+    margin-bottom: 20px;
+    list-style: none;
+}
+
+.sidebar-menu nav li a {
+    color: var(--grey);
+}
+
+.hide {
+    display: none;
+}

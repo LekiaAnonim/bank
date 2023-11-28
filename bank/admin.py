@@ -3,8 +3,33 @@ from django.contrib import admin
 # Register your models here.
 
 # Register your models here.
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency, Bank, Card, CardType, Loan
 
+
+class LoanAdmin(admin.ModelAdmin):
+    list_display = ('email', 'phone_number', 'amount')
+    fields = ['email', 'phone_number', 'amount']
+
+admin.site.register(Loan, LoanAdmin)
+class BankAdmin(admin.ModelAdmin):
+    list_display = ('bank_fullname', 'bank_abbr', 'bank_logo')
+    fields = ['bank_fullname', 'bank_abbr', 'bank_logo']
+
+admin.site.register(Bank, BankAdmin)
+
+class CardAdmin(admin.ModelAdmin):
+    list_display = ('account', 'card_number', 'expiry_date','card_type', 'cvv')
+    fields = ['account', 'card_number', 'expiry_date', 'card_type', 'cvv']
+
+
+admin.site.register(Card, CardAdmin)
+
+class CardTypeAdmin(admin.ModelAdmin):
+    list_display = ('company_name', 'company_logo')
+    fields = ['company_name', 'company_logo']
+
+
+admin.site.register(CardType, CardTypeAdmin)
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('user', 'created_on', 'middle_name', 'DOB', 'SSN',

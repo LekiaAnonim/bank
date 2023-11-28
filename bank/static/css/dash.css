@@ -1,0 +1,529 @@
+:root {
+    --blue: blue;
+    --orange: orange;
+    --body-background: rgb(225, 233, 241);
+    --grey: grey;
+}
+
+main {
+    margin: 50px 20px 20px 200px;
+}
+
+form {
+    max-width: 500px;
+}
+
+.user-greeting {
+    margin-bottom: 20px;
+}
+
+.user-greeting h2 {
+    color: var(--blue);
+    font-size: 30px;
+}
+
+.total-balance-card {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    width: fit-content;
+    min-width: 220px;
+    /* margin-left: 10px; */
+}
+
+.balance-title-show-balance {
+    display: flex;
+    align-items: center;
+}
+
+.balance-title-show-balance h4 {
+    color: var(--grey);
+    font-size: 12px;
+}
+
+.balance-title-show-balance svg {
+    width: 15px;
+    height: auto;
+    margin-left: 10px;
+    fill: var(--grey);
+}
+
+.total-account-balance {
+    margin-top: 10px;
+    /* margin-bottom: 10px; */
+}
+
+.total-account-balance .balance-amount {
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.account-type-acct-no {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.account-type-acct-no * {
+    font-weight: 800;
+}
+
+.account-type-acct-no .account-no {
+    margin-left: 25px;
+}
+
+.account-type-acct-no .account-no span {
+    color: var(--blue);
+    margin-left: 10px;
+}
+
+.account-type-acct-no * {
+    font-size: 16px;
+}
+
+.card {
+    padding: 10px 25px;
+    border-radius: 15px;
+    background-color: rgb(255, 239, 204);
+    width: fit-content;
+    height: fit-content;
+    max-height: 200px;
+    /* margin-left: 10px; */
+    min-width: 220px;
+    margin-top: 10px;
+}
+
+.card .connection svg {
+    width: 20px;
+    height: auto;
+    fill: var(--orange);
+    margin-top: 10px;
+}
+
+.card .logo {
+    width: 50px;
+}
+
+.card .logo-container-connection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card .card-number {
+    margin-bottom: 10px;
+}
+
+.card .card-number span {
+    font-size: 10px;
+    color: var(--grey);
+}
+
+.card .card-number p {
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.card .master-card img {
+    width: 45px;
+    height: auto;
+}
+
+.card .exp-cvv-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card .exp-cvv {
+    margin-bottom: 5px;
+}
+
+.card .exp-cvv * {
+    font-size: 11px;
+}
+
+.card .exp-cvv span {
+    margin-left: 10px;
+}
+
+.card .card-owner p {
+    text-transform: uppercase;
+    color: var(--blue);
+    font-size: 13px;
+}
+
+.balance-card-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.transaction-history {
+    background-color: #fff;
+    border-radius: 15px;
+    margin-top: 30px;
+    padding: 20px;
+    width: 100%;
+}
+
+.history-header {
+    display: flex;
+    align-items: center;
+}
+
+.history-date-range {
+    display: flex;
+    align-items: center;
+}
+
+.history-date-range input {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-left: 15px;
+}
+
+.form-wrapper {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+}
+
+.submit-btn {
+    border: none;
+    background-color: var(--blue);
+    cursor: pointer;
+    padding: 6px 10px;
+    color: #fff;
+    border-radius: 10px;
+    width: fit-content !important;
+}
+
+.history-date-range input:focus {
+    border: none;
+    outline: none;
+}
+
+.transtion-table .direction {
+    color: var(--grey);
+}
+
+.transtion-table .credit .amount {
+    color: green;
+}
+
+.transtion-table .debit .amount {
+    color: red;
+}
+
+.transaction-history {
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+table {
+    max-height: 500px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+table,
+td {
+    border-collapse: collapse;
+}
+
+.transtion-table tr td {
+    padding: 15px 20px;
+}
+
+.quick-transfer {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    margin-top: 20px;
+    /* width: fit-content; */
+}
+
+.quick-transfer h2 {
+    color: var(--blue);
+    margin-bottom: 20px;
+}
+
+.quick-transfer input,
+select {
+    width: 200px;
+    margin-top: 20px;
+    border: none;
+    padding: 10px 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.personal-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.personal-detail .person-photo {
+    width: 170px;
+    height: 170px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.personal-detail .person-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    border: 2px solid rgb(0, 183, 255);
+    min-width: 90%;
+}
+
+.person-info tr td {
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.person-info .person-heading {
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.personal-data-info {
+    color: rgb(110, 108, 108);
+}
+
+#personal_data {
+    padding: 20px;
+    border-radius: 15px;
+    /* max-width: 700px; */
+    background-color: #fff;
+    width: fit-content;
+    margin: 20px;
+}
+
+.page-title {
+    margin-bottom: 40px;
+}
+
+.page-title h1 {
+    font-size: 25px;
+}
+
+.click-expand {
+    height: 50px;
+    border-top: 1px solid #707070;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.click-expand:hover {
+    background-color: #e2f7f7;
+}
+
+.frequent-beneficiary-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+
+/* .frequent-beneficiary-text p {
+    color: var(--blue);
+    font-size: 11px;
+} */
+
+.frequent-beneficiary-text a {
+    color: var(--blue);
+    text-decoration: underline;
+    font-size: 11px;
+}
+
+.beneficiary-container {
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.beneficiary-card {
+    padding: 20px 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.beneficiary-card .name-letter {
+    padding: 10px;
+    background-color: #e2f7f7;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.beneficiary-card .name-letter p {
+    font-size: 40px;
+    color: var(--blue);
+    font-weight: 900;
+    text-align: center;
+}
+
+.beneficiary-card .full-name {
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+.beneficiary-card .full-name p {
+    color: var(--blue);
+    text-align: center;
+}
+
+.card-setting {
+    background-color: #fff;
+    padding: 40px 20px;
+    margin-top: 40px;
+    border-radius: 15px;
+}
+
+.loan input {
+    width: 100%;
+    max-width: 320px;
+}
+
+input:focus {
+    outline: 1px var(--blue) solid;
+}
+
+.general-support {
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.support-icon {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--blue);
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.support-section svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--orange);
+}
+
+.support-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0px 0 10px 0;
+    border-bottom: 1px solid #979696;
+}
+
+.section-title {
+    margin-bottom: 30px;
+}
+
+.otp-button {
+    border: none;
+    background-color: rgb(204, 204, 204);
+    border-radius: 15px;
+    padding: 5px 7px;
+    cursor: pointer;
+}
+
+.menu-card {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    width: 150px;
+    height: 100px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.menu-card svg {
+    width: 40px;
+    height: 40px;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 110px;
+}
+
+@media (max-width:650px) {
+    .sidebar-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        background-color: #fff;
+        padding: 10px 30px;
+    }
+    main {
+        margin: 70px 10px 10px 10px;
+    }
+    .menu-card {
+        width: 100px;
+        height: 70px;
+    }
+    .menu-card svg {
+        width: 30px;
+        height: 30px;
+    }
+    .menu-mobile a {
+        color: var(--orange);
+    }
+    .user-greeting h2 {
+        color: var(--blue);
+        font-size: 30px;
+    }
+    .user-greeting h2 {
+        font-size: 16px;
+    }
+    .total-account-balance .balance-amount {
+        font-size: 20px;
+    }
+    .account-type-acct-no * {
+        font-size: 12px;
+    }
+    .card .card-number p {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+    .personal-setting a {
+        font-size: 12px;
+    }
+}

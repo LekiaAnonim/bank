@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/base.css">
+</head>
+
+<body>
+    <sidebar>
+        <div class="sidebar-menu">
+            <nav>
+                <ul>
+                    <li class="menu-mobile">
+                        <a href="{% url 'bank:menu' %}">Menu</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'bank:customerdash_home' %}">Overview</a>
+                    </li>
+                    <li class="media-remove">
+                        <a href="{% url 'bank:customer-payment-create' %}">Account</a>
+                    </li>
+                    <li class="media-remove">
+                        <a href="{% url 'bank:my_cards' request.user.id %}">Cards</a>
+                    </li>
+                    <li class="media-remove">
+                        <a href="{% url 'bank:support' %}">Support</a>
+                    </li>
+                    <li class="media-remove">
+                        <a href="{% url 'bank:personal-data' %}">Personal Data</a>
+                    </li>
+                    <li class="media-remove">
+                        <a href="{% url 'bank:loan-create' %}">Loans</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </sidebar>
+</body>
+
+</html>
