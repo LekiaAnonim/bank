@@ -491,8 +491,11 @@ input:focus {
         left: 0;
         right: 0;
         top: auto;
-        background-color: #fff;
+        background-color: var(--blue);
         padding: 10px 30px;
+    }
+    .sidebar-menu nav li a {
+        color: #fff;
     }
     main {
         margin: 70px 10px 10px 10px;
