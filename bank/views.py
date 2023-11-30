@@ -493,7 +493,7 @@ class CustomerPaymentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView)
         self.context['login_user_accounts'] = login_user_accounts
         self.context['beneficiaries'] = beneficiaries
         self.context['balance'] = balance
-        self.context['balance'] = Bank.objects.all()
+        self.context['banks'] = Bank.objects.all()
         self.context['transaction_dataframe'] = transaction_dataframe
         return self.context
 
@@ -946,6 +946,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
     """
     Display homepage of the dashboard.
     """
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/customer_transaction_history.html'
     paginate_by = 10
@@ -1032,6 +1033,7 @@ class TransactionSuccessful(LoginRequiredMixin, View):
     """
     Display homepage of the dashboard.
     """
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/transaction_success.html'
     paginate_by = 10
@@ -1078,6 +1080,7 @@ class SupportView(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
     
 class PersonalDataView(LoginRequiredMixin, View):
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/personal_data.html'
     paginate_by = 10
@@ -1096,6 +1099,7 @@ class LoanCreate(SuccessMessageMixin, CreateView):
         return reverse('bank:loan_success')
     
 class LoanSuccessful(LoginRequiredMixin, View):
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/loan_successful.html'
 
@@ -1104,6 +1108,7 @@ class LoanSuccessful(LoginRequiredMixin, View):
 
 
 class MenuView(LoginRequiredMixin, View):
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/menu.html'
 
