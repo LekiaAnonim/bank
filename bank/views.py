@@ -850,7 +850,7 @@ class CustomerDashView(LoginRequiredMixin, View):
             account__customer__user_id=self.request.user.id).order_by("date")
 
         payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=self.request.user.id)
+            account=self.request.user)
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) 
@@ -925,7 +925,10 @@ class CustomerDashView(LoginRequiredMixin, View):
         currency = Currency.objects.all()
         self.context['currency'] = currency
         self.context['transaction_dataframe'] = transaction_dataframe
-        
+        card_account = request.user.customer.account_name
+        # cards = Card.objects.filter(account__customer__account_name=card_account)
+        cards = Card.objects.all()
+        self.context['cards'] = cards
         self.context['cur'] = cur
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
@@ -1069,6 +1072,8 @@ class CardListView(generic.ListView):
         context = super(CardListView,
                         self).get_context_data(**kwargs)
         # Create any data and add it to the context
+        cards = Card.objects.filter(account_id = self.request.user.id)
+        context['cards'] = cards
         return context
 
 class SupportView(LoginRequiredMixin, View):

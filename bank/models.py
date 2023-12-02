@@ -12,7 +12,7 @@ from django.core.validators import MaxValueValidator, RegexValidator
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer')
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     DOB = models.DateField(null=True, blank=True)
     SSN = USSocialSecurityNumberField(max_length=9)
@@ -37,8 +37,9 @@ class Customer(models.Model):
 
 
 class Account(models.Model):
+    acct_id = models.IntegerField(unique=True, auto_created=True, null=True)
     customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, null=True)
+        Customer, on_delete=models.CASCADE, null=True, related_name='account')
     CHOICES = (
         ('Checking', 'Checking'),
         ('Savings', 'Savings'),
@@ -178,7 +179,7 @@ class CardType(models.Model):
         return f'{self.company_name}'
 class Card(models.Model):
     account = models.OneToOneField(
-        Account, on_delete=models.SET_NULL, null=True)
+        Account, on_delete=models.SET_NULL, null=True, related_name='card_account')
     
     card_number = models.CharField(max_length=16, validators=[RegexValidator(r'^\d{1,16}$')], unique=True, help_text='Card number should be 16 digits')
     expiry_date = models.DateField()

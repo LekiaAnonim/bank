@@ -36,7 +36,7 @@
                 }
             </script>
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %} {% endif %} {% if cards %} {% for card in cards %}
         <div class="card">
             <div class="logo-container-connection">
                 <div class="logo">
@@ -48,23 +48,23 @@
             </div>
             <div class="card-number">
                 <span>Card Number</span>
-                <p>123 *** *** 456</p>
-
+                <p>{{card.card_number|slice:"0:4"}} *** *** {{card.card_number|slice:"12:16"}}</p>
             </div>
             <div class="exp-cvv-name">
                 <div class="exp-cvv-container">
                     <div class="exp-cvv">
-                        <p><span>Exp.: </span>12/28 <span>CVV: </span>***</p>
+                        <p><span>Exp.: </span>{{card.expiry_date|date:"m"}}/{{card.expiry_date|date:"y"}} <span>CVV: </span>***</p>
                     </div>
                     <div class="card-owner">
                         <p>{{user.customer.account_name}}</p>
                     </div>
                 </div>
                 <div class="master-card">
-                    <img src="/Images/Mastercard-logo.svg.png" alt="">
+                    <img src="{{card.card_type.company_logo.url}}" alt="{{card.card_type.company_name}}">
                 </div>
             </div>
         </div>
+        {% endfor %} {% endif %}
     </div>
     <div class="transaction-history">
         <div class="history-header">

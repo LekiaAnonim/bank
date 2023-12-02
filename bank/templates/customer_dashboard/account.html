@@ -74,9 +74,10 @@
                 </div>
                 <!-- <a href="#">Add From Beneficiaries</a> <br> -->
                 <div class="form-wrapper">
-                    <input type="amount" name="amount" id="id_amount" placeholder="Enter Amount">
+                    <input type="number" name="amount" id="id_amount" placeholder="Enter Amount">
                     <input type="text" name="remark" id="remark" placeholder="Enter Description (Optional)">
                 </div>
+                <input type="number" name="routing_number" id="id_routing_number" placeholder="Enter Routing Number">
                 <input type="text" name="otp" maxlength="255" required="" id="id_otp" placeholder="Enter OTP"> {% if account_suspend %}
                 <br><button class="otp-button account_suspend_btn">Get OTP</button>
                 <br><input class="submit-btn send-payment otp-button account_suspend_btn" type="button" value="Transfer"> {% else %}
