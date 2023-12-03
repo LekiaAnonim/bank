@@ -60,7 +60,8 @@
                 {% endfor %} {% endif %}
 
             </div>
-            <form action="" method="post" enctype="multipart/form-data" novalidate>
+            <form id="payment-form" action="" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
                 <div class="form-wrapper">
                     <select name="banks" id="id_bank">
                         <option value="">--Select Bank--</option>
