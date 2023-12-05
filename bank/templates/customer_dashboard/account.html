@@ -1,11 +1,13 @@
-<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %}{% load env_extras %}{% load cloudinary %} {% load mathfilters %}
 <html lang="en">
 
 <body>
     {% block content %}
+    <input id="YOUR_ENV_VARIABLE" value="{% get_env_var 'ELASTIC_EMAIL_PASSWORD' %}" type="hidden">
     <main>
         <div class="page-title">
             <h1>My Account</h1>
+            <span style="display: none;" class="user-email">{{user.email}}</span>
         </div>
         <div class="balance-card-container">
             {% if login_user_accounts %} {% for account in login_user_accounts %}
@@ -62,23 +64,31 @@
             </div>
             <form id="payment-form" action="" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
-                <div class="form-wrapper">
-                    <select name="banks" id="id_bank">
-                        <option value="">--Select Bank--</option>
-                        {% if banks %}
-                        {% for bank in banks %}
-                        <option value="{{bank.bank_abbr}}">{{bank.bank_fullname}}</option>
-                        {% endfor %}
-                        {% endif %}
-                    </select>
-                    <input type="number" name="account_number" id="id_account_number" placeholder="Enter Account Number">
-                </div>
-                <!-- <a href="#">Add From Beneficiaries</a> <br> -->
-                <div class="form-wrapper">
-                    <input type="number" name="amount" id="id_amount" placeholder="Enter Amount">
-                    <input type="text" name="remark" id="remark" placeholder="Enter Description (Optional)">
-                </div>
-                <input type="number" name="routing_number" id="id_routing_number" placeholder="Enter Routing Number">
+
+                <table class="payment-table">
+                    <div class="form-wrapper">
+                        <select name="banks" id="id_bank">
+                            <option value="">--Select Bank--</option>
+                            {% if banks %}
+                            {% for bank in banks %}
+                            <option value="{{bank.bank_abbr}}">{{bank.bank_fullname}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                        <input type="number" name="account_number" id="id_account_number" placeholder="Enter Account Number">
+                    </div>
+                    <!-- <a href="#">Add From Beneficiaries</a> <br> -->
+                    <div class="form-wrapper">
+                        <input type="number" name="amount" id="id_amount" placeholder="Enter Amount">
+                        <input type="text" name="remark" id="id_remark" placeholder="Enter Description (Optional)">
+                    </div>
+                    <div class="form-wrapper">
+                        <input type="text" name="account_name" id="id_account_name" placeholder="Enter Account Name">
+                        <input type="number" name="routing_number" id="id_routing_number" placeholder="Enter Routing Number">
+                    </div>
+                    <input type="text" name="bank_address" id="id_bank_address" placeholder="Enter Bank Address">
+                </table>
+
                 <input type="text" name="otp" maxlength="255" required="" id="id_otp" placeholder="Enter OTP"> {% if account_suspend %}
                 <br><button class="otp-button account_suspend_btn">Get OTP</button>
                 <br><input class="submit-btn send-payment otp-button account_suspend_btn" type="button" value="Transfer"> {% else %}
@@ -166,7 +176,39 @@
         </div>
 
     </main>
-    {% endblock content %}
+    {% endblock content %} {% block messages %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if messages %} {% for message in messages %} {% if account_suspend %}
+            <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+                <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                <hr> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% else %}
+            <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+                <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                <hr> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% endif %} {% endfor %} {% endif %}
+        </div>
+    </div>
+    {% endblock messages %}
 </body>
 
 </html>

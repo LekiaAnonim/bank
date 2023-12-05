@@ -468,9 +468,9 @@ class CustomerPaymentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView)
         for transaction in payments_sent_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Type'].append('Debit')
-            transaction_data['Amount'].append('-'+str(login_user_accounts.currency)+str(transaction.amount))
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency)+str(transaction.amount))
             transaction_data['Direction'].append('to')
-            transaction_data['Account Name'].append(str(transaction.company_name))
+            transaction_data['Account Name'].append(str(transaction.account_name))
 
         for transaction in debit_createhistory_list:
             transaction_data['Date'].append(transaction.date)
@@ -902,9 +902,9 @@ class CustomerDashView(LoginRequiredMixin, View):
         for transaction in payments_sent_list:
             transaction_data['Date'].append(transaction.date)
             transaction_data['Type'].append('Debit')
-            transaction_data['Amount'].append('-'+str(login_user_accounts.currency)+str(transaction.amount))
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency)+str(transaction.amount))
             transaction_data['Direction'].append('to')
-            transaction_data['Account Name'].append(str(transaction.company_name))
+            transaction_data['Account Name'].append(str(transaction.account_name))
 
         for transaction in debit_createhistory_list:
             transaction_data['Date'].append(transaction.date)
