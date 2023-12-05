@@ -37,7 +37,7 @@ class Customer(models.Model):
 
 
 class Account(models.Model):
-    acct_id = models.IntegerField(unique=True, auto_created=True, null=True)
+    # acct_id = models.IntegerField(unique=True, auto_created=True, null=True)
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, null=True, related_name='account')
     CHOICES = (
@@ -153,8 +153,12 @@ class Payment(models.Model):
     bank_address = models.CharField(max_length=255, blank=True, null=True)
     remark = models.CharField(max_length=255, blank=True, null=True)
 
+    class Meta:
+        ordering = ['-date']
+
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})
+    
     
 
 class Bank(models.Model):

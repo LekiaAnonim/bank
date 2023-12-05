@@ -54,9 +54,9 @@ class CustomerInline(admin.TabularInline):
 
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('acct_id','created_on', 'customer', 'account_number', 'account_type',
+    list_display = ('created_on', 'customer', 'account_number', 'account_type',
                     'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message', 'currency')
-    fields = ['acct_id','customer', 'account_number',
+    fields = ['customer', 'account_number',
               'account_type', 'suspend_account', 'block_account', 'block_account_message', 'suspend_account_message', 'currency']
 
 
