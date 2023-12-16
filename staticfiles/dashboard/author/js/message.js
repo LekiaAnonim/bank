@@ -15,9 +15,9 @@ let amountColumn = document.querySelectorAll('td:nth-child(3)');
 amountColumn.forEach((ele) => {
     if (ele.innerText.startsWith("-")) {
         ele.style.color = 'red';
-        console.log('red');
+        // console.log('red');
     } else {
         ele.style.color = 'green';
-        console.log('green');
+        // console.log('green');
     }
 })

@@ -39,7 +39,7 @@ urlpatterns = [
           name="transaction_history"
      ),
     path(
-        route="customer/transaction_successful",
+        route="customer/transaction_successful/<int:pk>/",
         view=views.TransactionSuccessful.as_view(),
         name="transaction_success"
     ),

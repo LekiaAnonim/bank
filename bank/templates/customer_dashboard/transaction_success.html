@@ -45,17 +45,15 @@
                     </div>
                 </div>
                 <div class="receipt-body">
-                    {% for payment in payments_sent_list|slice:":1" %}
                     <p>Transaction Date: <span>{{payment.date}}</span></p>
                     <p>Transaction Type: <span>Transfer</span></p>
                     <p>Amount: <span>{{payment.amount}}</span></p>
                     <p>Sender: <span class="name">{{request.user.first_name}} {{request.payment.account.customer.middle_name}} {{request.user.last_name}}</span></p>
                     <p>Beneficiary Account Number: <span>{{payment.account_number}}</span></p>
                     <p>Beneficiary Name: <span class="name">{{payment.account_name}}</span></p>
-                    <p>Bank: <span>{{payment.bank}}</span></p>
+                    <p>Bank: <span>{{payment.bank.bank_fullname}}</span></p>
                     <p>Remark: <span>{{payment.remark}}</span></p>
                     <p>Transaction Status: <span>Successful</span></p>
-                    {% endfor %}
                 </div>
                 <div class="receipt-footer">
                     <p>If you have any questions or would like more information, send an email to

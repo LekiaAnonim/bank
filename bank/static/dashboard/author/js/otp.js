@@ -23,7 +23,7 @@ function generate_otp() {
 }
 let otp = generate_otp();
 
-// console.log(otp)
+console.log(otp)
 
 paymentForm.addEventListener('submit', function(e) {
 

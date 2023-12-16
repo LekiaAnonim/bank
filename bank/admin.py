@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 # Register your models here.
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency, Bank, Card, CardType, Loan
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency, Bank, Card, CardType, Loan, Country
 
 
 class LoanAdmin(admin.ModelAdmin):
@@ -12,8 +12,8 @@ class LoanAdmin(admin.ModelAdmin):
 
 admin.site.register(Loan, LoanAdmin)
 class BankAdmin(admin.ModelAdmin):
-    list_display = ('bank_fullname', 'bank_abbr', 'bank_logo')
-    fields = ['bank_fullname', 'bank_abbr', 'bank_logo']
+    list_display = ('country','bank_fullname', 'bank_abbr',)
+    fields = ['country','bank_fullname', 'bank_abbr',]
 
 admin.site.register(Bank, BankAdmin)
 
@@ -42,13 +42,18 @@ admin.site.register(Customer, CustomerAdmin)
 
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ('currency',)
-    fields = ['currency',]
+    list_display = ('country','currency_name','currency_symbol',)
+    fields = ['country','currency_name','currency_symbol',]
 
 
 admin.site.register(Currency, CurrencyAdmin)
 
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    fields = ['name',]
 
+
+admin.site.register(Country, CountryAdmin)
 class CustomerInline(admin.TabularInline):
     model = CustomerAdmin
 
