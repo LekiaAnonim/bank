@@ -161,6 +161,12 @@ urlpatterns = [
     # account/login/
     path(
         route='',
+        view=views.Home.as_view(),
+        name='home'
+    ),
+
+    path(
+        route='signin',
         view=views.UserLoginView.as_view(),
         name='login'
     ),

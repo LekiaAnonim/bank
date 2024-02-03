@@ -44,7 +44,8 @@ handler404 = 'mysite.views.my_custom_page_not_found_view'
 handler500 = 'mysite.views.my_custom_error_view'
 handler403 = 'mysite.views.my_custom_permission_denied_view'
 
-
+class Home(generic.TemplateView):
+    template_name = 'home/index.html'
 class UserCreate(CreateView):
     model = User
     form_class = SignupForm
