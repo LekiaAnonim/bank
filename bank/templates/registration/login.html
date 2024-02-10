@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% extends 'home/base.html' %} {% load static %}{% load env_extras %}{% load cloudinary %} {% load mathfilters %}
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 {% load static %}
 <head>
@@ -93,7 +92,13 @@
     {% endfor %} {% endif %} {% endblock messages %}
     {% block content%}
             <div class="carousel" style="background: url('{% static 'image/images/tech-daily-pz_L0YpSVvE-unsplash.jpg' %}'); background-size:cover; margin-top: 0;">
-                
+                <!-- <div class="carousel-text">
+                    <h1 class="about-h1">About Us</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus natus provident.</p>
+                    <a href="#about">
+                        <div class="read-more">Read More</div>
+                    </a>
+                </div> -->
                 <div class="carousel-login">
                     <section class="login-widget">
                         <h2 class="login-title">Login</h2>
