@@ -1,0 +1,65 @@
+<!doctype html>
+{% extends 'customer_dashboard/customer_sidenav.html' %}
+{% load static %}
+{% load cloudinary %}
+{% load mathfilters %}
+
+{% block content %}
+    <div class="customer-container customer-transaction-details">
+        <h4 class="content-head" >Your account summary</h4>
+        <div class="customer-transaction-summary">
+            <div class="customer-transaction-card">
+                <h5>Current Balance</h5>
+                <p>{{login_user_accounts.currency}}{{balance|floatformat:"2g"}}</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Received</h5>
+                <p>{{login_user_accounts.currency}}{{last_payment_received.amount|floatformat:"2g"}}</p>
+            </div>
+            <div class="customer-transaction-card">
+                <h5>Last Payment Sent</h5>
+                <p>{{login_user_accounts.currency}}{{last_payment_sent.amount|floatformat:"2g"}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="customer-container customer-card-head">
+        <div class="customer-atm-card">
+            <div class="customer-logo">
+                <div class="customer-cadence-logo customer-card-logo">
+                    <img src="{% static 'cadence.png' %}" alt="cadence-logo">
+                </div>
+                <div class="customer-mastercard-logo customer-card-logo">
+                    <img src="{% static 'image/mastercard_logo_96px.png' %}" alt="master logo">
+                </div>
+            </div>
+            <div class="customer-chip-cardnum">
+                <img class="customer-chip" src="{% static 'image/chip_card_80px.png' %}" alt="">
+                <p class="customer-card-no"> <span>4563</span> <span> 5314 </span>    <span> **** </span>    <span> **** </span>  </p>
+                <img src="{% static 'image/contactless_payment_48px.png' %}" alt="">
+            </div>
+            <div class="customer-card-footer">
+                <h5 class="customer-card-name">{{user.customer.account_name}}</h5>
+                <div class="customer-date-cvv customer-exp-date">
+                    <p>Date</p>
+                    <p>**/**</p>
+                </div>
+                <div class="customer-date-cvv customer-cvv">
+                    <p>CVV</p>
+                    <p>***</p>
+                </div>
+                
+            </div>
+            
+        </div>
+        {% comment %} {% if accounts %} {% endcomment %}
+        {% comment %} {% for account in login_user_accounts %}
+        <div class="customer">
+            <p class="customer-acct-no"> <span>Account Number:</span> Hello</p>
+            <p class="customer-acct-type"><span>Account Type:</span> {{account.account_type}}</p>
+        </div>
+            
+        {% endfor %} {% endcomment %}
+        {% comment %} {% endif %} {% endcomment %}
+    </div>
+    
+{% endblock content %}

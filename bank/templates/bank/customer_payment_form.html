@@ -1,95 +1,67 @@
-<!doctype html>
-{% extends 'customer_dashboard/customer_sidenav.html' %}
-{% load static %}
-{% load env_extras %}
-
-{% block title %}
-    Send Money
-{% endblock title %}
-
-{% block stylesheets %}
-     {{ block.super }}
-        <link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" />
-{% endblock stylesheets %}
-
-
-{% block content %}
-    <input id="YOUR_ENV_VARIABLE" value="{% get_env_var 'ELASTIC_EMAIL_PASSWORD' %}" type="hidden">
-    <div class="customer-container page-header customer-payment-container">
-        <div class="row align-items-end">
-            <div class="col-lg-8">
-                <div class="page-header-title">
-                    <i class="ik ik-file-text bg-blue"></i>
-                    <div class="d-inline">
-                        <h5>Make Payment</h5>
-                        <span>Send Money.</span>
-                        <span style="display: none;" class="user-email">{{user.email}}</span>
-                    </div>
+<!doctype html> {% extends 'customer_dashboard/customer_sidenav.html' %} {% load static %} {% load env_extras %} {% block title %} Send Money {% endblock title %} {% block stylesheets %} {{ block.super }}
+<link href="{% static 'dashboard/author/css/dashboard.css' %}" rel="stylesheet" /> {% endblock stylesheets %} {% block content %}
+<input id="YOUR_ENV_VARIABLE" value="{% get_env_var 'ELASTIC_EMAIL_PASSWORD' %}" type="hidden">
+<div class="customer-container page-header customer-payment-container">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="ik ik-file-text bg-blue"></i>
+                <div class="d-inline">
+                    <h5>Make Payment</h5>
+                    <span>Send Money.</span>
+                    <span style="display: none;" class="user-email">{{user.email}}</span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="customer-payment-container mb-3">
-        <div class="row">
-            <div class="col-md-12">
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h4 class="title">Make Payment</h4>
-                        </div>
-                        <div class="card-body">
-                        <div class="content">
-                            <form id="payment-form" method="post" enctype="multipart/form-data" novalidate>
-                                {% csrf_token %}
-                                <table class="payment-table">
-                                    {{ form.as_table }}
-                                </table>
-                                {% if account_suspend %}
-                                    <button class="otp-button account_suspend_btn">Get OTP</button>
-                                    <input class="send-payment otp-button account_suspend_btn" type="button" value="Submit">
-                                    
-    
-                                {% else %}
-                                    <button class="otp-button">Get OTP</button>
-                                    <input class="send-payment" type="submit" value="Submit">
-                                {% endif %}
-                                {% if messages %}
-                                <div class="messages" id = "messages">
-                                    {% for message in messages %}
-                                    <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}">
-                                    {% if account_suspend %}
-                                    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                                        <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
-                                        <hr>
-                                        {{ message }}
-                                    </div>
-                                    {% else %}
-                                    <div {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
-                                        {{ message }}
-                                    </div>
-                                    {% endif %}
-                                    
-                                    {% endfor %}
+</div>
+<div class="customer-payment-container mb-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="title">Make Payment</h4>
+                </div>
+                <div class="card-body">
+                    <div class="content">
+                        <form id="payment-form" method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+                            <table class="payment-table">
+                                {{ form.as_table }}
+                            </table>
+                            {% if account_suspend %}
+                            <button class="otp-button account_suspend_btn">Get OTP</button>
+                            <input class="send-payment otp-button account_suspend_btn" type="button" value="Submit"> {% else %}
+                            <button class="otp-button">Get OTP</button>
+                            <input class="send-payment" type="submit" value="Submit"> {% endif %} {% if messages %}
+                            <div class="messages" id="messages">
+                                {% for message in messages %}
+                                <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}"> {% if account_suspend %}
+                                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                                    <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                                    <hr> {{ message }}
                                 </div>
-                                {% endif %}
-                                <div class="clearfix"></div>
-                            </form>
-                            
-                        </div>
+                                {% else %}
+                                <div {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                                    {{ message }}
+                                </div>
+                                {% endif %} {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="clearfix"></div>
+                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
-{% endblock content %}
 
-{% block messages %}
+</div>
+{% endblock content %} {% block messages %}
 <div class="row">
     <div class="col-md-12">
-        {% if messages %}
-        {% for message in messages %}
-
-        {% if account_suspend %}
+        {% if messages %} {% for message in messages %} {% if account_suspend %}
         <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
                                                                                {% if message.level_tag == 'error' %}
                                                                                message
@@ -97,8 +69,7 @@
                                                                                successful
                                                                                {% endif %}">
             <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
-            <hr>
-            {{ message }}
+            <hr> {{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -111,15 +82,12 @@
                                                                                successful
                                                                                {% endif %}">
             <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
-            <hr>
-            {{ message }}
+            <hr> {{ message }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+        {% endif %} {% endfor %} {% endif %}
     </div>
 </div>
 {% endblock messages %}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+{% extends 'home/base.html' %} {% load static %}{% load env_extras %}{% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Sky Premium Home</title>
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <div class="advertisment" style="background: url(/static/image/images/floriane-vita-FyD3OWBuXnY-unsplash.jpg); background-repeat: no-repeat; background-size: cover !important; min-height: 300px !important;">
+        <div class="advert">
+            <h2>Stay Informed, Stay Empowered</h2>
+            <p>Explore Our Blog For Exper Insights, Financial
+                Tips, And Updates On The Latest Trends. Empower Yourself
+                With Knowledge And Make Informed Financial Decisions.
+            </p>
+        </div> 
+    </div>
+    <div class="register">
+        <a class="line" href="open account"><p>Open <br> Account</p></a>
+        <a class="line" href="agent banking"><p>Agent <br> Banking</p></a>
+        <a class="line" href="Sustanability"><p>Sustanability</p></a>
+        <a class="line blue-line" href="Find Closest Branch"><p>Find Closest<br> Branch</p></a>
+        <a class="line" href="Annual Report"><p>Annual <br> Report</p></a>
+        <a class="line" href="Loan Calculator"><p>Loan <br> Calculator</p></a>
+        <a class="line" href="Support"><p>Support</p></a>
+    </div>
+    <div class="tech-innovation" style="background: url(/static/image/images/eduardo-soares-utWyPB8_FU8-unsplash.jpg); background-repeat: no-repeat; background-size: cover;">
+        <div class="tech">
+            <p id="stay"> Tech Innovation:</p>
+            <p id="para" >Stay Connected, Stay Ahead.</p>
+        </div>
+        <div class="online">
+            <li>
+                <a href="Online Banking">Online Banking</a>
+            </li>
+        </div>
+    </div>
+    <div class="new-section">
+        <label class="new-section">Latest News</label>
+    </div>
+    <div class="headings-container">
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/thomas-william-kStAM22qoww-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/robert-bye-jeF-vyxytb4-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/petr-machacek-BeVGrXEktIk-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="new-section">
+        <label class="new-section">Latest On Foreign Exchange</label>
+    </div>
+    <div class="headings-container">
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/paige-cody-bOVZ_f3fbQM-unsplash.jpg">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/krakenimages-376KN_ISplE-unsplash.jpg">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/jason-goodman-Oalh2MojUuk-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="new-section">
+        <label class="new-section">Latest On CBN</label>
+    </div>
+    <div class="headings-container">
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/dylan-gillis-KdeqA3aTnBY-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/carlos-muza-hpjSkU2UYSU-unsplash.jpg" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="headings">
+            <div class="headline1">
+                <img src="/static/image/images/calculator_240px.png" style="height: 200px; width: 365px; background-size: cover;">
+                <label id="first-news">HEADLINES</label>
+                <div class="news-content">
+                    <p>
+                        Lorem Ipsum, Dolor Sit Amet
+                        Consectetur Adipisicing Elit. Rerum
+                        Recusandae Harum Beatae,
+                        Dignissimos...
+                    </p>
+                    <p><a href="read more">Read More...</a></p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="down-signup" style="background: url(/static/image/images/dmytro-demidko-eBWzFKahEaU-unsplash.jpg); background-repeat: no-repeat; background-size: cover;">
+        <div class="footer-register">
+            <input id="email" type="email" placeholder="enter your email...">
+            <li class="sub"><a  href="subscribe" >Subscribe</a> </li>
+        </div>
+        <label id="Newsletter" >Sign Up To Our<br> Newsletter</label>
+    </div>
+    {% endblock %}
+</body>
+</html>

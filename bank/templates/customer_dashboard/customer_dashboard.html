@@ -1,65 +1,123 @@
-<!doctype html>
-{% extends 'customer_dashboard/customer_sidenav.html' %}
-{% load static %}
-{% load cloudinary %}
-{% load mathfilters %}
+<!doctype html> {% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %} {% block content %}
+<main>
+    <div class="page-title">
+        <h1>Overview</h1>
+    </div>
+    <div class="user-greeting">
+        <h2><span>Hello,</span> {{user.customer.account_name}}</h2>
+    </div>
+    <div class="balance-card-container">
+        {% if login_user_accounts %} {% for account in login_user_accounts %}
+        <div class="total-balance-card">
+            <div class="balance-title-show-balance">
+                <h4>Your Total Balance</h4>
+                <svg class="display-balance hide" onclick="displayBalance(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 9a3.02 3.02 0 0 0-3 3c0 1.642 1.358 3 3 3 1.641 0 3-1.358 3-3 0-1.641-1.359-3-3-3z"></path><path d="M12 5c-7.633 0-9.927 6.617-9.948 6.684L1.946 12l.105.316C2.073 12.383 4.367 19 12 19s9.927-6.617 9.948-6.684l.106-.316-.105-.316C21.927 11.617 19.633 5 12 5zm0 12c-5.351 0-7.424-3.846-7.926-5C4.578 10.842 6.652 7 12 7c5.351 0 7.424 3.846 7.926 5-.504 1.158-2.578 5-7.926 5z"></path></svg>
+                <svg class="display-balance" onclick="displayBalance(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 19c.946 0 1.81-.103 2.598-.281l-1.757-1.757c-.273.021-.55.038-.841.038-5.351 0-7.424-3.846-7.926-5a8.642 8.642 0 0 1 1.508-2.297L4.184 8.305c-1.538 1.667-2.121 3.346-2.132 3.379a.994.994 0 0 0 0 .633C2.073 12.383 4.367 19 12 19zm0-14c-1.837 0-3.346.396-4.604.981L3.707 2.293 2.293 3.707l18 18 1.414-1.414-3.319-3.319c2.614-1.951 3.547-4.615 3.561-4.657a.994.994 0 0 0 0-.633C21.927 11.617 19.633 5 12 5zm4.972 10.558-2.28-2.28c.19-.39.308-.819.308-1.278 0-1.641-1.359-3-3-3-.459 0-.888.118-1.277.309L8.915 7.501A9.26 9.26 0 0 1 12 7c5.351 0 7.424 3.846 7.926 5-.302.692-1.166 2.342-2.954 3.558z"></path></svg>
+            </div>
+            <div class="total-account-balance">
+                <span class="balance-amount">{{account.currency.currency_symbol}}{{balance|floatformat:"2g"}}</span>
+                <span class="balance-amount hide">*****</span>
+            </div>
+            <div class="account-type-acct-no">
+                <div class="account-type"><span>{{account.account_type}}</span></div>
+                <div class="account-no">Acct No:<span>{{account.account_number}}</span></div>
+            </div>
+            <script>
+                function displayBalance(ele) {
+                    let displayBals = document.querySelectorAll('.display-balance');
+                    displayBals.forEach(el => {
+                        el.classList.toggle('hide');
+                    });
 
-{% block content %}
-    <div class="customer-container customer-transaction-details">
-        <h4 class="content-head" >Your account summary</h4>
-        <div class="customer-transaction-summary">
-            <div class="customer-transaction-card">
-                <h5>Current Balance</h5>
-                <p>{{login_user_accounts.currency}}{{balance|floatformat:"2g"}}</p>
+                    let displayAmts = document.querySelectorAll('.balance-amount');
+                    displayAmts.forEach(el => {
+                        el.classList.toggle('hide');
+                    });
+                }
+            </script>
+        </div>
+        {% endfor %} {% endif %} {% if cards %} {% for card in cards %}
+        <div class="card">
+            <div class="logo-container-connection">
+                <div class="logo">
+                    <a href="/"><img src="{% static 'image/images/skyhigh.png' %}" alt="Sky Premium"></a>
+                </div>
+                <div class="connection">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 125" version="1.1" x="0px" y="0px"><title>chip - 2</title><desc>Created with Sketch.</desc><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-2562.000000, -1901.000000)" fill="#000000"><path d="M2616.95991,1968.03139 C2615.36384,1970.61117 2615.21092,1973.7766 2616.55059,1976.49981 L2623.19494,1990 L2648.49402,1990 C2653.18426,1990 2657,1986.16894 2657,1981.45895 L2657,1963.91164 L2624.34141,1963.91164 C2621.31592,1963.91164 2618.55599,1965.45069 2616.95991,1968.03139 Z M2648.49402,1913 L2623.19494,1913 L2616.55059,1926.49835 C2615.21092,1929.22156 2615.36384,1932.38791 2616.95991,1934.96769 C2618.5569,1937.54839 2621.31592,1939.08836 2624.34141,1939.08836 L2657,1939.08836 L2657,1921.53921 C2657,1916.83106 2653.18426,1913 2648.49402,1913 Z M2624.8194,1961.1535 L2657,1961.1535 L2657,1941.8465 L2624.8194,1941.8465 L2624.8194,1961.1535 Z M2614.6267,1966.57509 C2616.31984,1963.84085 2619.01109,1962.01588 2622.07229,1961.40081 L2622.07229,1941.59827 C2619.01109,1940.9832 2616.31984,1939.15823 2614.6267,1936.42307 C2612.52516,1933.0278 2612.32462,1928.86116 2614.08735,1925.27741 L2620.131,1913 L2604.13181,1913 L2610.17454,1925.27741 C2611.93911,1928.86208 2611.73674,1933.02872 2609.63519,1936.42399 C2607.96586,1939.12237 2605.32223,1940.93631 2602.31139,1941.57528 L2602.31139,1963.95394 L2567,1963.95394 L2567,1981.45895 C2567,1986.16894 2570.81574,1990 2575.50598,1990 L2601.18874,1990 L2607.06206,1978.0646 L2609.52531,1979.28553 L2604.25268,1990 L2620.131,1990 L2614.08735,1977.72075 C2612.32462,1974.13792 2612.52516,1969.97036 2614.6267,1966.57509 Z M2567,1961.19671 L2599.56428,1961.19671 L2599.56428,1941.8465 L2567,1941.8465 L2567,1961.19671 Z M2607.30198,1934.96769 C2608.89805,1932.38791 2609.05189,1929.22156 2607.7113,1926.49835 L2601.06878,1913 L2575.50598,1913 C2570.81574,1913 2567,1916.83106 2567,1921.53921 L2567,1939.08836 L2599.92232,1939.08836 C2602.94597,1939.08836 2605.70591,1937.54839 2607.30198,1934.96769 Z"/></g></g></svg>
+                </div>
             </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Received</h5>
-                <p>{{login_user_accounts.currency}}{{last_payment_received.amount|floatformat:"2g"}}</p>
+            <div class="card-number">
+                <span>Card Number</span>
+                <p>{{card.card_number|slice:"0:4"}} *** *** {{card.card_number|slice:"12:16"}}</p>
             </div>
-            <div class="customer-transaction-card">
-                <h5>Last Payment Sent</h5>
-                <p>{{login_user_accounts.currency}}{{last_payment_sent.amount|floatformat:"2g"}}</p>
+            <div class="exp-cvv-name">
+                <div class="exp-cvv-container">
+                    <div class="exp-cvv">
+                        <p><span>Exp.: </span>{{card.expiry_date|date:"m"}}/{{card.expiry_date|date:"y"}} <span>CVV: </span>***</p>
+                    </div>
+                    <div class="card-owner">
+                        <p>{{user.customer.account_name}}</p>
+                    </div>
+                </div>
+                <div class="master-card">
+                    <img src="{{card.card_type.company_logo.url}}" alt="{{card.card_type.company_name}}">
+                </div>
             </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+    <div class="transaction-history">
+        <div class="history-header">
+            <div class="history-title">
+                <h2>History</h2>
+            </div>
+            <form action="" method="get">
+                <div class="history-date-range">
+                    <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                    <input class="submit-btn" type="submit" value="Submit">
+                </div>
+            </form>
+            <script>
+                $(function() {
+                    $('input[name="daterange"]').daterangepicker({
+                        opens: 'left'
+                    }, function(start, end, label) {
+                        // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                    });
+                });
+            </script>
+        </div>
+        <div class="transtion-table">
+            <table>
+                {% for index, row in transaction_dataframe.iterrows %}
+                <tr>
+                    {% for cell in row %}
+                    <td>
+                        {{cell}}
+                    </td>
+                    {% endfor %}
+                    <!-- <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></td> -->
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
-    <div class="customer-container customer-card-head">
-        <div class="customer-atm-card">
-            <div class="customer-logo">
-                <div class="customer-cadence-logo customer-card-logo">
-                    <img src="{% static 'cadence.png' %}" alt="cadence-logo">
-                </div>
-                <div class="customer-mastercard-logo customer-card-logo">
-                    <img src="{% static 'image/mastercard_logo_96px.png' %}" alt="master logo">
-                </div>
-            </div>
-            <div class="customer-chip-cardnum">
-                <img class="customer-chip" src="{% static 'image/chip_card_80px.png' %}" alt="">
-                <p class="customer-card-no"> <span>4563</span> <span> 5314 </span>    <span> **** </span>    <span> **** </span>  </p>
-                <img src="{% static 'image/contactless_payment_48px.png' %}" alt="">
-            </div>
-            <div class="customer-card-footer">
-                <h5 class="customer-card-name">{{user.customer.account_name}}</h5>
-                <div class="customer-date-cvv customer-exp-date">
-                    <p>Date</p>
-                    <p>**/**</p>
-                </div>
-                <div class="customer-date-cvv customer-cvv">
-                    <p>CVV</p>
-                    <p>***</p>
-                </div>
-                
-            </div>
-            
+    <!-- <div class="quick-transfer">
+        <div class="quick-transfer-title">
+            <h2>Quick Transfer</h2>
         </div>
-        {% comment %} {% if accounts %} {% endcomment %}
-        {% comment %} {% for account in login_user_accounts %}
-        <div class="customer">
-            <p class="customer-acct-no"> <span>Account Number:</span> Hello</p>
-            <p class="customer-acct-type"><span>Account Type:</span> {{account.account_type}}</p>
-        </div>
-            
-        {% endfor %} {% endcomment %}
-        {% comment %} {% endif %} {% endcomment %}
-    </div>
-    
+        <form action="" method="post">
+            <select name="banks" id="id_bank">
+                <option value="">--Select Bank--</option>
+                <option value="access">Access Bank</option>
+                <option value="gtb">Guarantee Trust Bank</option>
+                <option value="zenith">Zenith</option>
+            </select> <br>
+            <input type="number" name="account_number" id="id_account_number" placeholder="Enter Account Number"><br><br>
+            <a href="">Add From Beneficiaries</a> <br>
+            <input type="text" name="remark" id="remark" placeholder="Enter Description (Optional)"> <br>
+            <input class="submit-btn" type="submit" value="Send">
+        </form>
+    </div> -->
+</main>
 {% endblock content %}

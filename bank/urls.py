@@ -19,6 +19,8 @@ urlpatterns = [
      path('customer/account_suspended',
          views.SuspendAccount.as_view(), name='suspend_account'),
 
+     
+
      path('customer/invalid_transaction/insufficient_fund',
           views.InsufficientFund.as_view(), name='insufficient_fund'),
      path(
@@ -37,7 +39,7 @@ urlpatterns = [
           name="transaction_history"
      ),
     path(
-        route="customer/transaction_successful",
+        route="customer/transaction_successful/<int:pk>/",
         view=views.TransactionSuccessful.as_view(),
         name="transaction_success"
     ),
@@ -108,6 +110,30 @@ urlpatterns = [
     path('<int:pk>/payments',
          views.PaymentListView.as_view(), name='payment-list'),
 
+     path('customer/<int:pk>/cards',
+         views.CardListView.as_view(), name='my_cards'),
+
+     path('customer/support',
+         views.SupportView.as_view(), name='support'),
+
+     path('customer/personal/data',
+         views.PersonalDataView.as_view(), name='personal-data'),
+
+     path(
+        route="customer/loan_successful",
+        view=views.LoanSuccessful.as_view(),
+        name="loan_success"
+     ),
+
+     path('loan/create/', views.LoanCreate.as_view(),
+         name='loan-create'),
+
+     path(
+        route="customer/menu",
+        view=views.MenuView.as_view(),
+        name="menu"
+     ),
+
     
 #     path(
 #         route="user/paid/",
@@ -133,6 +159,17 @@ urlpatterns = [
     # ACCOUNT URLS #
 
     # account/login/
+#     path(
+#         route='',
+#         view=views.Home.as_view(),
+#         name='home'
+#     ),
+
+#     path(
+#         route='signin',
+#         view=views.UserLoginView.as_view(),
+#         name='login'
+#     ),
     path(
         route='',
         view=views.UserLoginView.as_view(),

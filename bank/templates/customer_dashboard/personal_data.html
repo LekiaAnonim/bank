@@ -1,0 +1,104 @@
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% block content %}
+    <main>
+        <div class="page-title">
+            <h1>Personal Data</h1>
+        </div>
+        <div class="personal-detail">
+            <div class="person-photo">
+                <img src="{{ user.customer.image.url }}" alt="">
+            </div>
+            <div class="person-info">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="person-heading">Name :</td>
+                            <td>{{user.customer.account_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="person-heading">Acct No :</td>
+                            <td class="personal-data-info">0826834412</td>
+                        </tr>
+                        <tr>
+                            <td class="person-heading">Acct Type :
+                            </td>
+                            <td class="personal-data-info">Current</td>
+                        </tr>
+                        <tr>
+                            <td class="person-heading">SSN :
+                            </td>
+                            <td class="personal-data-info">{{user.customer.SSN}}</td>
+                        </tr>
+                        <!-- <tr>
+                            <td class="person-heading">Nationality :</td>
+                            <td class="personal-data-info">{{user.customer.home_address}}</td>
+                        </tr>
+                        <tr>
+                            <td class="person-heading">Region :</td>
+                            <td class="personal-data-info">Abuja</td> -->
+                        </tr>
+                        <tr>
+                            <td class="person-heading">Address :</td>
+                            <td class="personal-data-info">{{user.customer.home_address}}</td>
+                        </tr>
+                        <!-- <tr>
+                            <td class="person-heading">Occupation :
+                            </td>
+                            <td class="personal-data-info">Business</td>
+                        </tr> -->
+                        <tr>
+                            <td class="person-heading">Email :
+                            </td>
+                            <td class="personal-data-info">{{user.email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="personal-setting change-personal-data">
+            <div class="click-expand" onclick="expand(this)">
+                <a href="#">Change Personal Data</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+            </div>
+
+            <div class="expand-container hide">Please contact our customer care <a href="tel:+1(940) 277-9280">+1(940) 277-9280
+                </a> or send an email to <a href="mailto:skyhighpremiumbnk@gmail.com">skyhighpremiumbnk@gmail.com</a>.</div>
+        </div>
+        <div class="personal-setting change-password">
+            <div class="click-expand" onclick="expand(this)">
+                <a href="#">Change & Reset Password</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+            </div>
+
+            <div class="expand-container hide">Please contact our customer care <a href="tel:+1(940) 277-9280">+1(940) 277-9280
+                </a> or send an email to <a href="mailto:skyhighpremiumbnk@gmail.com">skyhighpremiumbnk@gmail.com</a>.</div>
+        </div>
+        <div class="personal-setting person-logout">
+            <div class="click-expand" onclick="expand(this)">
+                <a href="{% url 'bank:log-out' %}">Logout</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
+            </div>
+            <div class="expand-container hide">Please contact our customer care <a href="tel:+1(940) 277-9280">+1(940) 277-9280
+                </a> or send an email to <a href="mailto:skyhighpremiumbnk@gmail.com">skyhighpremiumbnk@gmail.com</a>.</div>
+        </div>
+        <script>
+            function expand(par) {
+                par.nextElementSibling.classList.toggle('hide');
+                // document.querySelector(`.expand-container`).classList.toggle('hide');
+            }
+        </script>
+    </main>
+    {% endblock content %}
+</body>
+
+</html>

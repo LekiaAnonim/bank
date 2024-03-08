@@ -1,6 +1,4 @@
-{% extends 'customer_dashboard/customer_sidenav.html' %}
-{% load static %}
-{% load cloudinary %}
+{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
 
 <head>
     <meta charset="UTF-8">
@@ -9,122 +7,64 @@
     <meta name="google-site-verification" content="J3uHWKo6UkFGmEz_dmaJ0wpGwPO95_IPH39yPCXV3DI" />
     <meta name="csrf_token" content="{{ csrf_token }}">
     <title>Transaction History</title>
-    
-   
+    {% block extrastyles %}
+    <link rel="stylesheet" href="{% static 'css/customer_dash.css' %}"> {% endblock extrastyles %}
 </head>
 
 
 
 
 {% block content %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-</script>
+<main>
 
-<!-- <script src="{% static 'dashboard/author/js/html2canvas.js' %}"></script>
-<script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
-</script> -->
-<!-- <script>
-    function doCapture() {
-        window.scrollTo(0, 0);
-        html2canvas(document.getElementById('receipt')).then(function (canvas) {
-            var ajax = new XMLHttpRequest();
-            ajax.open('POST', 'save_capture.html', true);
-            ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            ajax.send('image=' + canvas.toDataURL('image/png', 0.9))
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
 
-            ajax.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                }
+    <div class="customer-container customer-payment-container">
+        <img src="{% static 'image/time_machine_100px.png' %}" alt="" class="icon">
+        <h2 class="content-head">Transaction Successful</h2>
+        <div class="transaction-history transaction-success">
+            <div class="thumbs-up-image">
+                <img src="{% static 'image/thumbs_up_96px.png' %}" alt="" class="icon">
+            </div>
+            <div class="get-receipt-close">
+                <a href="{% url 'bank:transaction_history' %}">
+                    <div class="receipt-button close-successpage">
+                        <p>Close</p>
+                    </div>
+                </a>
 
-            }
-        });
-    }
-</script> -->
-
-<div class="customer-container customer-payment-container">
-    <img src="{% static 'image/time_machine_100px.png' %}" alt="" class="icon">
-    <h2 class="content-head">Transaction Successful</h2>
-    <div class="transaction-history transaction-success">
-        <div class="thumbs-up-image">
-            <img src="{% static 'image/thumbs_up_96px.png' %}" alt="" class="icon">
-        </div>
-        <div class="get-receipt-close">
-            <!-- <button class="receipt-button get-receipt" id="btn-Preview-Image">
-                <p>Preview Receipt</p>
-            </button>
-            <div class="receipt-button get-receipt" id="btn-Convert-Html2Image">
-                <p>Download Receipt</p>
-            </div> -->
-            <a href="{% url 'bank:transaction_history' %}">
-                <div class="receipt-button close-successpage">
-                    <p>Close</p></div>
-            </a>
-            
-        </div>
-        <div class="receipt" id="html-content-holder">
-            <div class="receipt-heading">
-                <div class="logo">
-                    <img src="{% static 'image/images/skyhigh.png' %}" alt="skyhigh logo">
+            </div>
+            <div class="receipt" id="html-content-holder">
+                <div class="receipt-heading">
+                    <div class="logo">
+                        <img src="{% static 'image/images/skyhigh.png' %}" alt="skyhigh logo">
+                    </div>
+                    <div>
+                        <p>Transaction Receipt</p>
+                    </div>
                 </div>
-                <div><p>Transaction Receipt</p></div>
-                
+                <div class="receipt-body">
+                    <p>Transaction Date: <span>{{payment.date}}</span></p>
+                    <p>Transaction Type: <span>Transfer</span></p>
+                    <p>Amount: <span>{{payment.amount}}</span></p>
+                    <p>Sender: <span class="name">{{request.user.first_name}} {{request.payment.account.customer.middle_name}} {{request.user.last_name}}</span></p>
+                    <p>Beneficiary Account Number: <span>{{payment.account_number}}</span></p>
+                    <p>Beneficiary Name: <span class="name">{{payment.account_name}}</span></p>
+                    <p>Bank: <span>{{payment.bank.bank_fullname}}</span></p>
+                    <p>Remark: <span>{{payment.remark}}</span></p>
+                    <p>Transaction Status: <span>Successful</span></p>
+                </div>
+                <div class="receipt-footer">
+                    <p>If you have any questions or would like more information, send an email to
+                        <a href="mailto:skyhighpremiumbnk@gmail.com" style="color: blue; text-decoration: underline;">skyhighpremiumbnk@gmail.com</a>
+                        <br> Thank you for choosing SkyHigh Premium Bank.
+                    </p>
+                </div>
             </div>
-            <div class="receipt-body">
-                {% for payment in payments_sent_list|slice:":1" %}
-                <p>Transaction Date: <span>{{payment.date}}</span></p>
-                <p>Transaction Type: <span>Transfer</span></p>
-                <p>Amount: <span>{{payment.amount}}</span></p>
-                <p>Sender: <span class="name">{{request.user.first_name}} {{request.payment.account.customer.middle_name}} {{request.user.last_name}}</span></p>
-                <p>Beneficiary Account Number: <span>{{payment.account_number}}</span></p>
-                <p>Beneficiary Name: <span class="name">{{payment.account_name}}</span></p>
-                <p>Bank: <span>{{payment.bank}}</span></p>
-                <p>Remark: <span>{{payment.remark}}</span></p>
-                <p>Transaction Status: <span>Successful</span></p>
-                {% endfor %}
-            </div>
-            <div class="receipt-footer">
-                <p>If you have any questions or would like more information, send an email to
-                    <a href="mailto:skyhighpremiumbnk@gmail.com" style="color: blue; text-decoration: underline;">skyhighpremiumbnk@gmail.com</a> 
-                    <br>
-                    Thank you for choosing SkyHigh Premium Bank.
-                </p>
-            </div>
+            <div id="previewImage"></div>
         </div>
-        <div id="previewImage"></div>
     </div>
-    <!-- <script>
-        $(document).ready(function () {
+</main>
 
-            // Global variable
-            var element = $("#html-content-holder");
-
-            // Global variable
-            var getCanvas;
-
-            $("#btn-Preview-Image").on('click', function () {
-                html2canvas(element, {
-                    onrendered: function (canvas) {
-                        $("#previewImage").append(canvas);
-                        getCanvas = canvas;
-                    }
-                });
-            });
-
-            $("#btn-Convert-Html2Image").on('click', function () {
-                var imgageData =
-                    getCanvas.toDataURL("image/png");
-
-                // Now browser starts downloading 
-                // it instead of just showing it
-                var newData = imgageData.replace(
-                    /^data:image\/png/, "data:application/octet-stream");
-
-                $("#btn-Convert-Html2Image").attr(
-                    "download", "GeeksForGeeks.png").attr(
-                        "href", newData);
-            });
-        });
-    </script> -->
-</div>
 {% endblock content %}
