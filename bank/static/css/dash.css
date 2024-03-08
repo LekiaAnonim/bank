@@ -495,7 +495,9 @@ td:nth-child(4) {
     color: #616161;
     font-size: 12px;
 }
-
+.history-date-range input{
+    display: none;
+}
 @media (max-width:650px) {
     .sidebar-menu {
         position: fixed;
