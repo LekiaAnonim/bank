@@ -14,7 +14,7 @@ from bank.forms import UserLoginForm, CustomerLoginForm, CreateHistoryForm, Cust
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency, Bank, Card, Loan
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -44,7 +44,8 @@ handler404 = 'mysite.views.my_custom_page_not_found_view'
 handler500 = 'mysite.views.my_custom_error_view'
 handler403 = 'mysite.views.my_custom_permission_denied_view'
 
-
+class Home(generic.TemplateView):
+    template_name = 'home/index.html'
 class UserCreate(CreateView):
     model = User
     form_class = SignupForm
@@ -406,23 +407,98 @@ class InsufficientFund(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
 
 
-class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
+class CustomerPaymentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+
+    login_url = 'bank:login'
     model = Payment
-    fields = ['account_name', 'account_number', 'bank', 'amount',
-              'receiver_email', 'routing_number', 'bank_address', 'otp']
+    fields = ['account_name', 'account_number', 'bank', 'amount', 'otp', 'routing_number', 'bank_address']
     context = {}
     context_object_name = 'payment'
-    template_name = 'bank/customer_payment_form.html'
+    template_name = 'customer_dashboard/account.html'
 
-    def get(self, request, *args, **kwargs):
+
+    def get_context_data(self, *args, **kwargs):
         self.context = super(CustomerPaymentCreate,
-                             self).get(request, **kwargs)
-        currency = Currency.objects.all()
-        self.context['currency'] = currency
-        cur = Currency.objects.all()[0]
-        self.context['cur'] = cur
+                             self).get_context_data(**kwargs)
+        
+        login_user_accounts = Account.objects.filter(customer__user_id=self.request.user.id)
+        beneficiaries = Payment.objects.filter(
+            account__customer__user_id=self.request.user.id)[0:4]
+
+
+        transaction_list = PostTransaction.objects.filter(
+            account__customer__user_id=self.request.user.id).order_by("date")
+
+        payments_sent_list = Payment.objects.filter(
+            account__customer__user_id=self.request.user.id)
+
+        all_withdrawals = sum(
+            transaction.amount for transaction in payments_sent_list) 
+
+        all_deposits = sum(
+            transaction.amount for transaction in transaction_list)
+
+        balance = (all_deposits - all_withdrawals)
+
+        createhistory_list = CreateHistory.objects.filter(
+            account__customer__user_id=self.request.user.id).order_by("date")
+
+        debit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
+                                                             top_up_type='Debit').order_by("date")
+        credit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
+                                                              top_up_type='Credit').order_by("date")
+        payments_sent_list = Payment.objects.filter(
+            account__id=self.request.user.id).order_by("-date")
+
+
+        transaction_data = {'Date': [], 'Type': [],
+                            'Amount': [], 'Direction': [], 'Account Name': []}
+
+        for transaction in transaction_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Credit')
+            transaction_data['Amount'].append(str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('from')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        for transaction in credit_createhistory_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Credit')
+            transaction_data['Amount'].append(str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('from')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        for transaction in payments_sent_list:
+            print(transaction.bank)
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Debit')
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('to')
+            transaction_data['Account Name'].append(str(transaction.account_name))
+
+        for transaction in debit_createhistory_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Debit')
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('to')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
+        transaction_dataframe['Date'] = pd.to_datetime(
+            transaction_dataframe.Date, utc=True)
+        transaction_dataframe['Date'] = transaction_dataframe['Date'].dt.date
+        transaction_dataframe.style.format(
+            {"Date": lambda t: t.strftime("%m/%d/%Y")})
+        transaction_dataframe.sort_values(
+            by=['Date'], ascending=False, inplace=True)
+        
         message = "Transaction successful"
         self.context['message'] = message
+        self.context['login_user_accounts'] = login_user_accounts
+        self.context['beneficiaries'] = beneficiaries
+        self.context['balance'] = balance
+        self.context['banks'] = Bank.objects.filter(country=login_user_accounts[0].currency.country)
+        self.context['transaction_dataframe'] = transaction_dataframe
         return self.context
 
     def post(self, request, *args, **kwargs):
@@ -438,11 +514,6 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
 
         payments_sent_list = Payment.objects.filter(
             account__customer__user_id=request.user.id)
-
-        debit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Debit', account__customer__user_id=request.user.id)
-        credit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Credit', account__customer__user_id=request.user.id)
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) 
@@ -461,6 +532,15 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
             else:
 
                 return super(CustomerPaymentCreate, self).post(request)
+            
+    # def form_valid(self, form):
+    #     # Save the form data to the model but don't commit yet
+    #     instance = form.save(commit=False)
+    #     # Customize any additional processing if needed
+    #     instance.save()
+
+    #     # Redirect to the landing page with the submitted form data
+    #     return HttpResponseRedirect(reverse_lazy('landing_page', kwargs={'pk': instance.pk}))
 
     def form_valid(self, form):
         form.instance.account = self.request.user
@@ -492,10 +572,18 @@ class CustomerPaymentCreate(SuccessMessageMixin, CreateView):
         if amount > balance:
             return redirect('bank:insufficient_fund')
         else:
-            return super().form_valid(form)
+            # return super().form_valid(form)
+        
+            # Save the form data to the model but don't commit yet
+            instance = form.save(commit=False)
+            # Customize any additional processing if needed
+            instance.save()
 
-    def get_success_url(self):
-        return reverse('bank:transaction_success')
+            # Redirect to the landing page with the submitted form data
+            return HttpResponseRedirect(reverse_lazy('bank:transaction_success', kwargs={'pk': instance.pk}))
+
+    # def get_success_url(self):
+    #     return reverse('bank:transaction_success')
 
 
 class PaymentUpdate(UpdateView):
@@ -769,6 +857,7 @@ class CustomerDashView(LoginRequiredMixin, View):
     """
     Display homepage of the dashboard.
     """
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/customer_dashboard.html'
     paginate_by = 10
@@ -781,34 +870,14 @@ class CustomerDashView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=self.request.user.id).order_by("date")
 
-        transaction_history_list = CreateHistory.objects.filter(
-            account__customer__user_id=self.request.user.id)
-
         payments_sent_list = Payment.objects.filter(
-            account__customer__user_id=self.request.user.id)
-
-        debit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Debit', account__customer__user_id=self.request.user.id)
-        credit_transaction_history_list = transaction_history_list.filter(
-            top_up_type='Credit', account__customer__user_id=self.request.user.id)
+            account=self.request.user)
 
         all_withdrawals = sum(
             transaction.amount for transaction in payments_sent_list) 
-            # + sum(
-            # transaction.amount for transaction in debit_transaction_history_list)
 
         all_deposits = sum(
             transaction.amount for transaction in transaction_list)
-        # +sum(
-        #     transaction.amount for transaction in credit_transaction_history_list)
-
-        # transaction_list = PostTransaction.objects.filter(
-        #     account__customer__user_id=request.user.id).order_by("date")
-
-        # print(transaction_list)
-
-        # payments_sent_list = Payment.objects.filter(
-        #     account__customer__user_id=request.user.id).order_by("date")
 
         last_payment_received = transaction_list.last()
 
@@ -816,20 +885,71 @@ class CustomerDashView(LoginRequiredMixin, View):
 
         customers = Customer.objects.all()
         accounts = Account.objects.all()
-        login_user_accounts = Account.objects.filter(customer__user_id=request.user.id)[0]
+        login_user_accounts = Account.objects.filter(customer__user_id=request.user.id)
         
         login_customer = Customer.objects.filter(id=self.request.user.id)
 
-        # all_deposits = sum(
-        #     transaction.amount for transaction in transaction_list)
-        # all_withdrawals = sum(
-        #     transaction.amount for transaction in payments_sent_list)
-
         balance = (all_deposits - all_withdrawals)
 
+        createhistory_list = CreateHistory.objects.filter(
+            account__customer__user_id=self.request.user.id).order_by("date")
+
+        debit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
+                                                             top_up_type='Debit').order_by("date")
+        credit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
+                                                              top_up_type='Credit').order_by("date")
+        payments_sent_list = Payment.objects.filter(
+            account__id=self.request.user.id).order_by("-date")
+        
+        cur = Currency.objects.all()[0]
+
+        transaction_data = {'Date': [], 'Type': [],
+                            'Amount': [], 'Direction': [], 'Account Name': []}
+
+        for transaction in transaction_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Credit')
+            transaction_data['Amount'].append(str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('from')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        for transaction in credit_createhistory_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Credit')
+            transaction_data['Amount'].append(str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('from')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        for transaction in payments_sent_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Debit')
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('to')
+            transaction_data['Account Name'].append(str(transaction.account_name))
+
+        for transaction in debit_createhistory_list:
+            transaction_data['Date'].append(transaction.date)
+            transaction_data['Type'].append('Debit')
+            transaction_data['Amount'].append('-'+str(login_user_accounts[0].currency.currency_symbol)+str(transaction.amount))
+            transaction_data['Direction'].append('to')
+            transaction_data['Account Name'].append(str(transaction.company_name))
+
+        transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
+        transaction_dataframe['Date'] = pd.to_datetime(
+            transaction_dataframe.Date, utc=True)
+        transaction_dataframe['Date'] = transaction_dataframe['Date'].dt.date
+        transaction_dataframe.style.format(
+            {"Date": lambda t: t.strftime("%m/%d/%Y")})
+        transaction_dataframe.sort_values(
+            by=['Date'], ascending=False, inplace=True)
+        
         currency = Currency.objects.all()
         self.context['currency'] = currency
-        cur = Currency.objects.all()[0]
+        self.context['transaction_dataframe'] = transaction_dataframe
+        card_account = request.user.customer.account_name
+        # cards = Card.objects.filter(account__customer__account_name=card_account)
+        cards = Card.objects.all()
+        self.context['cards'] = cards
         self.context['cur'] = cur
         self.context['all_deposits'] = all_deposits
         self.context['all_withdrawals'] = all_withdrawals
@@ -850,6 +970,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
     """
     Display homepage of the dashboard.
     """
+    login_url = 'bank:login'
     context = {}
     template_name = 'customer_dashboard/customer_transaction_history.html'
     paginate_by = 10
@@ -862,9 +983,6 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         transaction_list = PostTransaction.objects.filter(
             account__customer__user_id=self.request.user.id).order_by("date")
 
-        # transaction_list = PostTransaction.objects.filter(
-        #     account__customer__user_id=self.request.user.id)
-
         createhistory_list = CreateHistory.objects.filter(
             account__customer__user_id=self.request.user.id).order_by("date")
 
@@ -872,8 +990,6 @@ class TransactionHistoryView(LoginRequiredMixin, View):
                                                              top_up_type='Debit').order_by("date")
         credit_createhistory_list = createhistory_list.filter(account__customer__user_id=self.request.user.id,
                                                               top_up_type='Credit').order_by("date")
-
-        # if request.user:
         payments_sent_list = Payment.objects.filter(
             account__id=self.request.user.id).order_by("-date")
 
@@ -909,7 +1025,7 @@ class TransactionHistoryView(LoginRequiredMixin, View):
 
         transaction_dataframe = pd.DataFrame.from_dict(transaction_data)
         transaction_dataframe['Date'] = pd.to_datetime(
-            transaction_dataframe.Date)
+            transaction_dataframe.Date, utc=True)
         transaction_dataframe['Date'] = transaction_dataframe['Date'].dt.date
         transaction_dataframe.style.format(
             {"Date": lambda t: t.strftime("%m/%d/%Y")})
@@ -937,26 +1053,78 @@ class TransactionHistoryView(LoginRequiredMixin, View):
         return render(request, self.template_name, self.context)
 
 
-class TransactionSuccessful(LoginRequiredMixin, View):
+class TransactionSuccessful(LoginRequiredMixin, generic.DetailView):
     """
     Display homepage of the dashboard.
     """
-    context = {}
+    model = Payment
+    login_url = 'bank:login'
     template_name = 'customer_dashboard/transaction_success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # You can add more context if needed
+        return context
+
+
+class CardListView(generic.ListView):
+    model = Card
+    context_object_name = 'cards'
+    template_name = 'customer_dashboard/cards.html'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        """override get_context_data() in order to pass additional
+        context variables to the template """
+
+        # Call the base implementation first to get the context
+        context = super(CardListView,
+                        self).get_context_data(**kwargs)
+        # Create any data and add it to the context
+        cards = Card.objects.filter(account_id = self.request.user.id)
+        context['cards'] = cards
+        return context
+
+class SupportView(LoginRequiredMixin, View):
+    context = {}
+    template_name = 'customer_dashboard/support.html'
     paginate_by = 10
 
     def get(self, request, *args, **kwargs):
-        """
-        Returns the author details
-        """
+        return render(request, self.template_name, self.context)
+    
+class PersonalDataView(LoginRequiredMixin, View):
+    login_url = 'bank:login'
+    context = {}
+    template_name = 'customer_dashboard/personal_data.html'
+    paginate_by = 10
 
-        if request.user:
-            payments_sent_list = Payment.objects.filter(
-                account__id=request.user.id).order_by("-date")
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.context)
 
-        currency = Currency.objects.all()
-        self.context['currency'] = currency
-        cur = Currency.objects.all()[0]
-        self.context['cur'] = cur
-        self.context['payments_sent_list'] = payments_sent_list
+
+class LoanCreate(SuccessMessageMixin, CreateView):
+    model = Loan
+    fields = '__all__'
+    template_name = 'customer_dashboard/loans.html'
+    success_message = "Transaction successful"
+
+    def get_success_url(self):
+        return reverse('bank:loan_success')
+    
+class LoanSuccessful(LoginRequiredMixin, View):
+    login_url = 'bank:login'
+    context = {}
+    template_name = 'customer_dashboard/loan_successful.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, self.context)
+
+
+class MenuView(LoginRequiredMixin, View):
+    login_url = 'bank:login'
+    context = {}
+    template_name = 'customer_dashboard/menu.html'
+
+    def get(self, request, *args, **kwargs):
         return render(request, self.template_name, self.context)

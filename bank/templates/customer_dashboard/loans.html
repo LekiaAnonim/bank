@@ -1,0 +1,28 @@
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% block content %}
+    <main>
+        <div class="page-title">
+            <h1>Loans</h1>
+        </div>
+        <div class="quick-transfer loan">
+            <form action="" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <input type="email" name="email" id="id_email" placeholder="Email"><br>
+                <input type="tel" name="phone" id="id_phone_number" placeholder="Phone Number"><br>
+                <input type="amount" name="amount" id="id_amount" placeholder="Enter Amount"><br>
+                <input class="submit-btn" type="submit" value="Apply">
+            </form>
+        </div>
+    </main>
+    {% endblock content %}
+</body>
+
+</html>

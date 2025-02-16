@@ -1,0 +1,33 @@
+{% extends 'customer_dashboard/base.html' %} {% load static %} {% load cloudinary %} {% load mathfilters %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="J3uHWKo6UkFGmEz_dmaJ0wpGwPO95_IPH39yPCXV3DI" />
+    <meta name="csrf_token" content="{{ csrf_token }}">
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="{% static 'css/customer_dash.css' %}">
+</head>
+
+
+
+
+{% block content %}
+<main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+
+    <div class="customer-container customer-payment-container">
+        <img src="{% static 'image/time_machine_100px.png' %}" alt="" class="icon">
+        <h2 class="content-head">Transaction Successful</h2>
+        <div class="transaction-history transaction-success">
+            <div class="thumbs-up-image">
+                <img src="{% static 'image/thumbs_up_96px.png' %}" alt="" class="icon">
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}

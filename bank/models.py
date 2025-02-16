@@ -8,10 +8,11 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template import Context, Template
 from cloudinary.models import CloudinaryField
+from django.core.validators import MaxValueValidator, RegexValidator
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer')
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     DOB = models.DateField(null=True, blank=True)
     SSN = USSocialSecurityNumberField(max_length=9)
@@ -35,9 +36,45 @@ class Customer(models.Model):
     account_name.short_description = 'Customer'
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    class Meta:
+        verbose_name_plural = "countries"
+
+    def __str__(self):
+        return f'{self.name}'
+class Currency(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    currency_name = models.CharField(max_length=200, null=True)
+    currency_symbol = models.CharField(max_length=100, null=True)
+
+    class Meta:
+        verbose_name_plural = "currencies"
+
+    def __str__(self):
+        return f'{self.currency_name}({self.country})'
+
+    def get_absolute_url(self):
+        return reverse('bank:currency-update', kwargs={'pk': self.pk})
+class Bank(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+    bank_fullname = models.CharField(
+        max_length=255, null=True, blank=True)
+    bank_abbr = models.CharField(
+        max_length=255, null=True, blank=True)
+    
+    # bank_logo = CloudinaryField('image', null=True, blank=True)
+
+    class Meta:
+        ordering = ['bank_fullname']
+
+    def __str__(self):
+        return f'{self.bank_fullname}'
+
 class Account(models.Model):
+    # acct_id = models.IntegerField(unique=True, auto_created=True, null=True)
     customer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, null=True)
+        Customer, on_delete=models.CASCADE, null=True, related_name='account')
     CHOICES = (
         ('Checking', 'Checking'),
         ('Savings', 'Savings'),
@@ -60,15 +97,17 @@ class Account(models.Model):
     suspend_account_message = models.TextField(
         default='This account has been suspended Kindly contact the administrator to learn more. Or, enter a valid username and password.')
     
-    CURRENCY_CHOICES = (
-        ('$', 'Dollar'),
-        ('£', 'Pounds' ),
-        ('€', 'Euro'),
-        ('₩', 'Korean Won'),
-        ('₹', 'Indian Rupees'),
-        ('¥', 'Chinese Yuan'),
-    )
-    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
+    # CURRENCY_CHOICES = (
+    #     ('$', 'Dollar'),
+    #     ('£', 'Pounds' ),
+    #     ('€', 'Euro'),
+    #     ('₩', 'Korean Won'),
+    #     ('₹', 'Indian Rupees'),
+    #     ('¥', 'Chinese Yuan'),
+    # )
+
+    currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
+    # currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='Dollar', null=True)
 
     class Meta:
         ordering = ['account_type', 'created_on']
@@ -116,33 +155,18 @@ class CreateHistory(models.Model):
     class Meta:
         ordering = ['-date']
 
-class Currency(models.Model):
-    CURRENCY_CHOICES = (
-        ('$', 'Dollar'),
-        ('£', 'Pounds' ),
-        ('€', 'Euro'),
-        ('₩', 'Korean Won'),
-        ('₹', 'Indian Rupees'),
-        ('¥', 'Chinese Yuan'),
-    )
-    currency = models.CharField(max_length=100, choices=CURRENCY_CHOICES, default='$', null=True)
 
-    class Meta:
-        verbose_name_plural = "currencies"
-
-    def get_absolute_url(self):
-        return reverse('bank:currency-update', kwargs={'pk': self.pk})
 
 class Payment(models.Model):
     account = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
     account_number = models.CharField(max_length=12, null=True, blank=True, validators=[
         RegexValidator(r'^\d{1,12}$')])
-    bank = models.CharField(
-        max_length=255, null=True, blank=True)
+    bank = models.ForeignKey(
+        Bank, on_delete=models.SET_NULL, null=True, blank=True)
     account_name = models.CharField(
         max_length=255, blank=True, null=True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     otp = models.CharField(
         max_length=255, blank=False, null=False)
     amount = models.IntegerField(blank=False, null=False)
@@ -151,5 +175,31 @@ class Payment(models.Model):
     bank_address = models.CharField(max_length=255, blank=True, null=True)
     remark = models.CharField(max_length=255, blank=True, null=True)
 
+    class Meta:
+        ordering = ['-date']
+
     def get_absolute_url(self):
         return reverse('bank:payment-list', kwargs={'pk': self.pk})
+    
+class CardType(models.Model):
+    company_name = models.CharField(max_length=200, null=True, help_text='E.g. Master Card')
+    company_logo = CloudinaryField('image', null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.company_name}'
+class Card(models.Model):
+    account = models.OneToOneField(
+        Account, on_delete=models.SET_NULL, null=True, related_name='card_account')
+    
+    card_number = models.CharField(max_length=16, validators=[RegexValidator(r'^\d{1,16}$')], unique=True, help_text='Card number should be 16 digits')
+    expiry_date = models.DateField()
+    card_type = models.ForeignKey(CardType, on_delete=models.SET_NULL, null=True)
+    cvv = models.PositiveIntegerField(validators=[MaxValueValidator(999)], help_text='CVV should be 3 digits')
+
+    def get_absolute_url(self):
+        return reverse('bank:my_cards', kwargs={'pk': self.pk})
+
+class Loan(models.Model):
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=14, null=True)
+    amount = models.PositiveIntegerField()

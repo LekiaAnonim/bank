@@ -1,4 +1,3 @@
-
 const otpInput = document.querySelector('#id_otp');
 
 const otpButton = document.querySelector('.otp-button');
@@ -19,35 +18,37 @@ let elastic_email_password = hiddenInput.value;
 const len = 6;
 
 function generate_otp() {
-    let number = Math.floor(Math.pow(10, len-1) + Math.random() * (Math.pow(10, len) - Math.pow(10, len-1) - 1));
+    let number = Math.floor(Math.pow(10, len - 1) + Math.random() * (Math.pow(10, len) - Math.pow(10, len - 1) - 1));
     return number;
 }
 let otp = generate_otp();
 
-paymentForm.addEventListener('submit', function (e) {
-    
+console.log(otp)
+
+paymentForm.addEventListener('submit', function(e) {
+
     const otpInfo = document.createElement('p');
-    
+
     // console.log(otp);
     if (otpInput.value != otp) {
         e.preventDefault();
         // alert('The OTP does not match. Please click on the  Get OTP button, and check your mail to get your OTP');
         const otp_error = new Error('The OTP does not match. Please click on the  Get OTP button, and check your mail to get your OTP');
-        
+
         otpInfo.style.color = 'red';
         otpInfo.innerText = otp_error;
         paymentForm.appendChild(otpInfo);
     }
-    
+
 })
 
 
 
-otpButton.addEventListener('click', function (e) {
+otpButton.addEventListener('click', function(e) {
     e.preventDefault();
-    console.log(otp);
+    // console.log(otp);
     const name = 'Cadence Bank';
-    const email ='prosperlekia@gmail.com';
+    const email = 'prosperlekia@gmail.com';
     const subject = 'CADENCE BANK: Verify OTP';
     let message = `Hello, ${name}, you are trying to make a payment to the account with the following transaction details: Account Name - ${accountName.value}, Account Number - ${accountNumber.value}, Bank - ${bank.value}, Amount - $${amount.value}. copy the OTP to continue your transaction.
                     OTP: ${otp}`;
@@ -61,17 +62,17 @@ otpButton.addEventListener('click', function (e) {
 
 function sendMail(email, subject, message) {
     Email.send({
-        Host : "smtp.elasticemail.com",
-        Username : "prosperlekia@gmail.com",
+        Host: "smtp.elasticemail.com",
+        Username: "prosperlekia@gmail.com",
         Password: 'C5A1BC3126DDD1B8FC1A8F790F313A517A3A',
         smtp_sasl_auth_enable: 'yes',
         Port: 587,
         smtp_sasl_security_options: 'noanonymous',
-        To : receiverEmail.innerText,
-        From : email,
-        Subject : subject,
-        Body : message
+        To: receiverEmail.innerText,
+        From: email,
+        Subject: subject,
+        Body: message
     }).then(
-    message => alert(message)
+        message => alert(message)
     );
 }

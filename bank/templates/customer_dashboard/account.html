@@ -1,0 +1,213 @@
+<!DOCTYPE html>{% extends 'customer_dashboard/base.html' %} {% load static %}{% load env_extras %}{% load cloudinary %} {% load mathfilters %}
+<html lang="en">
+
+<body>
+    {% block content %}
+    <input id="YOUR_ENV_VARIABLE" value="{% get_env_var 'ELASTIC_EMAIL_PASSWORD' %}" type="hidden">
+    <main>
+        <div class="page-title">
+            <h1>My Account</h1>
+            <span style="display: none;" class="user-email">{{user.email}}</span>
+        </div>
+        <div class="balance-card-container">
+            {% if login_user_accounts %} {% for account in login_user_accounts %}
+            <div class="total-balance-card">
+                <div class="balance-title-show-balance">
+                    <h4>Your Total Balance</h4>
+                    <svg class="display-balance hide" onclick="displayBalance(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 9a3.02 3.02 0 0 0-3 3c0 1.642 1.358 3 3 3 1.641 0 3-1.358 3-3 0-1.641-1.359-3-3-3z"></path><path d="M12 5c-7.633 0-9.927 6.617-9.948 6.684L1.946 12l.105.316C2.073 12.383 4.367 19 12 19s9.927-6.617 9.948-6.684l.106-.316-.105-.316C21.927 11.617 19.633 5 12 5zm0 12c-5.351 0-7.424-3.846-7.926-5C4.578 10.842 6.652 7 12 7c5.351 0 7.424 3.846 7.926 5-.504 1.158-2.578 5-7.926 5z"></path></svg>
+                    <svg class="display-balance" onclick="displayBalance(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 19c.946 0 1.81-.103 2.598-.281l-1.757-1.757c-.273.021-.55.038-.841.038-5.351 0-7.424-3.846-7.926-5a8.642 8.642 0 0 1 1.508-2.297L4.184 8.305c-1.538 1.667-2.121 3.346-2.132 3.379a.994.994 0 0 0 0 .633C2.073 12.383 4.367 19 12 19zm0-14c-1.837 0-3.346.396-4.604.981L3.707 2.293 2.293 3.707l18 18 1.414-1.414-3.319-3.319c2.614-1.951 3.547-4.615 3.561-4.657a.994.994 0 0 0 0-.633C21.927 11.617 19.633 5 12 5zm4.972 10.558-2.28-2.28c.19-.39.308-.819.308-1.278 0-1.641-1.359-3-3-3-.459 0-.888.118-1.277.309L8.915 7.501A9.26 9.26 0 0 1 12 7c5.351 0 7.424 3.846 7.926 5-.302.692-1.166 2.342-2.954 3.558z"></path></svg>
+                </div>
+                <div class="total-account-balance">
+                    <span class="balance-amount">{{account.currency.currency_symbol}}{{balance|floatformat:"2g"}}</span>
+                    <span class="balance-amount hide">*****</span>
+                </div>
+                <div class="account-type-acct-no">
+                    <div class="account-type"><span>{{account.account_type}}</span></div>
+                    <div class="account-no">Acct No:<span>{{account.account_number}}</span></div>
+                </div>
+                <script>
+                    function displayBalance(ele) {
+                        let displayBals = document.querySelectorAll('.display-balance');
+                        displayBals.forEach(el => {
+                            el.classList.toggle('hide');
+                        });
+
+                        let displayAmts = document.querySelectorAll('.balance-amount');
+                        displayAmts.forEach(el => {
+                            el.classList.toggle('hide');
+                        });
+                    }
+                </script>
+            </div>
+            {% endfor %} {% endif %}
+        </div>
+        <div class="quick-transfer">
+            <div class="quick-transfer-title">
+                <h2>Transfer</h2>
+            </div>
+            <!-- <div class="frequent-beneficiary-text">
+                <a href="#">Frequent Beneficiaries</a>
+                <a href="#">Find Beneficiaries</a>
+            </div> -->
+            <!-- <div class="beneficiary-container">
+                {% if beneficiaries %} {% for beneficiary in beneficiaries %}
+                <div class="beneficiary-card">
+                    <div class="name-letter">
+                        <p>{{beneficiary.account_name|make_list|first}}</p>
+                    </div>
+                    <div class="full-name">
+                        <p>{{beneficiary.account_name}}</p>
+                    </div>
+                </div>
+                {% endfor %} {% endif %}
+            </div> -->
+            <form id="payment-form" action="" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                <table class="payment-table">
+                    <div class="form-wrapper">
+                        <select name="bank" id="id_bank">
+                            <option value="" selected="">---------</option>
+                            {% if banks %}
+                            {% for bank in banks %}
+                            <option value="{{bank.pk}}">{{bank.bank_fullname}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                        <input type="number" name="account_number" id="id_account_number" placeholder="Enter Account Number">
+                    </div>
+                    <!-- <a href="#">Add From Beneficiaries</a> <br> -->
+                    <div class="form-wrapper">
+                        <input type="number" name="amount" id="id_amount" placeholder="Enter Amount">
+                        <input type="text" name="remark" id="id_remark" placeholder="Enter Description (Optional)">
+                    </div>
+                    <div class="form-wrapper">
+                        <input type="text" name="account_name" id="id_account_name" placeholder="Enter Account Name">
+                        <input type="number" name="routing_number" id="id_routing_number" placeholder="Enter Routing Number">
+                    </div>
+                    <input type="text" name="bank_address" id="id_bank_address" placeholder="Enter Bank Address">
+                </table>
+
+                <input type="text" name="otp" maxlength="255" required="" id="id_otp" placeholder="Enter OTP"> {% if account_suspend %}
+                <br><button class="otp-button account_suspend_btn">Get OTP</button>
+                <br><input class="submit-btn send-payment otp-button account_suspend_btn" type="button" value="Transfer"> {% else %}
+                <button class="otp-button">Get OTP</button>
+                <input class="submit-btn send-payment" type="submit" value="Transfer"> {% endif %} {% if messages %}
+                <div class="messages" id="messages">
+                    {% for message in messages %}
+                    <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}"> {% if account_suspend %}
+                    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                        <hr> {{ message }}
+                    </div>
+                    {% else %}
+                    <div {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                        {{ message }}
+                    </div>
+                    {% endif %} {% endfor %}
+                </div>
+                {% endif %}
+                <div class="clearfix"></div>
+            </form>
+
+            <!-- <form id="payment-form" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <table class="payment-table">
+                    {{ form.as_table }}
+                </table>
+                {% if account_suspend %}
+                <button class="otp-button account_suspend_btn">Get OTP</button>
+                <input class="send-payment otp-button account_suspend_btn" type="button" value="Submit"> {% else %}
+                <button class="otp-button">Get OTP</button>
+                <input class="send-payment" type="submit" value="Submit"> {% endif %} {% if messages %}
+                <div class="messages" id="messages">
+                    {% for message in messages %}
+                    <input class="suspend_message" type="hidden" name="suspend_message" value="{{message}}"> {% if account_suspend %}
+                    <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                        <hr> {{ message }}
+                    </div>
+                    {% else %}
+                    <div {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+                        {{ message }}
+                    </div>
+                    {% endif %} {% endfor %}
+                </div>
+                {% endif %}
+                <div class="clearfix"></div>
+            </form> -->
+        </div>
+        <div class="transaction-history">
+            <div class="history-header">
+                <div class="history-title">
+                    <h2>History</h2>
+                </div>
+                <form action="" method="get">
+                    <div class="history-date-range">
+                        <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+                        <input class="submit-btn" type="submit" value="Submit">
+                    </div>
+                </form>
+                <script>
+                    $(function() {
+                        $('input[name="daterange"]').daterangepicker({
+                            opens: 'left'
+                        }, function(start, end, label) {
+                            // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                        });
+                    });
+                </script>
+            </div>
+            <div class="transtion-table">
+                <table>
+                    {% for index, row in transaction_dataframe.iterrows %}
+                    <tr>
+                        {% for cell in row %}
+                        <td>
+                            {{cell}}
+                        </td>
+                        {% endfor %}
+                        <!-- <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></td> -->
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </main>
+    {% endblock content %} {% block messages %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if messages %} {% for message in messages %} {% if account_suspend %}
+            <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+                <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                <hr> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% else %}
+            <div id="message" class="text-center font-weight-bold alert alert-dismissible fade show
+                                                                               {% if message.level_tag == 'error' %}
+                                                                               message
+                                                                               {% else %}
+                                                                               successful
+                                                                               {% endif %}">
+                <h3 style="font-weight: bolder; color:white; margin-bottom: 10px">Account Suspended!</h3>
+                <hr> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {% endif %} {% endfor %} {% endif %}
+        </div>
+    </div>
+    {% endblock messages %}
+</body>
+
+</html>

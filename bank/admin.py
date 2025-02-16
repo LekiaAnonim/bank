@@ -3,8 +3,33 @@ from django.contrib import admin
 # Register your models here.
 
 # Register your models here.
-from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency
+from .models import Customer, Account, PostTransaction, Payment, CreateHistory, Currency, Bank, Card, CardType, Loan, Country
 
+
+class LoanAdmin(admin.ModelAdmin):
+    list_display = ('email', 'phone_number', 'amount')
+    fields = ['email', 'phone_number', 'amount']
+
+admin.site.register(Loan, LoanAdmin)
+class BankAdmin(admin.ModelAdmin):
+    list_display = ('country','bank_fullname', 'bank_abbr',)
+    fields = ['country','bank_fullname', 'bank_abbr',]
+
+admin.site.register(Bank, BankAdmin)
+
+class CardAdmin(admin.ModelAdmin):
+    list_display = ('account', 'card_number', 'expiry_date','card_type', 'cvv')
+    fields = ['account', 'card_number', 'expiry_date', 'card_type', 'cvv']
+
+
+admin.site.register(Card, CardAdmin)
+
+class CardTypeAdmin(admin.ModelAdmin):
+    list_display = ('company_name', 'company_logo')
+    fields = ['company_name', 'company_logo']
+
+
+admin.site.register(CardType, CardTypeAdmin)
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('user', 'created_on', 'middle_name', 'DOB', 'SSN',
@@ -17,13 +42,18 @@ admin.site.register(Customer, CustomerAdmin)
 
 
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ('currency',)
-    fields = ['currency',]
+    list_display = ('country','currency_name','currency_symbol',)
+    fields = ['country','currency_name','currency_symbol',]
 
 
 admin.site.register(Currency, CurrencyAdmin)
 
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    fields = ['name',]
 
+
+admin.site.register(Country, CountryAdmin)
 class CustomerInline(admin.TabularInline):
     model = CustomerAdmin
 

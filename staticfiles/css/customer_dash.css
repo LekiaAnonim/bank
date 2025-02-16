@@ -1,5 +1,5 @@
 @media (min-width: 1500px) {
-    body{
+    body {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -7,80 +7,88 @@
     }
     .body-container {
         max-width: 1600px;
-
     }
     .customer-sidenav {
         margin-right: 50px;
     }
 }
-body{
+
+body {
     background-size: cover;
 }
-.body-container{
-    
-    
+
+.body-container {
     background-size: contain;
     /* background-repeat: no-repeat; */
 }
-.cover-container{
+
+.cover-container {
     background-color: #000066a6;
     margin: 0;
     padding: 10px;
 }
-.username-nav{
+
+.username-nav {
     color: #ffffff;
 }
 
-.content-head{
-    color: #ffffff;
+.content-head {
+    color: #000000;
     font-weight: 900;
 }
-.customer-sidenav{
+
+.customer-sidenav {
     float: left;
-    
     height: 100%;
 }
-.customer-user-info{
+
+.customer-user-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
-    
 }
-.customer-user-info p{
+
+.customer-user-info p {
     margin: 5px;
     padding: 0;
 }
-.customer-user-info .customer-name{
+
+.customer-user-info .customer-name {
     font-size: 25px;
     /* color: #2c2b2b; */
     color: #ffffff;
     font-weight: 800;
 }
-.customer-user-info .customer-user_email{
+
+.customer-user-info .customer-user_email {
     font-size: 14px;
     color: rgb(255, 254, 254);
     display: none;
 }
-.customer-photo{
+
+.customer-photo {
     border-radius: 50%;
     width: 100px;
     height: 100px;
     margin-bottom: 10px;
 }
-.customer-photo img{
+
+.customer-photo img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
-.customer-navigation{
+
+.customer-navigation {
     background-color: rgba(20, 20, 20, 0.7);
     border-radius: 30px;
     padding: 40px;
     height: 100vh;
 }
-.customer-dashboard-nav{
+
+.customer-dashboard-nav {
     height: 45px;
     /* width: 250px; */
     border-radius: 25px;
@@ -91,28 +99,32 @@ body{
     padding: 0 10px 0 10px;
     margin-bottom: 20px;
 }
-.customer-dashboard-nav h5{
+
+.customer-dashboard-nav h5 {
     color: #ffffff;
     margin-left: 10px;
     font-size: 16px;
-    
 }
-.customer-dashboard-nav img{
+
+.customer-dashboard-nav img {
     height: 20px;
     width: 20px;
 }
-.customer-container{
+
+.customer-container {
     padding-top: 50px;
     /* width: 100%; */
     /* padding-left: 150px; */
 }
-.customer-logo{
+
+.customer-logo {
     display: flex;
     justify-content: space-between;
     width: 100%;
     align-items: center;
 }
-.customer-atm-card{
+
+.customer-atm-card {
     min-width: 370px;
     max-width: 400px;
     height: fit-content;
@@ -124,7 +136,8 @@ body{
     background: -moz-linear-gradient(top left, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));
     background: linear-gradient(to bottom right, rgba(60, 40, 140, 1.0), rgba(81, 107, 175, 1.0));; */
 }
-.customer-card-logo{
+
+.customer-card-logo {
     width: 100px;
     height: 70px;
     /* border: #FF5733 solid; */
@@ -133,49 +146,58 @@ body{
     align-items: center;
     justify-content: center;
 }
-.customer-card-logo img{
+
+.customer-card-logo img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.customer-chip-cardnum{
+.customer-chip-cardnum {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.customer-card-no span{
+
+.customer-card-no span {
     margin-left: 10px;
     font-size: 14px;
 }
-.customer-card-no{
+
+.customer-card-no {
     letter-spacing: 2.5px;
 }
-.customer-card-footer{
+
+.customer-card-footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 15px;
 }
-.customer-card-head{
+
+.customer-card-head {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.customer-card-name{
+
+.customer-card-name {
     text-transform: uppercase;
     letter-spacing: 1.2px;
     font-size: 14px;
     padding: 5px;
 }
-.customer-chip-cardnum .customer-chip{
+
+.customer-chip-cardnum .customer-chip {
     width: 60px;
     height: 50px;
 }
-.customer-date-cvv p{
+
+.customer-date-cvv p {
     padding: 0;
     margin: 0;
 }
-.customer-account-info{
+
+.customer-account-info {
     margin-left: 30px;
     border-bottom: #FF5733 solid;
     border-top: #FF5733 solid;
@@ -186,24 +208,29 @@ body{
     padding: 0;
     height: fit-content;
 }
-.customer-account-info p{
+
+.customer-account-info p {
     padding: 0;
     margin: 0 0 5px 0;
 }
-.customer-account-info span{
+
+.customer-account-info span {
     font-weight: 600;
 }
-.customer-transaction-details{
+
+.customer-transaction-details {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     /* width: 70%; */
 }
-.customer-transaction-summary{
+
+.customer-transaction-summary {
     display: flex;
 }
-.customer-transaction-card{
+
+.customer-transaction-card {
     width: 100%;
     height: 100px;
     border-radius: 10px;
@@ -213,14 +240,16 @@ body{
     margin: 20px;
 }
 
-.customer-transaction-card p{
+.customer-transaction-card p {
     padding: 0;
     color: #000000;
 }
-a{
+
+a {
     list-style: none;
 }
-.customer-payment-container{
+
+.customer-payment-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -228,52 +257,64 @@ a{
     padding-left: 20px;
 }
 
+
 /* Customer Payment form */
-.row{
+
+.row {
     width: 100%;
 }
-p, h5, h4{
+
+p,
+h5,
+h4 {
     padding: 0;
     margin: 0;
 }
-.transaction-history{
+
+.transaction-history {
     margin-left: 50px;
     margin-top: 30px;
 }
-.transaction-history table{
+
+.transaction-history table {
     width: 90%;
     table-layout: fixed;
     border-collapse: collapse;
 }
- 
-.transaction-history td, th{
+
+.transaction-history td,
+th {
     padding: 20px;
     font-weight: 900;
 }
-.transaction-history td{
+
+.transaction-history td {
     border: thin solid #fffefe;
 }
 
-.transaction-history th{
+.transaction-history th {
     color: #FF5733;
     font-size: 18px;
 }
 
-.transaction-history tr:nth-child(even){
+.transaction-history tr:nth-child(even) {
     background: #ffebe6af;
 }
+
 .transaction-history tr:nth-child(odd) {
     color: #ffffff;
     background: #0000009d;
 }
+
 .transaction-history td:nth-child(4) {
     color: red;
 }
+
 .transaction-history td:nth-child(3) {
     color: green;
 }
 
-.customer-header{
+.customer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -282,117 +323,134 @@ p, h5, h4{
     padding: 20px;
     top: 0;
 }
-.dropdown{
+
+.dropdown {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
-.dropdown img{
+
+.dropdown img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
-.admin-site{
-    margin-top:10px;
-    display:flex;
+
+.admin-site {
+    margin-top: 10px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.admin-site img{
+
+.admin-site img {
     width: 30px;
     height: 30px;
 }
-.admin-site p{
-    font-size:10px;
+
+.admin-site p {
+    font-size: 10px;
 }
-.admin-site .admin{
-    display:flex;
+
+.admin-site .admin {
+    display: flex;
     justify-content: center;
     align-items: center;
     margin: 10px;
 }
 
-
-.transaction-success{
+.transaction-success {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.thumbs-up-image{
+
+.thumbs-up-image {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 150px;
     height: 150px;
 }
-.thumbs-up-image img{
+
+.thumbs-up-image img {
     width: 100%;
     height: 100%;
 }
 
-.get-receipt-close{
+.get-receipt-close {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.receipt-button{
+
+.receipt-button {
     margin: 20px;
     padding: 5px;
 }
-.get-receipt{
+
+.get-receipt {
     background-color: white;
     color: #FF5733;
 }
-.close-successpage{
+
+.close-successpage {
     background-color: #f31f1f;
     color: #ffffff;
 }
-.receipt{
+
+.receipt {
     /* display: none; */
     padding: 30px;
     background-color: #ffffff;
 }
-.receipt-button:hover{
+
+.receipt-button:hover {
     cursor: pointer;
 }
-.receipt-heading{
+
+.receipt-heading {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
-.receipt-heading .logo{
+
+.receipt-heading .logo {
     width: 150px;
 }
-.receipt-heading .logo img{
+
+.receipt-heading .logo img {
     width: 100%;
 }
-.receipt-heading p{
+
+.receipt-heading p {
     color: #030a77;
 }
 
-.receipt-body p{
+.receipt-body p {
     border-bottom: #afafaf solid thin;
     color: #030a77;
     padding: 20px;
 }
-.receipt-body p span{
+
+.receipt-body p span {
     color: #FF5733;
 }
+
 .receipt-body p .name {
     text-transform: uppercase;
 }
 
-
 @media (max-width:865px) {
-    body{
+    body {
         background-position: -20% 0%;
     }
-    .customer-sidenav{
+    .customer-sidenav {
         float: none;
     }
-    .customer-navigation{
+    .customer-navigation {
         height: 100%;
         margin: 10px;
         display: flex;
@@ -403,50 +461,50 @@ p, h5, h4{
         background-color: none;
         background: none;
     }
-    .customer-dashboard-nav{
+    .customer-dashboard-nav {
         background-color: rgba(20, 20, 20, 0.7);
         margin: 5px;
-        flex-direction:column;
-        justify-content:center;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
         border-radius: none;
         height: 70px;
         width: 90px;
     }
-    .customer-dashboard-nav h5{
-        margin-top:5px;
+    .customer-dashboard-nav h5 {
+        margin-top: 5px;
         font-size: smaller;
     }
-    .customer-card-head{
+    .customer-card-head {
         flex-wrap: wrap;
         padding: 5px;
     }
-    .customer-account-info{
+    .customer-account-info {
         margin-top: 10px;
     }
-    .customer-transaction-summary{
+    .customer-transaction-summary {
         flex-wrap: wrap;
     }
-    .transaction-history{
+    .transaction-history {
         padding: 0px;
         margin-left: 0;
         margin-top: 10px;
         width: 100%;
         margin-bottom: 10px;
     }
-    .transaction-history table{
+    .transaction-history table {
         width: 100%;
     }
-    .transaction-history td{
+    .transaction-history td {
         padding: 5px 4px 5px 4px;
         font-weight: 900;
         font-size: 10px;
     }
-    .transaction-history th{
+    .transaction-history th {
         font-size: 11px;
         padding: 10px 4px 10px 4px;
     }
-    .customer-payment-container{
+    .customer-payment-container {
         padding: 5px;
     }
     .receipt-body p {
@@ -457,23 +515,27 @@ p, h5, h4{
         font-size: 9.5px;
     }
 }
-.customer-container h5, .customer-container span{
+
+.customer-container h5,
+.customer-container span {
     color: #ffffff;
 }
-.icon{
+
+.icon {
     width: 20px;
     height: 20px;
 }
+
 .customer-transaction-card h5 {
     font-size: large;
     font-weight: 800;
     color: #000000;
     margin: 5px 0 5px 0;
 }
-.message{
+
+.message {
     color: white;
     background-color: #f31f1f;
-
 }
 
 .suspend {
@@ -488,15 +550,16 @@ p, h5, h4{
     z-index: 1000;
 }
 
-.suspend_message{
+.suspend_message {
     display: none;
 }
 
-.successful{
+.successful {
     color: white;
     background-color: #01b15f;
 }
-#message{
+
+#message {
     width: 300px;
     height: auto;
     padding: 10px;

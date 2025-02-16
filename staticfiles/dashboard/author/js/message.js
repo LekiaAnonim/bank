@@ -1,4 +1,3 @@
-
 const message = document.querySelector('#message');
 
 setTimeout(() => {
@@ -11,23 +10,14 @@ document.querySelectorAll('.messages').forEach((mess) => {
     }, 5000);
 });
 
+let amountColumn = document.querySelectorAll('td:nth-child(3)');
 
-// const accountSuspendBtn = document.querySelectorAll('.account_suspend_btn');
-// accountSuspendBtn.forEach((btn) => {
-//     btn.addEventListener('click', () => {
-//         const suspendDiv = document.createElement('div');
-//         suspendDiv.classList.add('suspend');
-//         suspendDiv.setAttribute('id', 'message');
-//         suspendDiv.innerText = document.querySelector('.suspend_message').value;
-        
-//         document.querySelector('.customer-payment-container').append(suspendDiv);
-//         setTimeout(() => {
-//            suspendDiv.style.display = "none";
-//         }, 5000);
-//     }
-//     )
-// })
-
-
-
-                            
+amountColumn.forEach((ele) => {
+    if (ele.innerText.startsWith("-")) {
+        ele.style.color = 'red';
+        // console.log('red');
+    } else {
+        ele.style.color = 'green';
+        // console.log('green');
+    }
+})

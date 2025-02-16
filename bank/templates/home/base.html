@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+{% load static %} {% load cloudinary %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Sky Premium</title>
+    {% endblock %}
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'css/stay.css' %}">
+    {% endblock %}
+</head>
+<body>
+    {% block header %}
+    <header>
+        <div class="navbar">
+            <div class="top-navbar1">
+                <li><a href="Business"> Business</a></li>
+                <li><a href="Individual">Individual</a></li>
+            </div>
+            <div class="top-navbar2">
+                <label id="no" input type="number"> +234 123-456-790</label>
+                <li><a href="sign-in">Sign In</a></li>|
+                <li><a href="Sign up">Sign Up</a></li>
+            </div>
+        </div>
+        <div class="boder"></div>
+        <div class="first">
+            <div class="top-logo"><img src="{% static 'image/images/skyhigh.png' %}" alt="Skyhighpremium"></div>
+         <div class="second-navbar">  
+            <li><a href="Home">Home</a></li>
+            <li><a href="Loan">Loan</a></li>
+            <li><a href="About U">About Us</a></li>
+            <li><a href="Service">Service</a></li>
+            <li><a href="Blog"><span>Blog</span></a> </li>
+            <li><a href="Support">Support</a> </li>
+            <li><a id="color" href="Online Banking">Online Banking</a> </li>
+         </div>
+        </div>
+    </header>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+    <footer>
+        <div class="end-footer">
+            <div class="footer-outline">
+                <div class="address">
+                    <div class="logo">
+                        <img src="{% static 'image/images/skyhigh.png' %}">
+                    </div>
+                    <p>
+                        <address>
+                        37, Sixth Block Nigeria,<br>
+                        Opposite Herms Worth<br>
+                        Building, Lagos State Nigeria<br>
+                        </address>
+                    </p>
+                    <p id="info">
+                        Info@Example.Com<br>
+                        +234 123-456-7890<br>
+                    </p>
+                </div>
+                <div class="about-us">
+                    <li><a id="orange" href="about us">About Us</a></li>
+                    <li><a href="Career">Career</a></li>
+                    <li><a href="Blog">Blog</a></li>
+                    <li><a href="team">Team</a></li>
+                </div>
+                <div class="our-services">
+                    <li><a id="orange" href="Our Services">Our Services</a> </li>
+                    <li><a href="Internet Banking">Internet Banking</a> </li>
+                    <li><a href="Mobile Banking">Mobile Banking</a> </li>
+                    <li><a href="Bank Security">Bank Security</a> </li>
+                    <li><a href="Tellers And Charges">Tellers And Charges</a> </li>
+                </div>
+                <div class="download-app">
+                    <li><a id="orange" href="DOWNLOAD APP">DOWNLOAD APP</a> </li>
+                    <p>
+                        Take Your Banking Experience
+                        To The Next Level With Our
+                        Latest Banking App
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="last-footer">
+            <div class="terms">
+                <li>
+                    <a href="Terms & Condition">Terms & Condition</a> |                    <a href="Privacy & Policy">Privacy & Policy</a>
+                </li>
+            </div>
+            <div class="copy-right">
+                <li><a href="Copyright© 2023 All Right Reseverd">Copyright© 2023 All Right Reseverd</a> </li>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+</body>
+</html>
